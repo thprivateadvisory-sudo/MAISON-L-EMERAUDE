@@ -1,37 +1,48 @@
 # Prompt Logo — Maison L'Émeraude
 
-## Prompt principal (Midjourney / DALL-E / Adobe Firefly)
+## Prompt principal — Version fine & raffinée
 
 ```
-Luxury jewelry brand logo for "MAISON L'ÉMERAUDE", elegant French fine jewelry house.
-Clean vector logo design. Centered composition with a refined teardrop emerald gemstone icon
-surrounded by a delicate diamond halo, above the brand name typeset in a classic high-end serif font.
-Below, a thin decorative line separator, then the subtitle "BIJOUTERIE DE LUXE" in small spaced capitals.
-Color palette: deep emerald green (#1B5E35), warm champagne gold (#C8A45A), ivory white background.
-Style: haute joaillerie, timeless French elegance, Cartier-inspired refinement.
-No gradients, no shadows, no AI artifacts. Flat vector illustration, print-ready.
-Black version and white version on neutral background.
---style raw --no photorealistic --no 3d render --no glow effects --ar 1:1 --v 6
+Minimalist luxury logo for the French jewelry brand "MAISON L'ÉMERAUDE".
+Ultra-thin line drawing of a teardrop pear-shaped gemstone, hairline stroke only, no fill, no shading.
+Above: the word "MAISON" in very small, widely letter-spaced light-weight serif capitals.
+Below the gem: "L'ÉMERAUDE" in an ultra-thin elegant serif typeface, light weight, generous letter-spacing.
+Below a single hairline rule: "BIJOUTERIE DE LUXE" in tiny spaced light uppercase letters.
+Color palette: one single deep forest green (#1A4731) on pure white background. No gold. No gradients.
+Style: Parisian minimalism, Céline meets Boucheron. Think Maison Margiela for jewelry.
+Extremely refined, restrained, editorial. Lots of white space. No ornamentation, no fleur-de-lis, no decorative flourishes.
+Flat 2D vector. Clean, printable, timeless.
+--style raw --no bold --no thick --no decorative --no 3d --no shadows --no gold --no ornament --ar 1:1 --v 6
 ```
 
 ---
 
-## Variante monochrome (pour usage sur fond sombre)
+## Variante bicolore (vert + or discret)
 
 ```
-Luxury monochrome logo for "MAISON L'ÉMERAUDE", French fine jewelry brand.
-Minimal elegant crest design: a single teardrop gemstone with halo of small round diamonds,
-flanked by two thin laurel sprigs. Brand name in refined serif typography below.
-All in solid white on deep emerald green background (#0D3D22).
-Clean, flat vector graphic. No gradients, no textures. High-end editorial feel.
---style raw --no photorealistic --ar 1:1 --v 6
+Refined minimalist logo for "MAISON L'ÉMERAUDE", French fine jewelry house.
+Hairline thin outline of a pear-shaped teardrop gem icon, no fill, stroked in dark emerald green.
+Typography: "MAISON" in tiny spaced light serif above, "L'ÉMERAUDE" in a delicate thin Didot-style serif below.
+One fine gold hairline separator (#B8963E). "BIJOUTERIE DE LUXE" in micro spaced gold capitals.
+Ivory white background (#FAFAF7). Two colors only: dark green + antique gold. No gradients, no shadows.
+Whitespace-forward layout. Ultra-refined. Like a Parisian jeweler's embossed business card.
+--style raw --no bold --no thick fonts --no photorealistic --no 3d --no decorative elements --ar 1:1 --v 6
 ```
 
 ---
 
 ## Notes de direction artistique
 
-- **Typographie** : Didot, Garamond ou Cormorant Garamond — jamais de sans-serif
-- **Symbole** : La goutte d'émeraude entourée de brillants est la signature visuelle de la marque
-- **Esprit** : Place Vendôme, raffinement discret, intemporel
-- **À éviter** : Couronnes chargées, effets métalliques brillants, polices modernes/géométriques, symboles génériques
+**Ce qu'on veut :**
+- Typographie **fine** (light / thin weight), jamais bold
+- Letter-spacing généreux — les mots respirent
+- Symbole en **trait fin** (stroke), pas de remplissage illustratif
+- Beaucoup d'espace blanc autour des éléments
+- Esprit : carte de visite gravée d'une grande maison parisienne
+
+**Ce qu'on évite absolument :**
+- Typo épaisse ou grande
+- Illustration réaliste ou 3D de la gemme
+- Fleur de lys, couronnes, ornements chargés
+- Or brillant / effets métalliques
+- Deux niveaux de hiérarchie typographique trop contrastés
