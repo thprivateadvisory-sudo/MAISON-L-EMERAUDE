@@ -20,7 +20,7 @@
       "settings": {
         "stone": "Cristal synthétique vert profond",
         "metal": "Acier inoxydable doré à l'or fin",
-        "chain_length": "42 cm — rallonge incluse jusqu'à 47 cm"
+        "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm"
       }
     },
     "storytelling": {
@@ -81,7 +81,7 @@
           "type": "question",
           "settings": {
             "question": "Quelle est la longueur de la chaîne ?",
-            "answer": "<p>La chaîne mesure 42 cm avec une rallonge incluse permettant d'aller jusqu'à 47 cm. Elle s'adapte à tous les décolletés.</p>"
+            "answer": "<p>La chaîne mesure 40 cm avec une rallonge de 5 cm incluse, soit jusqu'à 45 cm. Le pendentif mesure 1,1 cm. Elle s'adapte à tous les décolletés.</p>"
           }
         },
         "q6": {
