@@ -1,0 +1,40 @@
+<div class="sect" style="width: 100%;">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <h1 class="serif" style="font-size: clamp(26px, 4.5vw, 34px); font-weight: 420; margin-bottom: 32px;">{{ 'general.cart.title' | t }}</h1>
+
+    {% if cart.item_count == 0 %}
+      <p class="sans" style="color: #4A463D; margin-bottom: 24px;">{{ 'general.cart.empty' | t }}</p>
+      <a href="{{ routes.root_url }}" class="btn">{{ 'general.cart.continue_shopping' | t }}</a>
+    {% else %}
+      {% form 'cart' %}
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="sans">Pièce</th>
+              <th class="sans">{{ 'general.cart.quantity' | t }}</th>
+              <th class="sans" style="text-align: right;">{{ 'general.cart.subtotal' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart.items %}
+              <tr>
+                <td><img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title }}"></td>
+                <td class="sans">{{ item.product.title }}{% unless item.variant.title == 'Default Title' %}<br><span style="color:#6b6558;font-size:12.5px;">{{ item.variant.title }}</span>{% endunless %}</td>
+                <td><input class="qty-input sans" type="number" name="updates[]" value="{{ item.quantity }}" min="0"></td>
+                <td class="sans" style="text-align: right;">{{ item.final_line_price | money }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px; flex-wrap: wrap; gap: 16px;">
+          <button type="submit" name="update" class="nav-link u-link sans" style="background: none; border: none; cursor: pointer;">{{ 'general.cart.update' | t }}</button>
+          <div class="serif" style="font-size: 20px;">{{ 'general.cart.subtotal' | t }}, {{ cart.total_price | money }}</div>
+        </div>
+
+        <button type="submit" name="checkout" class="btn" style="width: 100%; margin-top: 20px;">{{ 'general.cart.checkout' | t }}</button>
+      {% endform %}
+    {% endif %}
+  </div>
+</div>

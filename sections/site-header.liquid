@@ -1,0 +1,26 @@
+<div style="width: 100%; position: sticky; top: 0; z-index: 20; background: rgba(251,248,242,.94); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(27,24,18,.08);">
+  <div class="header-inner">
+    <div class="header-left">
+      <a href="{{ routes.root_url }}" class="serif logo">{{ section.settings.logo_text | default: "MAISON LUEUR" }}</a>
+      <div class="nav-links">
+        <a href="{{ routes.root_url }}#maison" class="nav-link">La Maison</a>
+        <a href="{{ routes.root_url }}#piece" class="nav-link">Le Bijou</a>
+        <a href="{{ routes.root_url }}#faq" class="nav-link">FAQ</a>
+        <a href="{{ routes.root_url }}#contact" class="nav-link">Contact</a>
+      </div>
+    </div>
+    <a href="{{ routes.cart_url }}" class="cart-link nav-link">
+      Panier
+      <span class="cart-count">({{ cart.item_count }})</span>
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "En-tête du site",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Nom de la Maison", "default": "MAISON LUEUR" }
+  ]
+}
+{% endschema %}

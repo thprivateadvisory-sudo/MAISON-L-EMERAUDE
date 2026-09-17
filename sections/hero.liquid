@@ -1,0 +1,28 @@
+{% assign featured_product = section.settings.product | default: collections.all.products.first %}
+
+<div style="width: 100%; position: relative; min-height: 88vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #F3EEE3;">
+  <img src="{{ 'paris.jpg' | asset_url }}" alt="Le collier {{ featured_product.title | default: section.settings.piece_name }} porté, devant une maison parisienne" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 30%;">
+  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.18) 0%, rgba(23,20,15,.02) 35%, rgba(23,20,15,.62) 100%);"></div>
+  <div style="position: relative; text-align: center; padding: 0 20px; max-width: 720px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+    <span class="sans" style="font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: #F3EEE3;">{{ section.settings.brand_name | default: "Maison Lueur" }}</span>
+    <h1 class="serif hero-title" style="margin: 0; line-height: 1.1; color: #FBF8F2; font-weight: 420; letter-spacing: -.005em;">{{ section.settings.headline | default: "Une pièce qui ne passe pas inaperçue" }}</h1>
+    <p class="sans hero-sub" style="margin: 0; line-height: 1.6; color: rgba(251,248,242,.9); max-width: 440px;">{{ section.settings.subheadline | default: "Le bijou signature imaginé pour accompagner les moments que l'on n'oublie pas." }}</p>
+    <div style="display: flex; gap: 16px; margin-top: 4px; flex-wrap: wrap; justify-content: center;">
+      <a href="{{ featured_product.url | default: '#piece' }}" class="btn btn-light">Découvrir la pièce</a>
+      <a href="#offre" class="nav-link" style="color: #FBF8F2; opacity: .92; border-bottom: 1px solid rgba(251,248,242,.5); padding-bottom: 4px;">Voir l'offre de lancement</a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Pièce mise en avant" },
+    { "type": "text", "id": "brand_name", "label": "Nom de la Maison", "default": "Maison Lueur" },
+    { "type": "text", "id": "headline", "label": "Titre", "default": "Une pièce qui ne passe pas inaperçue" },
+    { "type": "textarea", "id": "subheadline", "label": "Sous-titre", "default": "Le bijou signature imaginé pour accompagner les moments que l'on n'oublie pas." },
+    { "type": "text", "id": "piece_name", "label": "Nom de la pièce (si aucun produit choisi)", "default": "L'Émeraude Singulière" }
+  ]
+}
+{% endschema %}

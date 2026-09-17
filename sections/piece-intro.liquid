@@ -1,0 +1,32 @@
+{% assign featured_product = section.settings.product | default: collections.all.products.first %}
+
+<div id="piece" class="sect" style="width: 100%;">
+  <div style="max-width: 640px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px;">
+    <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">La pièce signature</span>
+    <h2 class="serif" style="margin: 0; font-size: clamp(28px, 5vw, 40px); line-height: 1.2; font-weight: 420;">{{ featured_product.title | default: "L'Émeraude Singulière" }}</h2>
+    <p class="sans" style="margin: 0; font-size: 16px; line-height: 1.75; color: #4A463D;">{{ section.settings.description | default: "Une goutte d'émeraude sertie d'un halo de pierres brillantes, suspendue à une chaîne fine plaquée or. Conçue comme la première signature de la Maison, avant de devenir une collection." }}</p>
+    <div class="serif price" style="margin-top: 4px;">
+      {% if featured_product %}
+        {% if featured_product.compare_at_price > featured_product.price %}
+          <span class="compare-price">{{ featured_product.compare_at_price | money }}</span>
+        {% endif %}
+        {{ featured_product.price | money }}
+      {% else %}
+        [PRIX À CONFIRMER, créez votre produit dans Shopify]
+      {% endif %}
+    </div>
+    {% if featured_product %}
+      <a href="{{ featured_product.url }}" class="btn">Voir la pièce</a>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Présentation de la pièce",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Pièce mise en avant" },
+    { "type": "textarea", "id": "description", "label": "Description" }
+  ]
+}
+{% endschema %}

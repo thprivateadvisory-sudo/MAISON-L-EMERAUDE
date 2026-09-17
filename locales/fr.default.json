@@ -1,0 +1,25 @@
+{
+  "general": {
+    "cart": {
+      "title": "Votre panier",
+      "empty": "Votre panier est vide.",
+      "checkout": "Passer à la commande",
+      "continue_shopping": "Continuer mes achats",
+      "subtotal": "Sous-total",
+      "quantity": "Quantité",
+      "remove": "Retirer",
+      "update": "Mettre à jour"
+    },
+    "search": {
+      "no_results": "Aucun résultat."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Ajouter à mon écrin",
+      "sold_out": "Épuisé",
+      "unavailable": "Indisponible",
+      "quantity": "Quantité"
+    }
+  }
+}

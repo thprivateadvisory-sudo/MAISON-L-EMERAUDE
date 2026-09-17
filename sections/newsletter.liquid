@@ -1,0 +1,21 @@
+<div class="sect" style="width: 100%; background: #17140F;">
+  <div style="max-width: 520px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px;">
+    <h3 class="serif" style="margin: 0; font-size: clamp(22px, 3.6vw, 28px); color: #FBF8F2; font-weight: 420; font-style: italic;">Entrez dans la Maison</h3>
+    <p class="sans" style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(251,248,242,.7);">Recevez nos nouveautés, nos histoires et nos invitations privées.</p>
+    {% form 'customer', id: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      {% if form.posted_successfully? %}
+        <p class="sans" style="color: #B08D57; font-size: 13.5px;">Merci, votre inscription est confirmée.</p>
+      {% else %}
+        <div style="display: flex; width: 100%; border-bottom: 1px solid rgba(251,248,242,.4); padding-bottom: 12px; margin-top: 10px;">
+          <input class="sans nl-input" type="email" name="contact[email]" placeholder="Votre adresse email" required style="flex-grow: 1; min-width: 0; background: transparent; border: none; color: #FBF8F2; font-size: 14.5px; outline: none;">
+          <button type="submit" class="sans" style="background: none; border: none; color: #B08D57; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; white-space: nowrap;">S'inscrire</button>
+        </div>
+      {% endif %}
+    {% endform %}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Newsletter", "settings": [] }
+{% endschema %}

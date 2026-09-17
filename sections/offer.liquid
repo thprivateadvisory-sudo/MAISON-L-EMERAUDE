@@ -1,0 +1,29 @@
+{% assign featured_product = section.settings.product | default: collections.all.products.first %}
+
+<div id="offre" class="sect" style="width: 100%;">
+  <div style="max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 48px;">
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 560px;">
+      <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">Offre de lancement</span>
+      <h2 class="serif" style="margin: 0; font-size: clamp(26px, 4.5vw, 36px); line-height: 1.25; font-weight: 420;">Gardez-en un. Offrez l'autre.</h2>
+      <p class="sans" style="margin: 0; font-size: 15.5px; line-height: 1.8; color: #4A463D;">Pour célébrer le lancement de la Maison, nous avons choisi d'offrir une seconde pièce. Une pour vous, une à offrir, ou deux à garder.</p>
+    </div>
+    <div class="grid-2-tight" style="width: 100%;">
+      <div style="background: #F3EEE3; aspect-ratio: 1; overflow: hidden;">
+        <img src="{{ 'necklace_full.jpg' | asset_url }}" alt="Première pièce, pour vous" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%;">
+      </div>
+      <div style="background: #F3EEE3; aspect-ratio: 1; overflow: hidden;">
+        <img src="{{ 'necklace_full.jpg' | asset_url }}" alt="Seconde pièce, à offrir" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%;">
+      </div>
+    </div>
+    <a href="{{ featured_product.url | default: '#piece' }}" class="btn">Profiter de l'offre</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Offre de lancement",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Pièce mise en avant" }
+  ]
+}
+{% endschema %}

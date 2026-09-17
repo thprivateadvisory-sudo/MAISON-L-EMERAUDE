@@ -1,0 +1,17 @@
+<div id="maison" class="sect" style="width: 100%; background: #17140F;">
+  <div style="max-width: 720px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 26px;">
+    <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">Une pièce, une signification</span>
+    <p class="serif" style="margin: 0; font-size: clamp(20px, 3.4vw, 27px); line-height: 1.5; color: #FBF8F2; font-weight: 420; font-style: italic;">{{ section.settings.quote | default: "Nous voulions créer une pièce que l'on ne choisit pas simplement pour sa beauté, mais pour ce qu'elle représente." }}</p>
+    <p class="sans" style="margin: 0; font-size: 15.5px; line-height: 1.85; color: rgba(251,248,242,.7); max-width: 560px;">{{ section.settings.body | default: "Une pierre profonde, une silhouette délicate, une lumière qui accroche le regard. Le résultat, une pièce pensée pour rester, au-delà des tendances. Le vert de l'émeraude est devenu le fil conducteur de la Maison, celui du renouveau et du caractère." }}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Storytelling",
+  "settings": [
+    { "type": "textarea", "id": "quote", "label": "Citation" },
+    { "type": "textarea", "id": "body", "label": "Texte" }
+  ]
+}
+{% endschema %}

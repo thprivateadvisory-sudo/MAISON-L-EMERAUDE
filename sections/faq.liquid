@@ -1,0 +1,33 @@
+<div id="faq" class="sect" style="width: 100%; background: #F3EEE3;">
+  <div style="max-width: 720px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 56px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">Questions</span>
+      <h3 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 30px); font-weight: 420;">Ce qu'il faut savoir</h3>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      {% for block in section.blocks %}
+        <div class="faq-row" style="padding: 22px 0;{% if forloop.last %} border-bottom: 1px solid rgba(27,24,18,.12);{% endif %}">
+          <div class="serif" style="font-size: 17px; margin-bottom: 8px;">{{ block.settings.question }}</div>
+          <div class="sans" style="font-size: 14.5px; line-height: 1.7; color: #4A463D;">{{ block.settings.answer }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Réponse" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,12 @@
+<div style="width: 100%; background: #17140F; padding: 11px 16px; text-align: center;">
+  <span class="sans" style="font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #D9C7A0;">{{ section.settings.text | default: "Offre de lancement, une pièce achetée, une pièce offerte" }}</span>
+</div>
+
+{% schema %}
+{
+  "name": "Bandeau d'annonce",
+  "settings": [
+    { "type": "text", "id": "text", "label": "Texte", "default": "Offre de lancement, une pièce achetée, une pièce offerte" }
+  ]
+}
+{% endschema %}

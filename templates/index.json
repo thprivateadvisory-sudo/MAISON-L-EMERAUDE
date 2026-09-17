@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "hero": { "type": "hero" },
+    "piece-intro": { "type": "piece-intro" },
+    "detail-macro": { "type": "detail-macro" },
+    "storytelling": { "type": "storytelling" },
+    "lifestyle-banner": { "type": "lifestyle-banner" },
+    "offer": { "type": "offer" },
+    "packaging": { "type": "packaging" },
+    "trust": { "type": "trust" },
+    "reviews": { "type": "reviews" },
+    "faq": {
+      "type": "faq",
+      "blocks": {
+        "q1": { "type": "question", "settings": { "question": "Quel est le délai de livraison ?", "answer": "<p>[DÉLAI À CONFIRMER PAR LA MAISON]</p>" } },
+        "q2": { "type": "question", "settings": { "question": "Comment le bijou est-il emballé ?", "answer": "<p>Chaque pièce est présentée dans un écrin pensé pour l'occasion. [DÉTAILS À CONFIRMER]</p>" } },
+        "q3": { "type": "question", "settings": { "question": "Le paiement est-il sécurisé ?", "answer": "<p>Oui, l'ensemble des paiements est traité de façon sécurisée.</p>" } },
+        "q4": { "type": "question", "settings": { "question": "Comment entretenir le bijou ?", "answer": "<p>[RECOMMANDATIONS D'ENTRETIEN À CONFIRMER]</p>" } },
+        "q5": { "type": "question", "settings": { "question": "Quelle est la longueur de la chaîne ?", "answer": "<p>[LONGUEUR À CONFIRMER]</p>" } },
+        "q6": { "type": "question", "settings": { "question": "Quelle est la matière du bijou ?", "answer": "<p>[MATIÈRE À CONFIRMER]</p>" } },
+        "q7": { "type": "question", "settings": { "question": "Les pierres sont-elles naturelles ou synthétiques ?", "answer": "<p>[NATURE DES PIERRES À CONFIRMER]</p>" } },
+        "q8": { "type": "question", "settings": { "question": "Puis-je offrir le bijou ?", "answer": "<p>Oui, l'offre de lancement a d'ailleurs été pensée pour cela, une pièce pour vous, une à offrir.</p>" } },
+        "q9": { "type": "question", "settings": { "question": "Comment fonctionne l'offre 1 acheté = 1 offert ?", "answer": "<p>Pour chaque pièce commandée pendant le lancement, une seconde pièce identique est offerte.</p>" } },
+        "q10": { "type": "question", "settings": { "question": "Quelle est la politique de retour ?", "answer": "<p>[POLITIQUE DE RETOUR À CONFIRMER]</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"]
+    }
+  },
+  "order": ["hero", "piece-intro", "detail-macro", "storytelling", "lifestyle-banner", "offer", "packaging", "trust", "reviews", "faq"]
+}

@@ -1,0 +1,28 @@
+<div class="sect" style="width: 100%; padding-top: 0;">
+  <div style="max-width: 1280px; margin: 0 auto;" class="grid-2">
+    <div style="width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: #F3EEE3;">
+      <img src="{{ 'closeup.jpg' | asset_url }}" alt="Gros plan du pendentif émeraude porté" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%;">
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">Le détail</span>
+      <h3 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 30px); line-height: 1.25; font-weight: 420;">Une pierre pensée pour capter la lumière</h3>
+      <p class="sans" style="margin: 0; font-size: 15.5px; line-height: 1.8; color: #4A463D;">La pierre centrale, taillée en goutte, est enveloppée d'un halo de petites pierres brillantes qui prolongent son éclat. Un jeu de lumière discret, pensé pour se remarquer sans jamais s'imposer.</p>
+      <ul class="sans" style="list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #17140F;">
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Pierre centrale</span><span>{{ section.settings.stone | default: "[NATURE DE LA PIERRE À CONFIRMER]" }}</span></li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Métal</span><span>{{ section.settings.metal | default: "[MATIÈRE À CONFIRMER]" }}</span></li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Longueur de chaîne</span><span>{{ section.settings.chain_length | default: "[LONGUEUR À CONFIRMER]" }}</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gros plan produit",
+  "settings": [
+    { "type": "text", "id": "stone", "label": "Nature de la pierre" },
+    { "type": "text", "id": "metal", "label": "Métal" },
+    { "type": "text", "id": "chain_length", "label": "Longueur de chaîne" }
+  ]
+}
+{% endschema %}
