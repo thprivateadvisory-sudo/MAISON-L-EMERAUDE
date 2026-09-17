@@ -1,27 +1,124 @@
 {
   "sections": {
-    "hero": { "type": "hero" },
-    "piece-intro": { "type": "piece-intro" },
-    "detail-macro": { "type": "detail-macro" },
-    "storytelling": { "type": "storytelling" },
-    "lifestyle-banner": { "type": "lifestyle-banner" },
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "brand_name": "Maison L'Émeraude",
+        "headline": "Une pièce qui ne passe pas inaperçue",
+        "subheadline": "Le bijou signature imaginé pour accompagner les moments que l'on n'oublie pas.",
+        "piece_name": "La Goutte d'Émeraude"
+      }
+    },
+    "piece-intro": {
+      "type": "piece-intro",
+      "settings": {
+        "description": "Une goutte d'émeraude sertie d'un halo de zircons blancs, suspendue à une chaîne fine en acier doré. Conçue comme la première signature de la Maison, avant de devenir une collection."
+      }
+    },
+    "detail-macro": {
+      "type": "detail-macro",
+      "settings": {
+        "stone": "Cristal synthétique vert profond",
+        "metal": "Acier inoxydable doré à l'or fin",
+        "chain_length": "42 cm — rallonge incluse jusqu'à 47 cm"
+      }
+    },
+    "storytelling": {
+      "type": "storytelling",
+      "settings": {
+        "quote": "Nous voulions créer une pièce qui ne cherche pas à imiter le luxe — qui l'incarne, à sa propre façon.",
+        "body": "La Goutte d'Émeraude est née d'une idée simple : un bijou beau à voir, doux à porter, pensé pour durer. Son vert profond évoque la force tranquille des grandes pierres, son halo de lumière rappelle Paris au coucher du soleil. Chaque pièce quitte la Maison dans son écrin signature, prête à être portée ou offerte."
+      }
+    },
+    "lifestyle-banner": {
+      "type": "lifestyle-banner",
+      "settings": {
+        "caption": "Paris, à l'heure où la lumière se fait douce."
+      }
+    },
     "offer": { "type": "offer" },
     "packaging": { "type": "packaging" },
-    "trust": { "type": "trust" },
+    "trust": {
+      "type": "trust",
+      "settings": {
+        "shipping_delay": "3 à 7 jours ouvrés",
+        "return_policy": "30 jours après réception"
+      }
+    },
     "reviews": { "type": "reviews" },
     "faq": {
       "type": "faq",
       "blocks": {
-        "q1": { "type": "question", "settings": { "question": "Quel est le délai de livraison ?", "answer": "<p>[DÉLAI À CONFIRMER PAR LA MAISON]</p>" } },
-        "q2": { "type": "question", "settings": { "question": "Comment le bijou est-il emballé ?", "answer": "<p>Chaque pièce est présentée dans un écrin pensé pour l'occasion. [DÉTAILS À CONFIRMER]</p>" } },
-        "q3": { "type": "question", "settings": { "question": "Le paiement est-il sécurisé ?", "answer": "<p>Oui, l'ensemble des paiements est traité de façon sécurisée.</p>" } },
-        "q4": { "type": "question", "settings": { "question": "Comment entretenir le bijou ?", "answer": "<p>[RECOMMANDATIONS D'ENTRETIEN À CONFIRMER]</p>" } },
-        "q5": { "type": "question", "settings": { "question": "Quelle est la longueur de la chaîne ?", "answer": "<p>[LONGUEUR À CONFIRMER]</p>" } },
-        "q6": { "type": "question", "settings": { "question": "Quelle est la matière du bijou ?", "answer": "<p>[MATIÈRE À CONFIRMER]</p>" } },
-        "q7": { "type": "question", "settings": { "question": "Les pierres sont-elles naturelles ou synthétiques ?", "answer": "<p>[NATURE DES PIERRES À CONFIRMER]</p>" } },
-        "q8": { "type": "question", "settings": { "question": "Puis-je offrir le bijou ?", "answer": "<p>Oui, l'offre de lancement a d'ailleurs été pensée pour cela, une pièce pour vous, une à offrir.</p>" } },
-        "q9": { "type": "question", "settings": { "question": "Comment fonctionne l'offre 1 acheté = 1 offert ?", "answer": "<p>Pour chaque pièce commandée pendant le lancement, une seconde pièce identique est offerte.</p>" } },
-        "q10": { "type": "question", "settings": { "question": "Quelle est la politique de retour ?", "answer": "<p>[POLITIQUE DE RETOUR À CONFIRMER]</p>" } }
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "Quel est le délai de livraison ?",
+            "answer": "<p>Votre commande est expédiée sous 24 à 48h ouvrées. Vous recevrez votre colis sous 3 à 7 jours ouvrés, accompagné d'un numéro de suivi envoyé par email dès l'expédition.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "Comment le bijou est-il emballé ?",
+            "answer": "<p>Chaque pièce est présentée dans son écrin signature Maison L'Émeraude — un coffret rigide doublé de velours crème, fermé d'un ruban vert. Un packaging pensé pour être offert sans enveloppe supplémentaire.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "Le paiement est-il sécurisé ?",
+            "answer": "<p>Oui. L'ensemble des paiements est traité via Shopify Payments, certifié PCI DSS. Vos données bancaires ne transitent jamais par nos serveurs.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Comment entretenir le bijou ?",
+            "answer": "<p>Évitez le contact avec l'eau, les parfums et les produits cosmétiques. Rangez la pièce dans son écrin lorsqu'elle n'est pas portée. Un chiffon doux suffit pour raviver son éclat après chaque port.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle est la longueur de la chaîne ?",
+            "answer": "<p>La chaîne mesure 42 cm avec une rallonge incluse permettant d'aller jusqu'à 47 cm. Elle s'adapte à tous les décolletés.</p>"
+          }
+        },
+        "q6": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle est la matière du bijou ?",
+            "answer": "<p>La chaîne et la monture sont en acier inoxydable doré à l'or fin. Ce matériau résiste à l'oxydation et convient aux peaux sensibles.</p>"
+          }
+        },
+        "q7": {
+          "type": "question",
+          "settings": {
+            "question": "Les pierres sont-elles naturelles ou synthétiques ?",
+            "answer": "<p>La pierre centrale est un cristal synthétique taillé couleur émeraude, entouré de zircons blancs. Ce choix nous permet de proposer l'éclat d'une émeraude à un prix accessible, sans compromis sur la beauté.</p>"
+          }
+        },
+        "q8": {
+          "type": "question",
+          "settings": {
+            "question": "Puis-je offrir le bijou ?",
+            "answer": "<p>Absolument. L'écrin signature est conçu pour être offert directement. L'offre de lancement a d'ailleurs été imaginée pour cela : une pièce pour vous, une à glisser entre les mains de quelqu'un que vous aimez.</p>"
+          }
+        },
+        "q9": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne l'offre 1 acheté = 1 offert ?",
+            "answer": "<p>Pour chaque pièce commandée pendant la période de lancement, une seconde pièce identique est ajoutée à votre commande, gratuitement. Deux écrins, deux colliers, un seul règlement.</p>"
+          }
+        },
+        "q10": {
+          "type": "question",
+          "settings": {
+            "question": "Quelle est la politique de retour ?",
+            "answer": "<p>Vous disposez de 30 jours après réception pour nous retourner votre commande, à condition que le bijou n'ait pas été porté et soit dans son écrin d'origine. Le remboursement est effectué sous 5 à 10 jours ouvrés après réception du retour.</p>"
+          }
+        }
       },
       "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"]
     }
