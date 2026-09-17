@@ -2,7 +2,15 @@
   <div style="max-width: 1280px; margin: 0 auto;">
     <div class="footer-grid" style="padding-bottom: 56px;">
       <div style="display: flex; flex-direction: column; gap: 16px;">
-        <div class="serif" style="font-size: 19px; color: #FBF8F2; letter-spacing: .03em;">{{ section.settings.brand_name | default: "MAISON LUEUR" }}</div>
+        <a href="{{ routes.root_url }}" aria-label="Maison L'Émeraude — Accueil">
+          <img
+            src="{{ 'logo.png' | asset_url }}"
+            alt="Maison L'Émeraude"
+            class="footer-logo-img"
+            width="150"
+            loading="lazy"
+          >
+        </a>
         <p class="sans" style="font-size: 13.5px; line-height: 1.7; color: rgba(251,248,242,.55); max-width: 240px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
       </div>
       <div style="display: flex; flex-direction: column; gap: 14px;">
