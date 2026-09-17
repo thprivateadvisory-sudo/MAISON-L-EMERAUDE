@@ -11,14 +11,11 @@
         <div style="display: flex; gap: 14px; align-items: baseline;"><span class="serif" style="color: #B08D57; font-style: italic;">04</span><span>Votre écrin arrive chez vous</span></div>
       </div>
     </div>
-    <div style="width: 100%; aspect-ratio: 4 / 5; background: #FBF8F2; border: 1px solid rgba(176,141,87,.4); display: flex; align-items: center; justify-content: center; text-align: center; padding: 24px;">
+    <div style="width: 100%; aspect-ratio: 4 / 5; overflow: hidden;">
       {% if section.settings.image %}
-        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Écrin" style="width: 100%; height: 100%; object-fit: cover;">
+        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Le collier L'Émeraude dans son écrin" style="width: 100%; height: 100%; object-fit: cover;">
       {% else %}
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-          <span class="sans" style="letter-spacing: .1em; text-transform: uppercase; font-size: 11.5px; color: #B08D57;">Emplacement photo, à produire</span>
-          <span class="serif" style="font-size: 17px; color: #4A463D; max-width: 300px;">Le collier présenté dans son écrin, vue de dessus, lumière douce</span>
-        </div>
+        <img src="{{ 'ecrin.png' | asset_url }}" alt="Le collier L'Émeraude dans son écrin" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
       {% endif %}
     </div>
   </div>
