@@ -1,7 +1,30 @@
-<div style="width: 100%; position: sticky; top: 0; z-index: 20; background: rgba(251,248,242,.94); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(27,24,18,.08);">
+<div style="width: 100%; position: sticky; top: 0; z-index: 20; background: rgba(251,248,242,.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(27,24,18,.07);">
   <div class="header-inner">
     <div class="header-left">
-      <a href="{{ routes.root_url }}" class="serif logo">{{ section.settings.logo_text | default: "MAISON LUEUR" }}</a>
+      <a href="{{ routes.root_url }}" class="site-logo-link" aria-label="Maison L'Émeraude — Accueil">
+        {% if section.settings.logo_image != blank %}
+          <img
+            src="{{ section.settings.logo_image | image_url: width: 320 }}"
+            srcset="{{ section.settings.logo_image | image_url: width: 160 }} 160w,
+                    {{ section.settings.logo_image | image_url: width: 240 }} 240w,
+                    {{ section.settings.logo_image | image_url: width: 320 }} 320w"
+            sizes="(max-width: 860px) 130px, 160px"
+            alt="{{ section.settings.logo_image.alt | default: "Maison L'Émeraude" }}"
+            class="site-logo-img"
+            width="160"
+            height="{{ 160 | divided_by: section.settings.logo_image.aspect_ratio | round }}"
+            loading="eager"
+          >
+        {% else %}
+          <img
+            src="{{ 'logo.png' | asset_url }}"
+            alt="Maison L'Émeraude"
+            class="site-logo-img"
+            width="160"
+            loading="eager"
+          >
+        {% endif %}
+      </a>
       <div class="nav-links">
         <a href="{{ routes.root_url }}#maison" class="nav-link">La Maison</a>
         <a href="{{ routes.root_url }}#piece" class="nav-link">Le Bijou</a>
@@ -20,7 +43,21 @@
 {
   "name": "En-tête du site",
   "settings": [
-    { "type": "text", "id": "logo_text", "label": "Nom de la Maison", "default": "MAISON LUEUR" }
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo de la Maison"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Largeur du logo",
+      "default": 160
+    }
   ]
 }
 {% endschema %}
