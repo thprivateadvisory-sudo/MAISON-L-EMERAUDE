@@ -1,37 +1,37 @@
-<div id="contact" style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 90px) clamp(18px, 5vw, 32px) 40px; border-top: 1px solid rgba(251,248,242,.1);">
+<div id="contact" style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 90px) clamp(18px, 5vw, 32px) 40px; border-top: 1px solid rgba(251,248,242,.08);">
   <div style="max-width: 1280px; margin: 0 auto;">
-    <div class="footer-grid" style="padding-bottom: 56px;">
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <a href="{{ routes.root_url }}" aria-label="Maison L'Émeraude — Accueil" style="display: inline-block; background: #FBF8F2; padding: 10px 14px; border-radius: 3px; transition: opacity .25s ease;" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">
-          <img
-            src="{{ 'logo.png' | asset_url }}"
-            alt="Maison L'Émeraude"
-            style="display: block; width: 130px; height: auto;"
-            width="130"
-            loading="lazy"
-          >
+    <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 36px; padding-bottom: 56px;">
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <a href="{{ routes.root_url }}" aria-label="Maison L'Émeraude — Accueil" style="display: inline-flex; flex-direction: column; gap: 3px; transition: opacity .25s ease;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
+          <span class="eyebrow" style="font-size: 8.5px; letter-spacing: .32em; color: rgba(251,248,242,.36);">Maison</span>
+          <span class="serif" style="font-size: 23px; font-weight: 300; letter-spacing: .2em; color: #FBF8F2; text-transform: uppercase; line-height: 1;">L'Émeraude</span>
+          <span style="display: block; width: 22px; height: 1px; background: rgba(176,141,87,.45); margin-top: 7px;"></span>
         </a>
-        <p class="sans" style="font-size: 12.5px; font-weight: 300; line-height: 1.8; letter-spacing: .025em; color: rgba(251,248,242,.5); max-width: 240px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
+        <p class="sans" style="font-size: 12.5px; font-weight: 300; line-height: 1.85; letter-spacing: .025em; color: rgba(251,248,242,.45); max-width: 220px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
       </div>
+
       <div style="display: flex; flex-direction: column; gap: 14px;">
+        <span class="eyebrow" style="font-size: 9px; color: rgba(251,248,242,.3); margin-bottom: 4px;">Navigation</span>
         <a href="{{ routes.root_url }}#maison" class="footer-link">Notre histoire</a>
         <a href="{{ routes.root_url }}#piece" class="footer-link">Le bijou</a>
         <a href="{{ routes.root_url }}#faq" class="footer-link">FAQ</a>
         <a href="{{ routes.root_url }}#contact" class="footer-link">Contact</a>
       </div>
+
       <div style="display: flex; flex-direction: column; gap: 14px;">
-        {% for link in linklists.footer.links %}
-          <a href="{{ link.url }}" class="footer-link">{{ link.title }}</a>
-        {% endfor %}
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <span class="eyebrow" style="font-size: 9px; color: rgba(251,248,242,.3); margin-bottom: 4px;">Suivez-nous</span>
         {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" class="footer-link">Instagram</a>{% endif %}
         {% if section.settings.pinterest_url != blank %}<a href="{{ section.settings.pinterest_url }}" class="footer-link">Pinterest</a>{% endif %}
+        {% if section.settings.instagram_url == blank and section.settings.pinterest_url == blank %}
+          <span class="sans" style="font-size: 12px; font-weight: 300; color: rgba(251,248,242,.25); font-style: italic;">Bientôt disponible</span>
+        {% endif %}
       </div>
+
     </div>
-    <div style="border-top: 1px solid rgba(251,248,242,.1); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-      <span class="sans" style="font-size: 12px; color: rgba(251,248,242,.4);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
-      {% if pages.cookies %}<a href="{{ pages.cookies.url }}" class="sans" style="font-size: 12px; color: rgba(251,248,242,.4);">Cookies</a>{% endif %}
+    <div style="border-top: 1px solid rgba(251,248,242,.08); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+      <span class="sans" style="font-size: 11px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.3);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
+      {% if pages.cookies %}<a href="{{ pages.cookies.url }}" class="sans" style="font-size: 11px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.3);">Cookies</a>{% endif %}
     </div>
   </div>
 </div>
@@ -40,7 +40,6 @@
 {
   "name": "Pied de page",
   "settings": [
-    { "type": "text", "id": "brand_name", "label": "Nom de la Maison", "default": "MAISON LUEUR" },
     { "type": "textarea", "id": "tagline", "label": "Phrase d'accroche" },
     { "type": "url", "id": "instagram_url", "label": "Lien Instagram" },
     { "type": "url", "id": "pinterest_url", "label": "Lien Pinterest" }
