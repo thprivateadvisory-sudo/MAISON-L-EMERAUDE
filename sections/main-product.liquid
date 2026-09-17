@@ -11,25 +11,25 @@
       {% endif %}
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">La pièce signature</span>
-      <h1 class="serif" style="margin: 0; font-size: clamp(28px, 5vw, 38px); line-height: 1.2; font-weight: 420;">{{ product.title }}</h1>
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <span class="eyebrow" style="color: #B08D57; font-size: 10.5px;">La pièce signature</span>
+      <h1 class="serif" style="margin: 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.15; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
 
-      <div class="serif price">
+      <div style="display: flex; align-items: baseline; gap: 4px;">
         {% if product.compare_at_price > product.price %}
           <span class="compare-price">{{ product.compare_at_price | money }}</span>
         {% endif %}
-        {{ product.price | money }}
+        <span class="price">{{ product.price | money }}</span>
       </div>
 
-      <div class="sans" style="font-size: 15px; line-height: 1.8; color: #4A463D;">{{ product.description }}</div>
+      <div class="sans" style="font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .01em;">{{ product.description }}</div>
 
       {% form 'product', product %}
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
-            <div style="margin-top: 10px;">
-              <label class="sans" style="font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: #17140F;">{{ option.name }}</label><br>
-              <select name="options[{{ option.name | escape }}]" class="sans" style="margin-top: 8px; padding: 10px; border: 1px solid rgba(27,24,18,.25); background: transparent; min-width: 160px;">
+            <div style="margin-top: 8px;">
+              <label class="eyebrow" style="font-size: 10px; color: #6b6558;">{{ option.name }}</label><br>
+              <select name="options[{{ option.name | escape }}]" class="sans" style="margin-top: 10px; padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F;">
                 {% for value in option.values %}
                   <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
                 {% endfor %}
@@ -40,7 +40,7 @@
 
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-        <div style="display: flex; align-items: center; gap: 16px; margin-top: 20px;">
+        <div style="display: flex; align-items: center; gap: 14px; margin-top: 12px;">
           <input type="number" name="quantity" value="1" min="1" class="qty-input">
           <button type="submit" class="btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %} style="flex-grow: 1;">
             {% if product.selected_or_first_available_variant.available %}
@@ -52,13 +52,22 @@
         </div>
       {% endform %}
 
-      <p class="sans" style="font-size: 12.5px; color: #6b6558; margin-top: 8px;">Paiement sécurisé. Expédition suivie. Retours selon nos conditions de vente.</p>
+      <p class="sans" style="font-size: 11.5px; font-weight: 300; letter-spacing: .04em; color: #9c968a; margin-top: 4px;">Paiement sécurisé · Expédition suivie · Retours 30 jours</p>
 
-      <ul class="sans" style="list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #17140F;">
-        <li style="display: flex; justify-content: space-between; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Pierre centrale</span><span>{{ section.settings.stone | default: "Cristal synthétique vert profond" }}</span></li>
-        <li style="display: flex; justify-content: space-between; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Métal</span><span>{{ section.settings.metal | default: "Acier inoxydable doré à l'or fin" }}</span></li>
-        <li style="display: flex; justify-content: space-between; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Longueur de chaîne</span><span>{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span></li>
-      </ul>
+      <div style="margin-top: 4px; border-top: 1px solid rgba(27,24,18,.1);">
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.08);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a;">Pierre centrale</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .02em;">{{ section.settings.stone | default: "Cristal synthétique vert profond" }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.08);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a;">Métal</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .02em;">{{ section.settings.metal | default: "Acier inoxydable doré à l'or fin" }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.08);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a;">Longueur de chaîne</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .02em;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
