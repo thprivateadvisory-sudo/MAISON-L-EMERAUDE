@@ -2,9 +2,10 @@
 
 <div id="piece" class="sect" style="width: 100%;">
   <div style="max-width: 640px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px;">
-    <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">La pièce signature</span>
-    <h2 class="serif" style="margin: 0; font-size: clamp(28px, 5vw, 40px); line-height: 1.2; font-weight: 420;">{{ featured_product.title | default: "L'Émeraude Singulière" }}</h2>
-    <p class="sans" style="margin: 0; font-size: 16px; line-height: 1.75; color: #4A463D;">{{ section.settings.description | default: "Une goutte d'émeraude sertie d'un halo de pierres brillantes, suspendue à une chaîne fine plaquée or. Conçue comme la première signature de la Maison, avant de devenir une collection." }}</p>
+    <span class="eyebrow" style="color: #B08D57; font-size: 10.5px;">La pièce signature</span>
+    <span class="ornament"></span>
+    <h2 class="serif" style="margin: 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.15; font-weight: 300; letter-spacing: -.005em;">{{ featured_product.title | default: "L'Émeraude Singulière" }}</h2>
+    <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; letter-spacing: .02em; color: #4A463D;">{{ section.settings.description | default: "Une goutte d'émeraude sertie d'un halo de pierres brillantes, suspendue à une chaîne fine plaquée or. Conçue comme la première signature de la Maison, avant de devenir une collection." }}</p>
     <div class="serif price" style="margin-top: 4px;">
       {% if featured_product %}
         {% if featured_product.compare_at_price > featured_product.price %}
