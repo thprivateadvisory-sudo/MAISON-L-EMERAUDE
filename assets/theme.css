@@ -22,10 +22,7 @@ input.nl-input::placeholder { color: rgba(251,248,242,.5); }
 .nav-links { display: flex; gap: 32px; }
 .site-logo-link { display: flex; align-items: center; flex-shrink: 0; }
 .site-logo-img { display: block; width: 160px; max-width: 160px; height: auto; mix-blend-mode: multiply; transition: opacity .25s ease; }
-.site-logo-img:hover { opacity: .78; }
-.footer-logo-img { display: block; width: 150px; max-width: 150px; height: auto; filter: brightness(0) invert(1); opacity: .88; transition: opacity .25s ease; }
-.footer-logo-img:hover { opacity: 1; }
-.cart-link { position: relative; font-family: 'Karla', sans-serif; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
+.site-logo-img:hover { opacity: .78; }.cart-link { position: relative; font-family: 'Karla', sans-serif; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; }
 .cart-count { display: inline-block; margin-left: 6px; }
 
 .sect { padding: clamp(64px, 12vw, 140px) clamp(18px, 5vw, 32px); }
