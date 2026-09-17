@@ -1,33 +1,71 @@
 {% assign featured_product = section.settings.product | default: collections.all.products.first %}
 
-<div id="piece" class="sect" style="width: 100%;">
-  <div style="max-width: 640px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px;">
-    <span class="eyebrow" style="color: #B08D57; font-size: 10.5px;">La pièce signature</span>
-    <span class="ornament"></span>
-    <h2 class="serif" style="margin: 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.15; font-weight: 300; letter-spacing: -.005em;">{{ featured_product.title | default: "L'Émeraude Singulière" }}</h2>
-    <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; letter-spacing: .02em; color: #4A463D;">{{ section.settings.description | default: "Une goutte d'émeraude sertie d'un halo de pierres brillantes, suspendue à une chaîne fine plaquée or. Conçue comme la première signature de la Maison, avant de devenir une collection." }}</p>
-    <div class="serif price" style="margin-top: 4px;">
-      {% if featured_product %}
-        {% if featured_product.compare_at_price > featured_product.price %}
-          <span class="compare-price">{{ featured_product.compare_at_price | money }}</span>
-        {% endif %}
-        {{ featured_product.price | money }}
+<div id="piece" style="width: 100%;">
+  <div class="piece-showcase" style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr 1fr;">
+
+    <div class="piece-img-wrap" style="position: relative; overflow: hidden; min-height: 560px;">
+      {% if featured_product and featured_product.featured_image %}
+        <img
+          src="{{ featured_product.featured_image | image_url: width: 1200 }}"
+          srcset="{{ featured_product.featured_image | image_url: width: 600 }} 600w,
+                  {{ featured_product.featured_image | image_url: width: 900 }} 900w,
+                  {{ featured_product.featured_image | image_url: width: 1200 }} 1200w"
+          sizes="(max-width: 860px) 100vw, 55vw"
+          alt="{{ featured_product.featured_image.alt | default: featured_product.title }}"
+          style="width: 100%; height: 100%; object-fit: cover; object-position: center;"
+          loading="lazy">
       {% else %}
-        [PRIX À CONFIRMER, créez votre produit dans Shopify]
+        <img
+          src="{{ 'necklace_full.jpg' | asset_url }}"
+          alt="{{ featured_product.title | default: "La Goutte d'Émeraude" }}"
+          style="width: 100%; height: 100%; object-fit: cover; object-position: center top;"
+          loading="lazy">
       {% endif %}
     </div>
-    {% if featured_product %}
-      <a href="{{ featured_product.url }}" class="btn">Voir la pièce</a>
-    {% endif %}
+
+    <div style="display: flex; flex-direction: column; justify-content: center; gap: 26px; padding: clamp(48px, 7vw, 96px) clamp(28px, 5vw, 72px); background: #FBF8F2;">
+      <span class="eyebrow" style="color: #B08D57; font-size: 10.5px;">La pièce signature</span>
+      <span class="ornament" style="margin: 0;"></span>
+      <h2 class="serif" style="margin: 0; font-size: clamp(28px, 4vw, 44px); line-height: 1.12; font-weight: 300; letter-spacing: -.008em;">{{ featured_product.title | default: "L'Émeraude Singulière" }}</h2>
+      <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 2; letter-spacing: .02em; color: #4A463D; max-width: 360px;">{{ section.settings.description | default: "Une goutte d'émeraude sertie d'un halo de pierres brillantes, suspendue à une chaîne fine plaquée or. Conçue comme la première signature de la Maison." }}</p>
+
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        {% if featured_product %}
+          {% if featured_product.compare_at_price > featured_product.price %}
+            <span class="compare-price">{{ featured_product.compare_at_price | money }}</span>
+          {% endif %}
+          <span class="price">{{ featured_product.price | money }}</span>
+        {% else %}
+          <span class="price">[Prix à configurer dans Shopify]</span>
+        {% endif %}
+      </div>
+
+      {% if featured_product %}
+        <div style="display: flex; flex-direction: column; gap: 14px; align-items: flex-start;">
+          <a href="{{ featured_product.url }}" class="btn">Voir la pièce</a>
+          <span class="sans" style="font-size: 10.5px; font-weight: 300; letter-spacing: .06em; color: #B08D57;">
+            ✦ &nbsp;Livraison offerte · Retours 30 jours
+          </span>
+        </div>
+      {% endif %}
+    </div>
+
   </div>
 </div>
+
+<style>
+  @media (max-width: 860px) {
+    .piece-showcase { grid-template-columns: 1fr !important; }
+    .piece-img-wrap { min-height: 0 !important; aspect-ratio: 4 / 5; }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Présentation de la pièce",
   "settings": [
     { "type": "product", "id": "product", "label": "Pièce mise en avant" },
-    { "type": "textarea", "id": "description", "label": "Description" }
+    { "type": "textarea", "id": "description", "label": "Description courte" }
   ]
 }
 {% endschema %}
