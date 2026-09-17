@@ -63,6 +63,7 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
   .grid-2, .grid-2-tight { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
   .footer-grid { grid-template-columns: 1fr; row-gap: 32px; }
+  #contact > div > div:first-child { grid-template-columns: 1fr !important; row-gap: 36px !important; }
   .btn { padding: 13px 28px; }
   .grid-pdp { grid-template-columns: 1fr !important; }
 }
