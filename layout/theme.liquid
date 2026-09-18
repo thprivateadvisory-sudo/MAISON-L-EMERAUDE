@@ -3,18 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ page_title }}{% if page_title != shop.name %} · {{ shop.name }}{% endif %}</title>
+
+  <!-- SEO -->
+  <title>{{ page_title }}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
   {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:type" content="{% if template == 'product' %}product{% else %}website{% endif %}">
+  <meta property="og:title" content="{{ page_title | escape }}">
+  {% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
+  <meta property="og:url" content="{{ canonical_url }}">
+  {% if product.featured_image %}<meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">{% elsif settings.share_image %}<meta property="og:image" content="{{ settings.share_image | image_url: width: 1200 }}">{% endif %}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title | escape }}">
+  {% if page_description %}<meta name="twitter:description" content="{{ page_description | escape }}">{% endif %}
+
+  <!-- Schema.org Product (page produit) -->
+  {% if template == 'product' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | strip_newlines | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {% if product.featured_image %}
+    "image": {{ product.featured_image | image_url: width: 800 | prepend: 'https:' | json }},
+    {% endif %}
+    "brand": {
+      "@type": "Brand",
+      "name": "Maison L'Émeraude"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ product.price | divided_by: 100.0 | json }},
+      "availability": {% if product.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %},
+      "url": {{ request.origin | append: product.url | json }}
+    }
+  }
+  </script>
+  {% endif %}
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap">
   <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+
   {{ content_for_header }}
 </head>
 <body>
   {% sections 'header-group' %}
-  <main>
+  <main id="MainContent">
     {{ content_for_layout }}
   </main>
   {% sections 'footer-group' %}

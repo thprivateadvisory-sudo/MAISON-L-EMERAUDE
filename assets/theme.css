@@ -11,6 +11,8 @@ img { max-width: 100%; display: block; }
 .btn:hover { background: #17140F; color: #FBF8F2; }
 .btn-light { border: 1px solid rgba(251,248,242,.7); color: #FBF8F2; }
 .btn-light:hover { background: #FBF8F2; color: #17140F; }
+.btn-dark { background: #17140F; color: #FBF8F2; border: 1px solid #17140F; }
+.btn-dark:hover { background: #2c2720; border-color: #2c2720; }
 
 .nav-link { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; color: #17140F; opacity: .72; transition: opacity .25s ease; white-space: nowrap; }
 .nav-link:hover { opacity: 1; }
@@ -19,11 +21,24 @@ img { max-width: 100%; display: block; }
 
 .ornament { display: block; width: 28px; height: 1px; background: #B08D57; margin: 0 auto; }
 
-.faq-row { border-top: 1px solid rgba(27,24,18,.1); }
+.faq-item { border-top: 1px solid rgba(27,24,18,.1); }
+.faq-item:last-child { border-bottom: 1px solid rgba(27,24,18,.1); }
+.faq-question { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; cursor: pointer; gap: 16px; }
+.faq-question-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.4; }
+.faq-icon { flex-shrink: 0; width: 20px; height: 20px; position: relative; }
+.faq-icon::before, .faq-icon::after { content: ''; position: absolute; background: #B08D57; transition: transform .3s ease, opacity .3s ease; }
+.faq-icon::before { width: 12px; height: 1px; top: 9.5px; left: 4px; }
+.faq-icon::after { width: 1px; height: 12px; top: 4px; left: 9.5px; }
+.faq-item.open .faq-icon::after { transform: rotate(90deg); opacity: 0; }
+.faq-answer { display: none; padding-bottom: 22px; }
+.faq-answer.visible { display: block; }
+.faq-answer-inner { font-family: 'Montserrat', sans-serif; font-size: 14px; line-height: 1.8; color: #4A463D; font-weight: 300; }
+
 .footer-link { font-family: 'Montserrat', sans-serif; font-size: 11.5px; font-weight: 300; letter-spacing: .06em; color: rgba(251,248,242,.6); transition: color .25s ease; }
 .footer-link:hover { color: #FBF8F2; }
 input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 
+/* HEADER */
 .header-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(18px, 4vw, 36px); gap: 16px; }
 .header-left { display: flex; align-items: center; gap: 52px; min-width: 0; }
 .nav-links { display: flex; gap: 36px; }
@@ -33,6 +48,24 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 .cart-link { position: relative; font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; }
 .cart-count { display: inline-block; margin-left: 6px; }
 
+/* HAMBURGER MOBILE */
+.hamburger-btn { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; width: 32px; height: 32px; }
+.hamburger-btn span { display: block; width: 22px; height: 1px; background: #17140F; transition: transform .3s ease, opacity .3s ease; }
+.hamburger-btn.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; }
+.hamburger-btn.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.mobile-menu-overlay { display: none; position: fixed; inset: 0; z-index: 19; background: rgba(23,20,15,.35); backdrop-filter: blur(2px); }
+.mobile-menu-overlay.active { display: block; }
+
+.mobile-menu { display: none; position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: #FBF8F2; z-index: 20; padding: 80px 32px 40px; flex-direction: column; gap: 0; box-shadow: 4px 0 24px rgba(23,20,15,.1); overflow-y: auto; }
+.mobile-menu.active { display: flex; }
+.mobile-menu-nav { display: flex; flex-direction: column; gap: 0; }
+.mobile-menu-link { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #17140F; padding: 18px 0; border-bottom: 1px solid rgba(27,24,18,.08); opacity: .8; transition: opacity .2s ease; }
+.mobile-menu-link:hover { opacity: 1; }
+.mobile-menu-close { position: absolute; top: 18px; right: 18px; background: none; border: none; cursor: pointer; padding: 8px; }
+
+/* LAYOUT */
 .sect { padding: clamp(72px, 12vw, 148px) clamp(18px, 5vw, 36px); }
 .sect-tight { padding: clamp(56px, 9vw, 112px) clamp(18px, 5vw, 36px); }
 
@@ -47,18 +80,57 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 .price { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 400; letter-spacing: .03em; color: #17140F; }
 .compare-price { font-family: 'Cormorant Garamond', Georgia, serif; text-decoration: line-through; color: #9c968a; margin-right: 10px; font-size: 20px; }
 
+/* PRODUCT PAGE */
 .pdp-gallery img { width: 100%; }
 .pdp-thumbs { display: flex; gap: 10px; margin-top: 14px; }
 .pdp-thumbs img { width: 64px; height: 64px; object-fit: cover; border: 1px solid rgba(27,24,18,.12); cursor: pointer; transition: border-color .2s ease; }
+.pdp-thumbs img.active { border-color: #B08D57; }
 .pdp-thumbs img:hover { border-color: #B08D57; }
-.qty-input { width: 64px; padding: 11px 10px; border: 1px solid rgba(27,24,18,.22); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 14px; color: #17140F; }
+.qty-input { width: 64px; padding: 11px 10px; border: 1px solid rgba(27,24,18,.22); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 14px; color: #17140F; text-align: center; -moz-appearance: textfield; }
+.qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; }
 
+/* STICKY ADD TO CART */
+.sticky-atc { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 15; background: #FBF8F2; border-top: 1px solid rgba(27,24,18,.1); padding: 12px 20px; align-items: center; justify-content: space-between; gap: 12px; box-shadow: 0 -4px 24px rgba(23,20,15,.08); }
+.sticky-atc.visible { display: flex; }
+.sticky-atc-info { display: flex; flex-direction: column; gap: 2px; }
+.sticky-atc-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px; font-weight: 400; color: #17140F; }
+.sticky-atc-price { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 300; color: #6b6558; letter-spacing: .04em; }
+.sticky-atc-btn { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 400; letter-spacing: .22em; text-transform: uppercase; background: #17140F; color: #FBF8F2; border: none; padding: 12px 20px; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: background .3s ease; }
+.sticky-atc-btn:hover { background: #2c2720; }
+
+/* REVIEWS */
+.review-card { padding: clamp(24px, 3vw, 36px); border: 1px solid rgba(27,24,18,.1); display: flex; flex-direction: column; gap: 14px; background: #FBF8F2; }
+.review-stars { display: flex; gap: 3px; }
+.review-star { width: 12px; height: 12px; fill: #B08D57; }
+.review-text { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; font-style: italic; color: #1B1812; }
+.review-meta { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 300; letter-spacing: .04em; color: #9c968a; }
+.review-verified { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #B08D57; letter-spacing: .06em; text-transform: uppercase; }
+
+/* CART */
 .cart-table { width: 100%; border-collapse: collapse; }
 .cart-table th, .cart-table td { text-align: left; padding: 18px 8px; border-bottom: 1px solid rgba(27,24,18,.1); font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 300; letter-spacing: .02em; }
 .cart-table img { width: 72px; height: 72px; object-fit: cover; }
 
+/* TRUST BADGES */
+.trust-row { display: flex; align-items: center; gap: 7px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 300; letter-spacing: .04em; color: #6b6558; }
+.trust-check { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* DELIVERY TIMELINE */
+.delivery-steps { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+.delivery-step { display: flex; gap: 16px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid rgba(27,24,18,.07); }
+.delivery-step:last-child { border-bottom: none; }
+.delivery-step-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 13px; font-style: italic; color: #B08D57; flex-shrink: 0; width: 18px; padding-top: 1px; }
+.delivery-step-text { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 300; color: #17140F; line-height: 1.5; letter-spacing: .02em; }
+.delivery-step-sub { font-size: 11.5px; color: #9c968a; margin-top: 2px; }
+
+/* OFFER EXPLAINER */
+.offer-box { border: 1px solid rgba(176,141,87,.3); padding: clamp(20px, 3vw, 28px); background: rgba(176,141,87,.04); display: flex; flex-direction: column; gap: 12px; }
+.offer-box-title { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #B08D57; }
+.offer-box-content { font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.75; color: #4A463D; letter-spacing: .02em; }
+
 @media (max-width: 860px) {
   .nav-links { display: none; }
+  .hamburger-btn { display: flex; }
   .site-logo-img { width: 130px; max-width: 130px; }
   .grid-2, .grid-2-tight { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
@@ -66,4 +138,11 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
   #contact > div > div:first-child { grid-template-columns: 1fr !important; row-gap: 36px !important; }
   .btn { padding: 13px 28px; }
   .grid-pdp { grid-template-columns: 1fr !important; }
+  .sticky-atc { display: flex; }
+  .sticky-atc.hidden { display: none; }
+}
+
+@media (min-width: 861px) {
+  .sticky-atc { display: none !important; }
+  .hamburger-btn { display: none !important; }
 }

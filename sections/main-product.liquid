@@ -1,35 +1,73 @@
-<div class="sect" style="width: 100%;">
+<div class="sect" style="width: 100%;" id="product-main">
   <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
+
+    <!-- Galerie produit -->
     <div class="pdp-gallery">
-      <img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.featured_image.alt | default: product.title }}" id="MainProductImage">
+      <div style="overflow: hidden; background: #F3EEE3;">
+        <img
+          src="{{ product.featured_image | image_url: width: 1000 }}"
+          srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 1000 }} 1000w"
+          sizes="(max-width: 860px) 100vw, 50vw"
+          alt="{{ product.featured_image.alt | default: product.title }}"
+          id="MainProductImage"
+          style="width: 100%; height: auto; display: block; transition: opacity .3s ease;"
+          loading="eager"
+        >
+      </div>
       {% if product.images.size > 1 %}
         <div class="pdp-thumbs">
           {% for image in product.images %}
-            <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | default: product.title }}" onclick="document.getElementById('MainProductImage').src=this.src.replace('width=200','width=1000')">
+            <img
+              src="{{ image | image_url: width: 200 }}"
+              alt="{{ image.alt | default: product.title }}"
+              class="{% if forloop.first %}active{% endif %}"
+              onclick="
+                var main = document.getElementById('MainProductImage');
+                main.style.opacity='0';
+                setTimeout(function(){ main.src='{{ image | image_url: width: 1000 }}'; main.style.opacity='1'; }, 200);
+                document.querySelectorAll('.pdp-thumbs img').forEach(function(t){ t.classList.remove('active'); });
+                this.classList.add('active');
+              "
+              style="cursor: pointer;"
+            >
           {% endfor %}
         </div>
       {% endif %}
     </div>
 
-    <div style="display: flex; flex-direction: column; gap: 22px;">
-      <span class="eyebrow" style="color: #B08D57; font-size: 10.5px;">La pièce signature</span>
-      <h1 class="serif" style="margin: 0; font-size: clamp(30px, 5vw, 44px); line-height: 1.15; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
+    <!-- Informations produit -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
 
-      <div style="display: flex; align-items: baseline; gap: 4px;">
+      <span class="eyebrow" style="color: #B08D57; font-size: 10px;">La pièce signature</span>
+      <h1 class="serif" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
+
+      <!-- Prix -->
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-top: -4px;">
         {% if product.compare_at_price > product.price %}
           <span class="compare-price">{{ product.compare_at_price | money }}</span>
         {% endif %}
         <span class="price">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="sans" style="font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #B08D57; padding: 3px 8px; border: 1px solid rgba(176,141,87,.4);">Offre de lancement</span>
+        {% endif %}
       </div>
 
+      <!-- Offre 1+1 encadrée -->
+      <div class="offer-box">
+        <span class="offer-box-title">Offre de lancement — 1 pièce achetée · 1 pièce offerte</span>
+        <p class="offer-box-content" style="margin: 0;">{{ section.settings.offer_text | default: "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous recevrez deux bijoux dans leurs écrins respectifs. Une pour vous, une à offrir — ou deux à garder." }}</p>
+      </div>
+
+      <!-- Description -->
       <div class="sans" style="font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .01em;">{{ product.description }}</div>
 
+      <!-- Formulaire -->
       {% form 'product', product %}
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
-            <div style="margin-top: 8px;">
-              <label class="eyebrow" style="font-size: 10px; color: #6b6558;">{{ option.name }}</label><br>
-              <select name="options[{{ option.name | escape }}]" class="sans" style="margin-top: 10px; padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F;">
+            <div>
+              <label class="eyebrow" style="font-size: 10px; color: #6b6558; display: block; margin-bottom: 8px;">{{ option.name }}</label>
+              <select name="options[{{ option.name | escape }}]" class="sans" style="padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; width: 100%; max-width: 240px;">
                 {% for value in option.values %}
                   <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
                 {% endfor %}
@@ -40,9 +78,15 @@
 
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
-        <div style="display: flex; align-items: center; gap: 14px; margin-top: 12px;">
-          <input type="number" name="quantity" value="1" min="1" class="qty-input">
-          <button type="submit" class="btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %} style="flex-grow: 1;">
+        <div style="display: flex; gap: 12px; margin-top: 8px; align-items: stretch; flex-wrap: wrap;">
+          <input type="number" name="quantity" value="1" min="1" class="qty-input" aria-label="Quantité" style="flex-shrink: 0;">
+          <button
+            type="submit"
+            class="btn btn-dark"
+            id="AddToCartBtn"
+            {% unless product.selected_or_first_available_variant.available %}disabled style="opacity:.45; cursor:not-allowed;"{% endunless %}
+            style="flex-grow: 1; padding: 14px 24px;"
+          >
             {% if product.selected_or_first_available_variant.available %}
               {{ 'products.product.add_to_cart' | t }}
             {% else %}
@@ -52,33 +96,113 @@
         </div>
       {% endform %}
 
-      <p class="sans" style="font-size: 11.5px; font-weight: 300; letter-spacing: .04em; color: #9c968a; margin-top: 4px;">Paiement sécurisé · Expédition suivie · Retours 30 jours</p>
-
-      <div style="margin-top: 4px; border-top: 1px solid rgba(27,24,18,.1);">
-        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.08);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a;">Pierre centrale</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .02em;">{{ section.settings.stone | default: "Cristal synthétique vert profond" }}</span>
+      <!-- Réassurance sous bouton -->
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px;">
+        <div class="trust-row">
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          Paiement sécurisé
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.08);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a;">Métal</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .02em;">{{ section.settings.metal | default: "Acier inoxydable doré à l'or fin" }}</span>
+        <div class="trust-row">
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          Livraison suivie · Expédition sous 24–48h ouvrées
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.08);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a;">Longueur de chaîne</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .02em;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
+        <div class="trust-row">
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          Retours acceptés sous 30 jours
+        </div>
+        <div class="trust-row">
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          Écrin signature inclus — prêt à offrir
         </div>
       </div>
+
+      <!-- Fiche matières -->
+      <div style="margin-top: 8px; border-top: 1px solid rgba(27,24,18,.1);">
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert — l'éclat de l'émeraude, sans le prix de la pierre naturelle" }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Métal</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.metal | default: "Acier inoxydable, finition dorée à l'or fin" }}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Longueur</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
+        </div>
+        {% if section.settings.pendant_size != blank %}
+        <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Pendentif</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.pendant_size }}</span>
+        </div>
+        {% endif %}
+        {% if section.settings.water_resistance != blank %}
+        <div style="display: flex; justify-content: space-between; padding: 13px 0;">
+          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Résistance</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.water_resistance }}</span>
+        </div>
+        {% endif %}
+      </div>
+
     </div>
   </div>
 </div>
+
+<!-- Sticky Add to Cart (mobile) -->
+<div class="sticky-atc hidden" id="StickyATC">
+  <div class="sticky-atc-info">
+    <span class="sticky-atc-name">{{ product.title }}</span>
+    <span class="sticky-atc-price">{{ product.price | money }} · 1 acheté · 1 offert</span>
+  </div>
+  <button class="sticky-atc-btn" id="StickyATCBtn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+    {% if product.selected_or_first_available_variant.available %}Ajouter{% else %}Épuisé{% endif %}
+  </button>
+</div>
+
+<script>
+(function() {
+  var mainBtn = document.getElementById('AddToCartBtn');
+  var stickyBar = document.getElementById('StickyATC');
+  var stickyBtn = document.getElementById('StickyATCBtn');
+
+  if (!mainBtn || !stickyBar) return;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        stickyBar.classList.add('hidden');
+        stickyBar.classList.remove('visible');
+      } else {
+        stickyBar.classList.remove('hidden');
+        stickyBar.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(mainBtn);
+
+  if (stickyBtn) {
+    stickyBtn.addEventListener('click', function() {
+      var form = document.querySelector('form[action*="/cart/add"]');
+      if (form) {
+        var tempBtn = form.querySelector('[type="submit"]');
+        if (tempBtn) tempBtn.click();
+      }
+    });
+  }
+})();
+</script>
 
 {% schema %}
 {
   "name": "Page produit",
   "settings": [
-    { "type": "text", "id": "stone", "label": "Nature de la pierre" },
+    { "type": "text", "id": "stone", "label": "Pierre centrale (description)" },
     { "type": "text", "id": "metal", "label": "Métal" },
-    { "type": "text", "id": "chain_length", "label": "Longueur de chaîne" }
+    { "type": "text", "id": "chain_length", "label": "Longueur de chaîne" },
+    { "type": "text", "id": "pendant_size", "label": "Dimensions du pendentif" },
+    { "type": "text", "id": "water_resistance", "label": "Résistance à l'eau" },
+    { "type": "textarea", "id": "offer_text", "label": "Explication de l'offre 1+1" }
   ]
 }
 {% endschema %}

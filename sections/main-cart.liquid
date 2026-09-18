@@ -1,40 +1,82 @@
-<div class="sect" style="width: 100%;">
-  <div style="max-width: 900px; margin: 0 auto;">
-    <h1 class="serif" style="font-size: clamp(26px, 4.5vw, 34px); font-weight: 420; margin-bottom: 32px;">{{ 'general.cart.title' | t }}</h1>
+<div class="sect" style="width: 100%; min-height: 50vh;">
+  <div style="max-width: 860px; margin: 0 auto;">
+
+    <h1 class="serif" style="font-size: clamp(26px, 4.5vw, 34px); font-weight: 300; margin-bottom: 40px; letter-spacing: -.005em;">Votre panier</h1>
 
     {% if cart.item_count == 0 %}
-      <p class="sans" style="color: #4A463D; margin-bottom: 24px;">{{ 'general.cart.empty' | t }}</p>
-      <a href="{{ routes.root_url }}" class="btn">{{ 'general.cart.continue_shopping' | t }}</a>
+      <div style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; padding: clamp(40px, 6vw, 60px) 0;">
+        <p class="sans" style="color: #4A463D; font-size: 14px; font-weight: 300; line-height: 1.7; margin: 0;">Votre panier est vide pour l'instant.</p>
+        <a href="{{ routes.root_url }}" class="btn">Découvrir la pièce</a>
+      </div>
+
     {% else %}
+
+      <!-- Rappel offre 1+1 -->
+      <div class="offer-box" style="margin-bottom: 32px;">
+        <span class="offer-box-title">Offre de lancement incluse</span>
+        <p class="offer-box-content" style="margin: 0;">Votre commande inclut une seconde pièce offerte. Vous recevrez deux bijoux dans leurs écrins respectifs, dans un seul colis.</p>
+      </div>
+
       {% form 'cart' %}
         <table class="cart-table">
           <thead>
             <tr>
-              <th></th>
-              <th class="sans">Pièce</th>
-              <th class="sans">{{ 'general.cart.quantity' | t }}</th>
-              <th class="sans" style="text-align: right;">{{ 'general.cart.subtotal' | t }}</th>
+              <th class="sans" style="font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #9c968a; font-weight: 400; padding-bottom: 14px;"></th>
+              <th class="sans" style="font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #9c968a; font-weight: 400; padding-bottom: 14px;">Pièce</th>
+              <th class="sans" style="font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #9c968a; font-weight: 400; padding-bottom: 14px;">Quantité</th>
+              <th class="sans" style="font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #9c968a; font-weight: 400; padding-bottom: 14px; text-align: right;">Sous-total</th>
             </tr>
           </thead>
           <tbody>
             {% for item in cart.items %}
               <tr>
-                <td><img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title }}"></td>
-                <td class="sans">{{ item.product.title }}{% unless item.variant.title == 'Default Title' %}<br><span style="color:#6b6558;font-size:12.5px;">{{ item.variant.title }}</span>{% endunless %}</td>
-                <td><input class="qty-input sans" type="number" name="updates[]" value="{{ item.quantity }}" min="0"></td>
-                <td class="sans" style="text-align: right;">{{ item.final_line_price | money }}</td>
+                <td style="width: 80px; padding-right: 16px;">
+                  <img src="{{ item.image | image_url: width: 150 }}" alt="{{ item.title }}" style="width: 72px; height: 72px; object-fit: cover; background: #F3EEE3;">
+                </td>
+                <td>
+                  <div class="sans" style="font-size: 13.5px; font-weight: 300; color: #17140F; line-height: 1.4;">{{ item.product.title }}</div>
+                  {% unless item.variant.title == 'Default Title' %}
+                    <div class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558; margin-top: 3px;">{{ item.variant.title }}</div>
+                  {% endunless %}
+                  <a href="{{ item.url_to_remove }}" class="sans" style="font-size: 10.5px; font-weight: 300; color: #9c968a; letter-spacing: .04em; margin-top: 6px; display: inline-block; border-bottom: 1px solid rgba(156,150,138,.3); padding-bottom: 1px; transition: color .2s ease;" onmouseover="this.style.color='#4A463D'" onmouseout="this.style.color='#9c968a'">Retirer</a>
+                </td>
+                <td>
+                  <input class="qty-input sans" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantité">
+                </td>
+                <td class="sans" style="text-align: right; font-size: 14px; font-weight: 300; color: #17140F;">{{ item.final_line_price | money }}</td>
               </tr>
             {% endfor %}
           </tbody>
         </table>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px; flex-wrap: wrap; gap: 16px;">
-          <button type="submit" name="update" class="nav-link u-link sans" style="background: none; border: none; cursor: pointer;">{{ 'general.cart.update' | t }}</button>
-          <div class="serif" style="font-size: 20px;">{{ 'general.cart.subtotal' | t }}, {{ cart.total_price | money }}</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 16px; padding-top: 20px; border-top: 1px solid rgba(27,24,18,.1);">
+          <button type="submit" name="update" class="sans" style="background: none; border: none; cursor: pointer; font-size: 11px; letter-spacing: .08em; color: #9c968a; padding: 0; text-decoration: underline; text-underline-offset: 3px; transition: color .2s ease;" onmouseover="this.style.color='#17140F'" onmouseout="this.style.color='#9c968a'">Mettre à jour</button>
+          <div class="serif" style="font-size: 22px; font-weight: 400; color: #17140F; letter-spacing: .02em;">Total : {{ cart.total_price | money }}</div>
         </div>
 
-        <button type="submit" name="checkout" class="btn" style="width: 100%; margin-top: 20px;">{{ 'general.cart.checkout' | t }}</button>
+        <!-- Réassurance pré-checkout -->
+        <div style="margin-top: 28px; display: flex; flex-direction: column; gap: 10px; padding: 20px; background: #F8F4ED;">
+          <div class="trust-row">
+            <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+            Paiement sécurisé
+          </div>
+          <div class="trust-row">
+            <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+            Expédition sous 24–48h · Livraison suivie avec numéro de suivi
+          </div>
+          <div class="trust-row">
+            <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+            Retours acceptés sous 30 jours à compter de la réception
+          </div>
+        </div>
+
+        <button type="submit" name="checkout" class="btn btn-dark" style="width: 100%; margin-top: 16px; padding: 16px 24px; font-size: 10.5px;">
+          Passer à la commande
+        </button>
+
       {% endform %}
+
     {% endif %}
+
   </div>
 </div>

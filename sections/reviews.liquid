@@ -1,10 +1,98 @@
-<div class="sect" style="width: 100%; padding-top: 0;">
-  <div style="max-width: 640px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; border: 1px solid rgba(27,24,18,.12); padding: clamp(36px, 6vw, 56px) clamp(20px, 5vw, 40px);">
-    <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">Avis clients</span>
-    <p class="sans" style="margin: 0; font-size: 14.5px; line-height: 1.7; color: #6b6558;">Les premiers avis seront affichés ici dès leur réception. La Maison ne publie que des témoignages authentiques.</p>
+{% assign has_reviews = false %}
+{% for block in section.blocks %}
+  {% if block.settings.text != blank %}
+    {% assign has_reviews = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<div class="sect" style="width: 100%; background: #FBF8F2; padding-top: 0;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(40px, 6vw, 64px);">
+      <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Avis clients</span>
+      {% if has_reviews %}
+        <h3 class="serif" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); font-weight: 300;">Ce qu'elles en disent</h3>
+      {% endif %}
+    </div>
+
+    {% if has_reviews %}
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+        {% for block in section.blocks %}
+          {% if block.settings.text != blank %}
+            <div class="review-card" {{ block.shopify_attributes }}>
+              <!-- Étoiles -->
+              <div class="review-stars">
+                {% assign stars = block.settings.rating | default: 5 %}
+                {% for i in (1..5) %}
+                  <svg class="review-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    {% if i <= stars %}
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#B08D57" stroke="none"/>
+                    {% else %}
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="none" stroke="#C8B89A" stroke-width="1.5"/>
+                    {% endif %}
+                  </svg>
+                {% endfor %}
+              </div>
+
+              <!-- Texte de l'avis -->
+              <p class="review-text" style="margin: 0;">"{{ block.settings.text }}"</p>
+
+              <!-- Auteur & date -->
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; flex-wrap: wrap;">
+                <div>
+                  <span class="review-meta" style="display: block; color: #17140F; font-weight: 400;">{{ block.settings.author | default: "Client·e vérifié·e" }}</span>
+                  {% if block.settings.date != blank %}
+                    <span class="review-meta" style="display: block; margin-top: 2px;">{{ block.settings.date }}</span>
+                  {% endif %}
+                </div>
+                {% if block.settings.verified %}
+                  <span class="review-verified">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Achat vérifié
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    {% else %}
+
+      <!-- État vide premium -->
+      <div style="max-width: 560px; margin: 0 auto; text-align: center; padding: clamp(36px, 6vw, 56px); border: 1px solid rgba(27,24,18,.1);">
+        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <p class="sans" style="margin: 0 0 8px; font-size: 14px; font-weight: 300; line-height: 1.75; color: #4A463D;">Les premiers avis seront publiés ici dès réception.</p>
+        <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; color: #9c968a; line-height: 1.6;">La Maison ne publie que des témoignages authentiques, de clientes ayant reçu leur pièce.</p>
+      </div>
+
+    {% endif %}
+
   </div>
 </div>
 
 {% schema %}
-{ "name": "Avis clients", "settings": [] }
+{
+  "name": "Avis clients",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Avis",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Texte de l'avis" },
+        { "type": "text", "id": "author", "label": "Prénom et initiale (ex : Sophie M.)" },
+        { "type": "text", "id": "date", "label": "Date (ex : Septembre 2025)" },
+        { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Note", "default": 5 },
+        { "type": "checkbox", "id": "verified", "label": "Achat vérifié", "default": true }
+      ]
+    }
+  ]
+}
 {% endschema %}
