@@ -154,22 +154,29 @@
 </div>
 
 <script>
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   // --- Galerie produit ---
   var mainImg = document.getElementById('MainProductImage');
   var thumbs = document.querySelectorAll('.pdp-thumb');
 
   thumbs.forEach(function(thumb) {
     thumb.addEventListener('click', function() {
-      var fullSrc = this.getAttribute('data-full');
+      var clicked = this;
+      var fullSrc = clicked.getAttribute('data-full');
       if (!mainImg || !fullSrc) return;
+
+      // Marquer la vignette active immédiatement
+      thumbs.forEach(function(t) { t.classList.remove('active'); });
+      clicked.classList.add('active');
+
+      // Fondu + swap — on retire srcset pour forcer l'usage de src
       mainImg.style.opacity = '0';
       setTimeout(function() {
+        mainImg.removeAttribute('srcset');
+        mainImg.removeAttribute('sizes');
         mainImg.src = fullSrc;
         mainImg.style.opacity = '1';
-      }, 200);
-      thumbs.forEach(function(t) { t.classList.remove('active'); });
-      this.classList.add('active');
+      }, 150);
     });
   });
 
@@ -202,7 +209,7 @@
       }
     });
   }
-})();
+});
 </script>
 
 {% schema %}
