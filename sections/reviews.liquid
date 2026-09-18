@@ -6,27 +6,37 @@
   {% endif %}
 {% endfor %}
 
-<div class="sect" style="width: 100%; background: #FBF8F2; padding-top: 0;">
+<div style="width: 100%; background: #FBF8F2; padding: clamp(72px, 11vw, 136px) clamp(18px, 5vw, 36px);">
   <div style="max-width: 1100px; margin: 0 auto;">
 
-    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(40px, 6vw, 64px);">
-      <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Avis clients</span>
-      {% if has_reviews %}
-        <h3 class="serif" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); font-weight: 300;">Ce qu'elles en disent</h3>
-      {% endif %}
-    </div>
-
     {% if has_reviews %}
+
+      <!-- ===== ÉTAT AVEC VRAIS AVIS ===== -->
+      <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 72px);">
+        <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Avis clients</span>
+        {% assign total = section.blocks.size %}
+        <h2 class="serif" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); font-weight: 300;">Ce qu'elles en disent</h2>
+        <!-- Note globale -->
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+          <div style="display: flex; gap: 3px;">
+            {% for i in (1..5) %}
+              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#B08D57" stroke="none"/></svg>
+            {% endfor %}
+          </div>
+          <span class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558;">{{ total }} avis</span>
+        </div>
+      </div>
 
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
         {% for block in section.blocks %}
           {% if block.settings.text != blank %}
-            <div class="review-card" {{ block.shopify_attributes }}>
+            <div style="padding: clamp(24px, 3vw, 32px); border: 1px solid rgba(27,24,18,.1); display: flex; flex-direction: column; gap: 14px; background: #FBF8F2;" {{ block.shopify_attributes }}>
+
               <!-- Étoiles -->
-              <div class="review-stars">
+              <div style="display: flex; gap: 3px;">
                 {% assign stars = block.settings.rating | default: 5 %}
                 {% for i in (1..5) %}
-                  <svg class="review-star" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="13" height="13" viewBox="0 0 24 24">
                     {% if i <= stars %}
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#B08D57" stroke="none"/>
                     {% else %}
@@ -36,24 +46,25 @@
                 {% endfor %}
               </div>
 
-              <!-- Texte de l'avis -->
-              <p class="review-text" style="margin: 0;">"{{ block.settings.text }}"</p>
+              <!-- Texte -->
+              <p class="serif" style="margin: 0; font-size: 17px; line-height: 1.6; font-style: italic; color: #1B1812;">"{{ block.settings.text }}"</p>
 
-              <!-- Auteur & date -->
-              <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; flex-wrap: wrap;">
+              <!-- Auteur -->
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
                 <div>
-                  <span class="review-meta" style="display: block; color: #17140F; font-weight: 400;">{{ block.settings.author | default: "Client·e vérifié·e" }}</span>
+                  <span class="sans" style="font-size: 12.5px; font-weight: 400; color: #17140F; display: block;">{{ block.settings.author | default: "Cliente" }}</span>
                   {% if block.settings.date != blank %}
-                    <span class="review-meta" style="display: block; margin-top: 2px;">{{ block.settings.date }}</span>
+                    <span class="sans" style="font-size: 11px; font-weight: 300; color: #9c968a; display: block; margin-top: 2px;">{{ block.settings.date }}</span>
                   {% endif %}
                 </div>
                 {% if block.settings.verified %}
-                  <span class="review-verified">
+                  <span class="sans" style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #B08D57; letter-spacing: .06em; text-transform: uppercase;">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                     Achat vérifié
                   </span>
                 {% endif %}
               </div>
+
             </div>
           {% endif %}
         {% endfor %}
@@ -61,21 +72,71 @@
 
     {% else %}
 
-      <!-- État vide premium -->
-      <div style="max-width: 560px; margin: 0 auto; text-align: center; padding: clamp(36px, 6vw, 56px); border: 1px solid rgba(27,24,18,.1);">
-        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.2">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-          </svg>
+      <!-- ===== ÉTAT PRÉ-LANCEMENT ===== -->
+      <!-- Design premium même sans avis : donne confiance par la transparence -->
+
+      <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(48px, 7vw, 96px); align-items: center;" class="reviews-prelaunch-grid">
+
+        <!-- Gauche : intention éditoriale -->
+        <div style="display: flex; flex-direction: column; gap: 28px;">
+          <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Avis clients</span>
+          <h2 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 36px); font-weight: 300; line-height: 1.2;">Les premiers témoignages arrivent.</h2>
+          <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La Maison vient d'ouvrir. Les premières pièces sont en route. Les premiers avis seront publiés ici, de clientes ayant réellement reçu et porté leur bijou — sans filtre, sans mise en scène.</p>
+
+          <!-- Engagement de la Maison -->
+          <div style="border-left: 2px solid rgba(176,141,87,.4); padding-left: 20px; display: flex; flex-direction: column; gap: 10px;">
+            <p class="sans" style="margin: 0; font-size: 12.5px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La Maison s'engage à ne publier que des témoignages authentiques. Aucun avis ne sera inventé ou modifié.</p>
+          </div>
+
+          <!-- Ce que nos clientes pourront partager -->
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
+            <span class="eyebrow" style="font-size: 9px; color: #9c968a; letter-spacing: .18em;">Après réception, elles pourront témoigner sur</span>
+            <div style="display: flex; flex-direction: column; gap: 7px;">
+              <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>La qualité du bijou</span>
+              <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>L'expérience d'ouverture de l'écrin</span>
+              <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>La livraison et le soin apporté</span>
+            </div>
+          </div>
         </div>
-        <p class="sans" style="margin: 0 0 8px; font-size: 14px; font-weight: 300; line-height: 1.75; color: #4A463D;">Les premiers avis seront publiés ici dès réception.</p>
-        <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; color: #9c968a; line-height: 1.6;">La Maison ne publie que des témoignages authentiques, de clientes ayant reçu leur pièce.</p>
+
+        <!-- Droite : aperçu visuel de la section à venir -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+
+          <!-- 3 cartes "en attente" au design sobre -->
+          {% for i in (1..3) %}
+            <div style="padding: 22px 24px; border: 1px solid rgba(27,24,18,.08); display: flex; flex-direction: column; gap: 12px; background: rgba(27,24,18,.02);">
+              <!-- Étoiles placeholder -->
+              <div style="display: flex; gap: 3px;">
+                {% for j in (1..5) %}
+                  <svg width="11" height="11" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#B08D57" stroke="none" opacity=".25"/></svg>
+                {% endfor %}
+              </div>
+              <!-- Lignes placeholder -->
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="height: 10px; background: rgba(27,24,18,.07); border-radius: 1px; width: {% if i == 1 %}82%{% elsif i == 2 %}68%{% else %}75%{% endif %};"></div>
+                <div style="height: 10px; background: rgba(27,24,18,.05); border-radius: 1px; width: {% if i == 1 %}55%{% elsif i == 2 %}40%{% else %}58%{% endif %};"></div>
+              </div>
+              <!-- Auteur placeholder -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+                <div style="height: 8px; background: rgba(27,24,18,.06); border-radius: 1px; width: 30%;"></div>
+                <span class="sans" style="font-size: 9.5px; letter-spacing: .08em; color: rgba(27,24,18,.2); text-transform: uppercase;">Bientôt</span>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
       </div>
 
     {% endif %}
 
   </div>
 </div>
+
+<style>
+@media (max-width: 860px) {
+  .reviews-prelaunch-grid { grid-template-columns: 1fr !important; }
+}
+</style>
 
 {% schema %}
 {
@@ -86,11 +147,11 @@
       "type": "review",
       "name": "Avis",
       "settings": [
-        { "type": "textarea", "id": "text", "label": "Texte de l'avis" },
+        { "type": "textarea", "id": "text", "label": "Texte de l'avis (tel que reçu — ne pas modifier)" },
         { "type": "text", "id": "author", "label": "Prénom et initiale (ex : Sophie M.)" },
         { "type": "text", "id": "date", "label": "Date (ex : Septembre 2025)" },
         { "type": "range", "id": "rating", "min": 1, "max": 5, "step": 1, "label": "Note", "default": 5 },
-        { "type": "checkbox", "id": "verified", "label": "Achat vérifié", "default": true }
+        { "type": "checkbox", "id": "verified", "label": "Achat vérifié (cocher uniquement si l'achat peut être confirmé)", "default": false }
       ]
     }
   ]
