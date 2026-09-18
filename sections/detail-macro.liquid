@@ -1,18 +1,46 @@
 <div class="sect" style="width: 100%; padding-top: 0;">
   <div style="max-width: 1280px; margin: 0 auto;" class="grid-2">
+
     <div style="width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: #F3EEE3;">
-      <img src="{{ 'closeup.jpg' | asset_url }}" alt="Gros plan du pendentif émeraude porté" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%;">
+      <img
+        src="{{ 'closeup.jpg' | asset_url }}"
+        alt="Gros plan du pendentif — cristal synthétique vert, halo de zircons blancs"
+        style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%;"
+        loading="lazy"
+      >
     </div>
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">Le détail</span>
-      <h3 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 30px); line-height: 1.25; font-weight: 420;">Une pierre pensée pour capter la lumière</h3>
-      <p class="sans" style="margin: 0; font-size: 15.5px; line-height: 1.8; color: #4A463D;">La pierre centrale, taillée en goutte, est enveloppée d'un halo de petites pierres brillantes qui prolongent son éclat. Un jeu de lumière discret, pensé pour se remarquer sans jamais s'imposer.</p>
-      <ul class="sans" style="list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14.5px; color: #17140F;">
-        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Pierre centrale</span><span>{{ section.settings.stone | default: "Cristal synthétique vert profond" }}</span></li>
-        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Métal</span><span>{{ section.settings.metal | default: "Acier inoxydable doré à l'or fin" }}</span></li>
-        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.12); padding-top: 10px;"><span style="color: #6b6558;">Longueur de chaîne</span><span>{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span></li>
+
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Le détail</span>
+      <h2 class="serif" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); line-height: 1.25; font-weight: 300;">Une pierre conçue pour capter la lumière.</h2>
+      <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La pierre centrale est un cristal synthétique vert, taillé en goutte, entouré d'un halo de zircons blancs. Elle restitue la profondeur visuelle de l'émeraude — sans le coût d'une pierre naturelle.</p>
+
+      <!-- Note de transparence -->
+      <div style="background: rgba(27,24,18,.04); border-left: 2px solid #B08D57; padding: 14px 18px;">
+        <p class="sans" style="margin: 0; font-size: 12.5px; font-weight: 300; line-height: 1.75; color: #4A463D; font-style: italic;">Nous précisons que la pierre utilisée est un cristal synthétique, et non une émeraude naturelle. Cette transparence est pour nous une question d'intégrité.</p>
+      </div>
+
+      <!-- Fiche matières -->
+      <ul class="sans" style="list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: 13.5px; color: #17140F;">
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding: 13px 0;">
+          <span style="color: #9c968a; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 400;">Pierre centrale</span>
+          <span style="font-weight: 300; text-align: right; max-width: 60%;">{{ section.settings.stone | default: "Cristal synthétique vert, taille goutte" }}</span>
+        </li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding: 13px 0;">
+          <span style="color: #9c968a; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 400;">Pierre secondaire</span>
+          <span style="font-weight: 300; text-align: right; max-width: 60%;">{{ section.settings.secondary_stone | default: "Zircons blancs (halo)" }}</span>
+        </li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding: 13px 0;">
+          <span style="color: #9c968a; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 400;">Métal</span>
+          <span style="font-weight: 300; text-align: right; max-width: 60%;">{{ section.settings.metal | default: "Acier inoxydable, finition dorée à l'or fin" }}</span>
+        </li>
+        <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.1);">
+          <span style="color: #9c968a; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 400;">Chaîne</span>
+          <span style="font-weight: 300; text-align: right; max-width: 60%;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
+        </li>
       </ul>
     </div>
+
   </div>
 </div>
 
@@ -20,7 +48,8 @@
 {
   "name": "Gros plan produit",
   "settings": [
-    { "type": "text", "id": "stone", "label": "Nature de la pierre" },
+    { "type": "text", "id": "stone", "label": "Pierre centrale" },
+    { "type": "text", "id": "secondary_stone", "label": "Pierre secondaire" },
     { "type": "text", "id": "metal", "label": "Métal" },
     { "type": "text", "id": "chain_length", "label": "Longueur de chaîne" }
   ]

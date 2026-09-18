@@ -1,46 +1,153 @@
-<div id="contact" style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 90px) clamp(18px, 5vw, 32px) 40px; border-top: 1px solid rgba(251,248,242,.08);">
+<!-- Section Contact -->
+<div id="contact" style="width: 100%; background: #F3EEE3; padding: clamp(64px, 10vw, 100px) clamp(18px, 5vw, 36px);">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 80px); align-items: start;" class="grid-pdp">
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Contact</span>
+        <h2 class="serif" style="margin: 0; font-size: clamp(24px, 3.8vw, 34px); font-weight: 300; line-height: 1.2;">Une question ?</h2>
+        <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.85; color: #4A463D; letter-spacing: .015em;">Nous sommes disponibles pour répondre à toutes vos questions — sur votre commande, votre bijou, ou simplement pour en savoir plus sur la Maison.</p>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px;">
+          {% if section.settings.contact_email != blank %}
+            <a href="mailto:{{ section.settings.contact_email }}" class="sans" style="font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; display: flex; align-items: center; gap: 10px; transition: color .2s ease;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+              {{ section.settings.contact_email }}
+            </a>
+          {% else %}
+            <a href="mailto:contact@maisonlemeraude.com" class="sans" style="font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; display: flex; align-items: center; gap: 10px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+              contact@maisonlemeraude.com
+            </a>
+          {% endif %}
+          <span class="sans" style="font-size: 12px; font-weight: 300; color: #9c968a; letter-spacing: .03em;">Réponse sous 24 à 48 heures ouvrées</span>
+        </div>
+      </div>
+
+      <!-- Formulaire de contact -->
+      {% form 'contact' %}
+        {% if form.posted_successfully? %}
+          <div style="display: flex; align-items: center; gap: 12px; padding: 20px; border: 1px solid rgba(176,141,87,.3); background: rgba(176,141,87,.06);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; color: #17140F; line-height: 1.6;">Votre message a bien été envoyé. Nous vous répondrons dans les meilleurs délais.</p>
+          </div>
+        {% else %}
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            {% if form.errors %}
+              <p class="sans" style="font-size: 13px; color: #c0392b; font-weight: 300;">{{ form.errors | default_errors }}</p>
+            {% endif %}
+            <div>
+              <label class="eyebrow" style="font-size: 9px; color: #9c968a; display: block; margin-bottom: 7px;" for="ContactName">Votre prénom</label>
+              <input
+                type="text"
+                id="ContactName"
+                name="contact[name]"
+                required
+                style="width: 100%; padding: 11px 14px; border: 1px solid rgba(27,24,18,.18); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 300; color: #17140F; outline: none; transition: border-color .2s ease;"
+                onfocus="this.style.borderColor='#B08D57'"
+                onblur="this.style.borderColor='rgba(27,24,18,.18)'"
+                placeholder="Sophie"
+              >
+            </div>
+            <div>
+              <label class="eyebrow" style="font-size: 9px; color: #9c968a; display: block; margin-bottom: 7px;" for="ContactEmail">Email</label>
+              <input
+                type="email"
+                id="ContactEmail"
+                name="contact[email]"
+                required
+                style="width: 100%; padding: 11px 14px; border: 1px solid rgba(27,24,18,.18); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 300; color: #17140F; outline: none; transition: border-color .2s ease;"
+                onfocus="this.style.borderColor='#B08D57'"
+                onblur="this.style.borderColor='rgba(27,24,18,.18)'"
+                placeholder="votre@email.com"
+              >
+            </div>
+            <div>
+              <label class="eyebrow" style="font-size: 9px; color: #9c968a; display: block; margin-bottom: 7px;" for="ContactMessage">Message</label>
+              <textarea
+                id="ContactMessage"
+                name="contact[body]"
+                required
+                rows="4"
+                style="width: 100%; padding: 11px 14px; border: 1px solid rgba(27,24,18,.18); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 13.5px; font-weight: 300; color: #17140F; resize: vertical; outline: none; transition: border-color .2s ease;"
+                onfocus="this.style.borderColor='#B08D57'"
+                onblur="this.style.borderColor='rgba(27,24,18,.18)'"
+                placeholder="Votre question ou commentaire…"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn" style="align-self: flex-start;">Envoyer</button>
+          </div>
+        {% endif %}
+      {% endform %}
+
+    </div>
+  </div>
+</div>
+
+<!-- Footer principal -->
+<footer style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 90px) clamp(18px, 5vw, 32px) 40px; border-top: 1px solid rgba(251,248,242,.06);">
   <div style="max-width: 1280px; margin: 0 auto;">
-    <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 36px; padding-bottom: 56px;">
+
+    <div style="display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 36px; padding-bottom: 56px;" class="footer-main-grid">
 
       <div style="display: flex; flex-direction: column; gap: 20px;">
         <a href="{{ routes.root_url }}" aria-label="Maison L'Émeraude — Accueil" style="display: inline-flex; flex-direction: column; gap: 3px; transition: opacity .25s ease;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-          <span class="eyebrow" style="font-size: 8.5px; letter-spacing: .32em; color: rgba(251,248,242,.36);">Maison</span>
-          <span class="serif" style="font-size: 23px; font-weight: 300; letter-spacing: .2em; color: #FBF8F2; text-transform: uppercase; line-height: 1;">L'Émeraude</span>
-          <span style="display: block; width: 22px; height: 1px; background: rgba(176,141,87,.45); margin-top: 7px;"></span>
+          <span class="eyebrow" style="font-size: 8px; letter-spacing: .36em; color: rgba(251,248,242,.32);">Maison</span>
+          <span class="serif" style="font-size: 22px; font-weight: 300; letter-spacing: .2em; color: #FBF8F2; text-transform: uppercase; line-height: 1;">L'Émeraude</span>
+          <span style="display: block; width: 20px; height: 1px; background: rgba(176,141,87,.4); margin-top: 7px;"></span>
         </a>
-        <p class="sans" style="font-size: 12.5px; font-weight: 300; line-height: 1.85; letter-spacing: .025em; color: rgba(251,248,242,.45); max-width: 220px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
+        <p class="sans" style="font-size: 12px; font-weight: 300; line-height: 1.9; letter-spacing: .025em; color: rgba(251,248,242,.4); max-width: 220px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
+        {% if section.settings.contact_email != blank %}
+          <a href="mailto:{{ section.settings.contact_email }}" class="sans" style="font-size: 11.5px; font-weight: 300; color: rgba(251,248,242,.4); transition: color .25s ease;" onmouseover="this.style.color='rgba(251,248,242,.7)'" onmouseout="this.style.color='rgba(251,248,242,.4)'">{{ section.settings.contact_email }}</a>
+        {% else %}
+          <a href="mailto:contact@maisonlemeraude.com" class="sans" style="font-size: 11.5px; font-weight: 300; color: rgba(251,248,242,.4); transition: color .25s ease;" onmouseover="this.style.color='rgba(251,248,242,.7)'" onmouseout="this.style.color='rgba(251,248,242,.4)'">contact@maisonlemeraude.com</a>
+        {% endif %}
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 14px;">
-        <span class="eyebrow" style="font-size: 9px; color: rgba(251,248,242,.3); margin-bottom: 4px;">Navigation</span>
-        <a href="{{ routes.root_url }}#maison" class="footer-link">Notre histoire</a>
+        <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.28); margin-bottom: 4px; letter-spacing: .22em;">Navigation</span>
+        <a href="{{ routes.root_url }}#maison" class="footer-link">La Maison</a>
         <a href="{{ routes.root_url }}#piece" class="footer-link">Le bijou</a>
+        <a href="{{ routes.root_url }}#offre" class="footer-link">L'offre de lancement</a>
         <a href="{{ routes.root_url }}#faq" class="footer-link">FAQ</a>
         <a href="{{ routes.root_url }}#contact" class="footer-link">Contact</a>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 14px;">
-        <span class="eyebrow" style="font-size: 9px; color: rgba(251,248,242,.3); margin-bottom: 4px;">Suivez-nous</span>
-        {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" class="footer-link">Instagram</a>{% endif %}
-        {% if section.settings.pinterest_url != blank %}<a href="{{ section.settings.pinterest_url }}" class="footer-link">Pinterest</a>{% endif %}
-        {% if section.settings.instagram_url == blank and section.settings.pinterest_url == blank %}
-          <span class="sans" style="font-size: 12px; font-weight: 300; color: rgba(251,248,242,.25); font-style: italic;">Bientôt disponible</span>
+        <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.28); margin-bottom: 4px; letter-spacing: .22em;">Informations</span>
+        {% if pages.cgv %}<a href="{{ pages.cgv.url }}" class="footer-link">Conditions générales de vente</a>{% endif %}
+        {% if pages.privacy %}<a href="{{ pages.privacy.url }}" class="footer-link">Politique de confidentialité</a>{% endif %}
+        {% if pages.returns %}<a href="{{ pages.returns.url }}" class="footer-link">Politique de retour</a>{% endif %}
+        {% if pages.mentions-legales %}<a href="{{ pages.mentions-legales.url }}" class="footer-link">Mentions légales</a>{% endif %}
+        {% if section.settings.instagram_url != blank %}
+          <a href="{{ section.settings.instagram_url }}" class="footer-link" rel="noopener" target="_blank">Instagram</a>
+        {% endif %}
+        {% if section.settings.pinterest_url != blank %}
+          <a href="{{ section.settings.pinterest_url }}" class="footer-link" rel="noopener" target="_blank">Pinterest</a>
         {% endif %}
       </div>
 
     </div>
-    <div style="border-top: 1px solid rgba(251,248,242,.08); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-      <span class="sans" style="font-size: 11px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.3);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
-      {% if pages.cookies %}<a href="{{ pages.cookies.url }}" class="sans" style="font-size: 11px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.3);">Cookies</a>{% endif %}
+
+    <div style="border-top: 1px solid rgba(251,248,242,.07); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center;">
+      <span class="sans" style="font-size: 10.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.28);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
+      <span class="sans" style="font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.2); letter-spacing: .04em;">Paiement sécurisé · Livraison suivie</span>
     </div>
+
   </div>
-</div>
+</footer>
+
+<style>
+@media (max-width: 860px) {
+  .footer-main-grid { grid-template-columns: 1fr !important; row-gap: 36px !important; }
+}
+</style>
 
 {% schema %}
 {
-  "name": "Pied de page",
+  "name": "Pied de page & Contact",
   "settings": [
-    { "type": "textarea", "id": "tagline", "label": "Phrase d'accroche" },
+    { "type": "text", "id": "contact_email", "label": "Adresse email de contact", "default": "contact@maisonlemeraude.com" },
+    { "type": "textarea", "id": "tagline", "label": "Phrase d'accroche footer" },
     { "type": "url", "id": "instagram_url", "label": "Lien Instagram" },
     { "type": "url", "id": "pinterest_url", "label": "Lien Pinterest" }
   ]

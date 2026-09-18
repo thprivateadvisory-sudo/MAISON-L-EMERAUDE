@@ -1,6 +1,13 @@
 <div style="width: 100%; position: sticky; top: 0; z-index: 20; background: rgba(251,248,242,.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(27,24,18,.07);">
   <div class="header-inner">
     <div class="header-left">
+      <!-- Hamburger mobile -->
+      <button class="hamburger-btn" id="HamburgerBtn" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
       <a href="{{ routes.root_url }}" class="site-logo-link" aria-label="Maison L'Émeraude — Accueil">
         {% if section.settings.logo_image != blank %}
           <img
@@ -25,19 +32,78 @@
           >
         {% endif %}
       </a>
-      <div class="nav-links">
+
+      <nav class="nav-links" aria-label="Navigation principale">
         <a href="{{ routes.root_url }}#maison" class="nav-link">La Maison</a>
         <a href="{{ routes.root_url }}#piece" class="nav-link">Le Bijou</a>
+        <a href="{{ routes.root_url }}#offre" class="nav-link">L'Offre</a>
         <a href="{{ routes.root_url }}#faq" class="nav-link">FAQ</a>
         <a href="{{ routes.root_url }}#contact" class="nav-link">Contact</a>
-      </div>
+      </nav>
     </div>
-    <a href="{{ routes.cart_url }}" class="cart-link nav-link">
-      Panier
-      <span class="cart-count">({{ cart.item_count }})</span>
+
+    <a href="{{ routes.cart_url }}" class="cart-link nav-link" aria-label="Panier, {{ cart.item_count }} article{% if cart.item_count != 1 %}s{% endif %}">
+      Panier{% if cart.item_count > 0 %}&nbsp;({{ cart.item_count }}){% endif %}
     </a>
   </div>
 </div>
+
+<!-- Menu mobile overlay -->
+<div class="mobile-menu-overlay" id="MobileMenuOverlay" aria-hidden="true"></div>
+
+<!-- Menu mobile drawer -->
+<nav class="mobile-menu" id="MobileMenu" aria-label="Menu mobile" aria-hidden="true">
+  <button class="mobile-menu-close" id="MobileMenuClose" aria-label="Fermer le menu">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="1.5">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <div class="mobile-menu-nav">
+    <a href="{{ routes.root_url }}#maison" class="mobile-menu-link">La Maison</a>
+    <a href="{{ routes.root_url }}#piece" class="mobile-menu-link">Le Bijou</a>
+    <a href="{{ routes.root_url }}#offre" class="mobile-menu-link">L'Offre de lancement</a>
+    <a href="{{ routes.root_url }}#faq" class="mobile-menu-link">FAQ</a>
+    <a href="{{ routes.root_url }}#contact" class="mobile-menu-link">Contact</a>
+    <a href="{{ routes.cart_url }}" class="mobile-menu-link" style="opacity:1; color: #B08D57;">Panier {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}</a>
+  </div>
+</nav>
+
+<script>
+(function() {
+  var btn = document.getElementById('HamburgerBtn');
+  var overlay = document.getElementById('MobileMenuOverlay');
+  var menu = document.getElementById('MobileMenu');
+  var closeBtn = document.getElementById('MobileMenuClose');
+  var links = menu ? menu.querySelectorAll('.mobile-menu-link') : [];
+
+  function openMenu() {
+    btn.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+    overlay.classList.add('active');
+    menu.classList.add('active');
+    menu.setAttribute('aria-hidden', 'false');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    overlay.classList.remove('active');
+    menu.classList.remove('active');
+    menu.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  if (btn) btn.addEventListener('click', function() {
+    btn.classList.contains('open') ? closeMenu() : openMenu();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  if (overlay) overlay.addEventListener('click', closeMenu);
+  links.forEach(function(link) { link.addEventListener('click', closeMenu); });
+})();
+</script>
 
 {% schema %}
 {

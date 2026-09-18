@@ -1,18 +1,31 @@
-<div class="sect" style="width: 100%; background: #17140F;">
-  <div style="max-width: 520px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 22px;">
-    <h3 class="serif" style="margin: 0; font-size: clamp(22px, 3.6vw, 28px); color: #FBF8F2; font-weight: 420; font-style: italic;">Entrez dans la Maison</h3>
-    <p class="sans" style="margin: 0; font-size: 14.5px; line-height: 1.7; color: rgba(251,248,242,.7);">Recevez nos nouveautés, nos histoires et nos invitations privées.</p>
+<div style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 96px) clamp(18px, 5vw, 36px);">
+  <div style="max-width: 480px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <span class="eyebrow" style="font-size: 9.5px; color: rgba(176,141,87,.75); letter-spacing: .28em;">La Maison</span>
+    <h3 class="serif" style="margin: 0; font-size: clamp(21px, 3.4vw, 27px); color: #FBF8F2; font-weight: 300; font-style: italic; line-height: 1.35;">Restez dans la Maison.</h3>
+    <p class="sans" style="margin: 0; font-size: 13.5px; line-height: 1.75; color: rgba(251,248,242,.55); font-weight: 300; max-width: 360px;">Nouvelles pièces, invitations privées, histoires de la Maison. Pas de spam.</p>
     {% form 'customer', id: 'newsletter-form' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
       {% if form.posted_successfully? %}
-        <p class="sans" style="color: #B08D57; font-size: 13.5px;">Merci, votre inscription est confirmée.</p>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <p class="sans" style="color: #B08D57; font-size: 13px; font-weight: 300; margin: 0;">Inscription confirmée. À bientôt.</p>
+        </div>
       {% else %}
-        <div style="display: flex; width: 100%; border-bottom: 1px solid rgba(251,248,242,.4); padding-bottom: 12px; margin-top: 10px;">
-          <input class="sans nl-input" type="email" name="contact[email]" placeholder="Votre adresse email" required style="flex-grow: 1; min-width: 0; background: transparent; border: none; color: #FBF8F2; font-size: 14.5px; outline: none;">
-          <button type="submit" class="sans" style="background: none; border: none; color: #B08D57; font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; white-space: nowrap;">S'inscrire</button>
+        <div style="display: flex; width: 100%; border-bottom: 1px solid rgba(251,248,242,.3); padding-bottom: 12px; margin-top: 8px;">
+          <input
+            class="sans nl-input"
+            type="email"
+            name="contact[email]"
+            placeholder="Votre adresse email"
+            required
+            aria-label="Adresse email pour la newsletter"
+            style="flex-grow: 1; min-width: 0; background: transparent; border: none; color: #FBF8F2; font-size: 14px; outline: none; font-weight: 300;"
+          >
+          <button type="submit" class="sans" style="background: none; border: none; color: #B08D57; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; white-space: nowrap; padding-left: 16px; transition: color .2s ease;" onmouseover="this.style.color='#C9A96E'" onmouseout="this.style.color='#B08D57'">S'inscrire</button>
         </div>
       {% endif %}
     {% endform %}
+    <p class="sans" style="margin: 0; font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.25); line-height: 1.5;">En vous inscrivant, vous acceptez de recevoir nos communications. Désinscription possible à tout moment.</p>
   </div>
 </div>
 

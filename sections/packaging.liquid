@@ -1,31 +1,74 @@
 <div class="sect" style="width: 100%; background: #F3EEE3;">
   <div style="max-width: 1280px; margin: 0 auto;" class="grid-2">
-    <div style="display: flex; flex-direction: column; gap: 20px;">
-      <span class="sans" style="font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: #B08D57;">L'expérience</span>
-      <h3 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 32px); line-height: 1.25; font-weight: 420;">Votre écrin vous attend</h3>
-      <p class="sans" style="margin: 0; font-size: 15.5px; line-height: 1.8; color: #4A463D;">Du premier regard à l'ouverture de l'écrin, chaque détail doit prolonger l'expérience. La pièce est protégée, présentée, prête à être offerte.</p>
-      <div class="sans" style="display: flex; flex-direction: column; gap: 14px; margin-top: 8px; font-size: 14.5px; color: #17140F;">
-        <div style="display: flex; gap: 14px; align-items: baseline;"><span class="serif" style="color: #B08D57; font-style: italic;">01</span><span>Votre commande est préparée</span></div>
-        <div style="display: flex; gap: 14px; align-items: baseline;"><span class="serif" style="color: #B08D57; font-style: italic;">02</span><span>Votre pièce est soigneusement protégée</span></div>
-        <div style="display: flex; gap: 14px; align-items: baseline;"><span class="serif" style="color: #B08D57; font-style: italic;">03</span><span>Votre colis est expédié</span></div>
-        <div style="display: flex; gap: 14px; align-items: baseline;"><span class="serif" style="color: #B08D57; font-style: italic;">04</span><span>Votre écrin arrive chez vous</span></div>
+
+    <div style="display: flex; flex-direction: column; gap: 22px;">
+      <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">L'expérience</span>
+      <h2 class="serif" style="margin: 0; font-size: clamp(24px, 3.8vw, 34px); line-height: 1.2; font-weight: 300;">Votre pièce arrive prête à être offerte.</h2>
+      <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">Nous souhaitons que l'ouverture du colis soit une expérience à part entière. La pièce est protégée, présentée dans son écrin, et prête — que vous la gardiez ou que vous l'offriez.</p>
+
+      <!-- Timeline livraison -->
+      <div class="delivery-steps" style="margin-top: 8px;">
+        <div class="delivery-step">
+          <span class="delivery-step-num">01</span>
+          <div>
+            <div class="delivery-step-text">Commande confirmée</div>
+            <div class="delivery-step-sub sans">Vous recevez un email de confirmation immédiatement.</div>
+          </div>
+        </div>
+        <div class="delivery-step">
+          <span class="delivery-step-num">02</span>
+          <div>
+            <div class="delivery-step-text">Préparation de votre écrin</div>
+            <div class="delivery-step-sub sans">Sous 24 à 48 heures ouvrées.</div>
+          </div>
+        </div>
+        <div class="delivery-step">
+          <span class="delivery-step-num">03</span>
+          <div>
+            <div class="delivery-step-text">Expédition avec numéro de suivi</div>
+            <div class="delivery-step-sub sans">Vous êtes notifié·e par email dès l'envoi.</div>
+          </div>
+        </div>
+        <div class="delivery-step">
+          <span class="delivery-step-num">04</span>
+          <div>
+            <div class="delivery-step-text">Livraison chez vous</div>
+            <div class="delivery-step-sub sans">{{ section.settings.delivery_time | default: "3 à 7 jours ouvrés" }} après expédition.</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div style="width: 100%; aspect-ratio: 4 / 5; overflow: hidden;">
+
+    <!-- Image de l'écrin -->
+    <div style="width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: #EAE4D7;">
       {% if section.settings.image %}
-        <img src="{{ section.settings.image | image_url: width: 900 }}" alt="Le collier L'Émeraude dans son écrin" style="width: 100%; height: 100%; object-fit: cover;">
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          srcset="{{ section.settings.image | image_url: width: 600 }} 600w, {{ section.settings.image | image_url: width: 900 }} 900w"
+          sizes="(max-width: 860px) 100vw, 50vw"
+          alt="Écrin Maison L'Émeraude — bijou prêt à offrir"
+          style="width: 100%; height: 100%; object-fit: cover;"
+          loading="lazy"
+        >
       {% else %}
-        <img src="{{ 'ecrin.png' | asset_url }}" alt="Le collier L'Émeraude dans son écrin" style="width: 100%; height: 100%; object-fit: cover; object-position: center top;">
+        <img
+          src="{{ 'ecrin.png' | asset_url }}"
+          alt="Écrin Maison L'Émeraude — bijou prêt à offrir"
+          style="width: 100%; height: 100%; object-fit: cover; object-position: center top;"
+          loading="lazy"
+        >
       {% endif %}
     </div>
+
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Packaging",
+  "name": "Packaging & livraison",
   "settings": [
-    { "type": "image_picker", "id": "image", "label": "Photo de l'écrin" }
+    { "type": "image_picker", "id": "image", "label": "Photo de l'écrin" },
+    { "type": "text", "id": "delivery_time", "label": "Délai de livraison affiché", "default": "3 à 7 jours ouvrés" }
   ]
 }
 {% endschema %}

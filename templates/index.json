@@ -4,45 +4,59 @@
       "type": "hero",
       "settings": {
         "brand_name": "Maison L'Émeraude",
-        "headline": "Une pièce qui ne passe pas inaperçue",
-        "subheadline": "Le bijou signature imaginé pour accompagner les moments que l'on n'oublie pas.",
-        "piece_name": "La Goutte d'Émeraude"
+        "headline": "La Goutte d'Émeraude",
+        "subheadline": "Un bijou imaginé pour capter la lumière."
       }
     },
     "piece-intro": {
       "type": "piece-intro",
       "settings": {
-        "description": "Une goutte d'émeraude sertie d'un halo de zircons blancs, suspendue à une chaîne fine en acier doré. Conçue comme la première signature de la Maison, avant de devenir une collection."
+        "description": "Une goutte d'émeraude entourée d'un halo de zircons blancs, suspendue à une chaîne fine en acier doré. La première pièce de la Maison."
       }
     },
     "detail-macro": {
       "type": "detail-macro",
       "settings": {
-        "stone": "Cristal synthétique vert profond",
-        "metal": "Acier inoxydable doré à l'or fin",
+        "stone": "Cristal synthétique vert, taille goutte",
+        "secondary_stone": "Zircons blancs (halo)",
+        "metal": "Acier inoxydable, finition dorée à l'or fin",
         "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm"
       }
     },
     "storytelling": {
       "type": "storytelling",
       "settings": {
-        "quote": "Nous voulions créer une pièce qui ne cherche pas à imiter le luxe — qui l'incarne, à sa propre façon.",
-        "body": "La Goutte d'Émeraude est née d'une idée simple : un bijou beau à voir, doux à porter, pensé pour durer. Son vert profond évoque la force tranquille des grandes pierres, son halo de lumière rappelle Paris au coucher du soleil. Chaque pièce quitte la Maison dans son écrin signature, prête à être portée ou offerte."
+        "quote": "Nous voulions créer une pièce belle à voir, douce à porter. Ni plus, ni moins.",
+        "body": "Maison L'Émeraude est une jeune maison de bijoux, née d'une pièce et d'une idée simple. La Goutte d'Émeraude a été imaginée pour celles qui veulent porter quelque chose de beau sans avoir à justifier pourquoi. Son vert profond. Son éclat discret. Son prix honnête. Chaque commande part dans un écrin soigné, prête à être portée ou offerte."
       }
     },
     "lifestyle-banner": {
       "type": "lifestyle-banner",
       "settings": {
-        "caption": "Paris, à l'heure où la lumière se fait douce."
+        "caption": "Une pièce. Un écrin. Une intention.",
+        "show_fallback": false
       }
     },
-    "offer": { "type": "offer" },
-    "packaging": { "type": "packaging" },
+    "offer": {
+      "type": "offer",
+      "settings": {
+        "headline": "Une pour vous.<br>Une à offrir.",
+        "body": "Pour fêter l'ouverture de la Maison, nous avons décidé d'offrir une seconde pièce à chaque commande passée pendant cette période de lancement. Deux bijoux. Deux écrins. Un seul prix.",
+        "delivery": "3 à 7 jours ouvrés",
+        "disclaimer": "Offre valable pendant la période de lancement uniquement, dans la limite des stocks disponibles. Un seul bijou supplémentaire par commande."
+      }
+    },
+    "packaging": {
+      "type": "packaging",
+      "settings": {
+        "delivery_time": "3 à 7 jours ouvrés"
+      }
+    },
     "trust": {
       "type": "trust",
       "settings": {
         "shipping_delay": "3 à 7 jours ouvrés",
-        "return_policy": "30 jours après réception"
+        "return_policy": "Retour simple, à partir de la réception"
       }
     },
     "reviews": { "type": "reviews" },
@@ -53,74 +67,81 @@
           "type": "question",
           "settings": {
             "question": "Quel est le délai de livraison ?",
-            "answer": "<p>Votre commande est expédiée sous 24 à 48h ouvrées. Vous recevrez votre colis sous 3 à 7 jours ouvrés, accompagné d'un numéro de suivi envoyé par email dès l'expédition.</p>"
+            "answer": "<p>Votre commande est préparée sous 24 à 48 heures ouvrées, puis expédiée avec un numéro de suivi. La livraison intervient généralement sous 3 à 7 jours ouvrés à compter de l'expédition. Vous êtes notifié·e par email à chaque étape.</p>"
           }
         },
         "q2": {
           "type": "question",
           "settings": {
-            "question": "Comment le bijou est-il emballé ?",
-            "answer": "<p>Chaque pièce est présentée dans son écrin signature Maison L'Émeraude — un coffret rigide doublé de velours crème, fermé d'un ruban vert. Un packaging pensé pour être offert sans enveloppe supplémentaire.</p>"
+            "question": "Comment fonctionne l'offre 1 acheté · 1 offert ?",
+            "answer": "<p>Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront envoyés dans le même colis. Deux La Goutte d'Émeraude. Un seul règlement.</p>"
           }
         },
         "q3": {
           "type": "question",
           "settings": {
-            "question": "Le paiement est-il sécurisé ?",
-            "answer": "<p>Oui. L'ensemble des paiements est traité via Shopify Payments, certifié PCI DSS. Vos données bancaires ne transitent jamais par nos serveurs.</p>"
+            "question": "Quelle est la matière du bijou ?",
+            "answer": "<p>La chaîne et la monture sont en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable résiste à l'oxydation dans le temps et convient aux peaux sensibles.</p>"
           }
         },
         "q4": {
           "type": "question",
           "settings": {
-            "question": "Comment entretenir le bijou ?",
-            "answer": "<p>Évitez le contact avec l'eau, les parfums et les produits cosmétiques. Rangez la pièce dans son écrin lorsqu'elle n'est pas portée. Un chiffon doux suffit pour raviver son éclat après chaque port.</p>"
+            "question": "La pierre est-elle une vraie émeraude ?",
+            "answer": "<p>Non, et nous souhaitons être transparents à ce sujet. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré de zircons blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible, sans prétendre être une pierre naturelle. C'est un choix délibéré de notre part.</p>"
           }
         },
         "q5": {
           "type": "question",
           "settings": {
-            "question": "Quelle est la longueur de la chaîne ?",
-            "answer": "<p>La chaîne mesure 40 cm avec une rallonge de 5 cm incluse, soit jusqu'à 45 cm. Le pendentif mesure 1,1 cm. Elle s'adapte à tous les décolletés.</p>"
+            "question": "Le bijou résiste-t-il à l'eau ?",
+            "answer": "<p>Nous recommandons d'éviter un contact prolongé avec l'eau (piscine, mer, bain) pour préserver la finition dorée dans le temps. Le contact occasionnel avec l'eau ne devrait pas l'endommager, mais par précaution, retirez le bijou avant de vous baigner.</p>"
           }
         },
         "q6": {
           "type": "question",
           "settings": {
-            "question": "Quelle est la matière du bijou ?",
-            "answer": "<p>La chaîne et la monture sont en acier inoxydable doré à l'or fin. Ce matériau résiste à l'oxydation et convient aux peaux sensibles.</p>"
+            "question": "Comment entretenir le collier ?",
+            "answer": "<p>Essuyez-le délicatement avec un chiffon doux après le port. Rangez-le dans son écrin, à l'abri de l'humidité et des produits cosmétiques. Évitez les parfums directement sur le bijou.</p>"
           }
         },
         "q7": {
           "type": "question",
           "settings": {
-            "question": "Les pierres sont-elles naturelles ou synthétiques ?",
-            "answer": "<p>La pierre centrale est un cristal synthétique taillé couleur émeraude, entouré de zircons blancs. Ce choix nous permet de proposer l'éclat d'une émeraude à un prix accessible, sans compromis sur la beauté.</p>"
+            "question": "Que contient l'écrin ?",
+            "answer": "<p>Chaque pièce est présentée dans l'écrin signature Maison L'Émeraude. L'écrin est inclus dans votre commande et constitue en lui-même un objet de présentation soigné — pensé pour être offert sans emballage supplémentaire.</p>"
           }
         },
         "q8": {
           "type": "question",
           "settings": {
-            "question": "Puis-je offrir le bijou ?",
-            "answer": "<p>Absolument. L'écrin signature est conçu pour être offert directement. L'offre de lancement a d'ailleurs été imaginée pour cela : une pièce pour vous, une à glisser entre les mains de quelqu'un que vous aimez.</p>"
+            "question": "Puis-je offrir le bijou directement ?",
+            "answer": "<p>Absolument. La pièce arrive dans son écrin, sans bon de livraison tarifé à l'intérieur. L'ensemble est pensé pour être offert directement, tel quel.</p>"
           }
         },
         "q9": {
           "type": "question",
           "settings": {
-            "question": "Comment fonctionne l'offre 1 acheté = 1 offert ?",
-            "answer": "<p>Pour chaque pièce commandée pendant la période de lancement, une seconde pièce identique est ajoutée à votre commande, gratuitement. Deux écrins, deux colliers, un seul règlement.</p>"
+            "question": "Comment suivre ma commande ?",
+            "answer": "<p>Dès l'expédition de votre colis, vous recevrez un email avec votre numéro de suivi. Vous pourrez suivre votre livraison en temps réel via le lien indiqué dans cet email.</p>"
           }
         },
         "q10": {
           "type": "question",
           "settings": {
-            "question": "Quelle est la politique de retour ?",
-            "answer": "<p>Vous disposez de 30 jours après réception pour nous retourner votre commande, à condition que le bijou n'ait pas été porté et soit dans son écrin d'origine. Le remboursement est effectué sous 5 à 10 jours ouvrés après réception du retour.</p>"
+            "question": "Comment effectuer un retour ?",
+            "answer": "<p>Vous disposez de 30 jours à compter de la réception pour retourner votre commande. Contactez-nous via le formulaire de contact en bas de cette page. La pièce doit être retournée dans son état d'origine, dans son écrin. Le remboursement est effectué sous 5 à 10 jours ouvrés après réception.</p>"
+          }
+        },
+        "q11": {
+          "type": "question",
+          "settings": {
+            "question": "Comment contacter la Maison ?",
+            "answer": "<p>Vous pouvez nous écrire via le formulaire de contact en bas de cette page, ou directement par email. Nous répondons dans un délai de 24 à 48 heures ouvrées.</p>"
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"]
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11"]
     }
   },
   "order": ["hero", "piece-intro", "detail-macro", "storytelling", "lifestyle-banner", "offer", "packaging", "trust", "reviews", "faq"]
