@@ -15,19 +15,13 @@
         >
       </div>
       {% if product.images.size > 1 %}
-        <div class="pdp-thumbs">
+        <div class="pdp-thumbs" id="PdpThumbs">
           {% for image in product.images %}
             <img
               src="{{ image | image_url: width: 200 }}"
+              data-full="{{ image | image_url: width: 1000 }}"
               alt="{{ image.alt | default: product.title }}"
-              class="{% if forloop.first %}active{% endif %}"
-              onclick="
-                var main = document.getElementById('MainProductImage');
-                main.style.opacity='0';
-                setTimeout(function(){ main.src='{{ image | image_url: width: 1000 }}'; main.style.opacity='1'; }, 200);
-                document.querySelectorAll('.pdp-thumbs img').forEach(function(t){ t.classList.remove('active'); });
-                this.classList.add('active');
-              "
+              class="pdp-thumb{% if forloop.first %} active{% endif %}"
               style="cursor: pointer;"
             >
           {% endfor %}
@@ -161,25 +155,43 @@
 
 <script>
 (function() {
+  // --- Galerie produit ---
+  var mainImg = document.getElementById('MainProductImage');
+  var thumbs = document.querySelectorAll('.pdp-thumb');
+
+  thumbs.forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      var fullSrc = this.getAttribute('data-full');
+      if (!mainImg || !fullSrc) return;
+      mainImg.style.opacity = '0';
+      setTimeout(function() {
+        mainImg.src = fullSrc;
+        mainImg.style.opacity = '1';
+      }, 200);
+      thumbs.forEach(function(t) { t.classList.remove('active'); });
+      this.classList.add('active');
+    });
+  });
+
+  // --- Sticky Add to Cart (mobile) ---
   var mainBtn = document.getElementById('AddToCartBtn');
   var stickyBar = document.getElementById('StickyATC');
   var stickyBtn = document.getElementById('StickyATCBtn');
 
-  if (!mainBtn || !stickyBar) return;
-
-  var observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        stickyBar.classList.add('hidden');
-        stickyBar.classList.remove('visible');
-      } else {
-        stickyBar.classList.remove('hidden');
-        stickyBar.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1 });
-
-  observer.observe(mainBtn);
+  if (mainBtn && stickyBar) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          stickyBar.classList.add('hidden');
+          stickyBar.classList.remove('visible');
+        } else {
+          stickyBar.classList.remove('hidden');
+          stickyBar.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(mainBtn);
+  }
 
   if (stickyBtn) {
     stickyBtn.addEventListener('click', function() {
