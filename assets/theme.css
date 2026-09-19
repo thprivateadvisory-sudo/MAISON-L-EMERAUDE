@@ -144,7 +144,7 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
     transform: translate(-50%, -50%);
   }
   .logo-mobile .site-logo-img {
-    height: 44px;
+    height: 60px;
     width: auto;
     max-width: none;
   }
