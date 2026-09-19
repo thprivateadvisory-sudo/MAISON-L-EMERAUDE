@@ -63,5 +63,24 @@
     {{ content_for_layout }}
   </main>
   {% sections 'footer-group' %}
+
+  <noscript><style>.ml-reveal,.ornament-grow{opacity:1!important;transform:none!important;}</style></noscript>
+  <script>
+  (function(){
+    if(!('IntersectionObserver' in window)){
+      document.querySelectorAll('.ml-reveal,.ornament-grow').forEach(function(el){el.classList.add('ml-visible');});
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('ml-visible'); io.unobserve(e.target); }
+      });
+    },{threshold:0.08, rootMargin:'0px 0px -28px 0px'});
+    function scan(){
+      document.querySelectorAll('.ml-reveal,.ornament-grow').forEach(function(el){ io.observe(el); });
+    }
+    if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',scan); } else { scan(); }
+  })();
+  </script>
 </body>
 </html>

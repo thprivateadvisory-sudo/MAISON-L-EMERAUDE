@@ -1,6 +1,6 @@
 {% assign featured_product = section.settings.product | default: collections.all.products.first %}
 
-<div style="width: 100%; position: relative; min-height: 88vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #F3EEE3;">
+<div style="width: 100%; position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #17140F;">
   <img
     src="{{ 'paris.jpg' | asset_url }}"
     alt="Maison L'Émeraude — le collier porté"
@@ -8,17 +8,17 @@
     loading="eager"
     fetchpriority="high"
   >
-  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.18) 0%, rgba(23,20,15,.02) 40%, rgba(23,20,15,.62) 100%);"></div>
+  <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,20,15,.32) 0%, rgba(23,20,15,.04) 38%, rgba(23,20,15,.08) 55%, rgba(23,20,15,.76) 100%);"></div>
 
-  <div style="position: relative; text-align: center; padding: 0 clamp(20px, 6vw, 60px); max-width: 680px; display: flex; flex-direction: column; align-items: center; gap: 18px;">
-    <span class="eyebrow" style="color: rgba(176,141,87,.9); font-size: 10px; letter-spacing: .3em;">{{ section.settings.brand_name | default: "Maison L'Émeraude" }}</span>
-    <span style="display: block; width: 24px; height: 1px; background: rgba(176,141,87,.6); margin: 0 auto;"></span>
-    <h1 class="serif hero-title" style="margin: 0; line-height: 1.08; color: #FBF8F2;">{{ section.settings.headline | default: "La Goutte d'Émeraude" }}</h1>
-    <p class="serif" style="margin: 0; font-size: clamp(15px, 2vw, 18px); font-style: italic; line-height: 1.6; color: rgba(251,248,242,.82); max-width: 380px; font-weight: 300;">{{ section.settings.subheadline | default: "Un bijou imaginé pour capter la lumière." }}</p>
-    <div style="display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; justify-content: center; align-items: center;">
-      <a href="{{ featured_product.url | default: '#piece' }}" class="btn btn-light" style="min-width: 180px;">Découvrir la pièce</a>
+  <div style="position: relative; text-align: center; padding: 0 clamp(20px, 6vw, 60px); max-width: 700px; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <span class="eyebrow ha1" style="color: rgba(176,141,87,.92); font-size: 10px; letter-spacing: .32em;">{{ section.settings.brand_name | default: "Maison L'Émeraude" }}</span>
+    <span class="ha2" style="display: block; width: 28px; height: 1px; background: rgba(176,141,87,.65); margin: 0 auto;"></span>
+    <h1 class="serif hero-title ha3" style="margin: 0; line-height: 1.06; color: #FBF8F2;">{{ section.settings.headline | default: "La Goutte d'Émeraude" }}</h1>
+    <p class="serif ha4" style="margin: 0; font-size: clamp(15px, 2vw, 19px); font-style: italic; line-height: 1.65; color: rgba(251,248,242,.82); max-width: 400px; font-weight: 300;">{{ section.settings.subheadline | default: "Un bijou imaginé pour capter la lumière." }}</p>
+    <div class="ha5" style="display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap; justify-content: center; align-items: center;">
+      <a href="{{ featured_product.url | default: '#piece' }}" class="btn btn-light" style="min-width: 190px;">Découvrir la pièce</a>
     </div>
-    <a href="#offre" class="sans" style="font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(251,248,242,.7); border-bottom: 1px solid rgba(251,248,242,.25); padding-bottom: 2px; margin-top: 4px; transition: color .25s ease, border-color .25s ease;">Offre de lancement — 1 acheté · 1 offert</a>
+    <a href="#offre" class="sans ha6" style="font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(251,248,242,.68); border-bottom: 1px solid rgba(251,248,242,.22); padding-bottom: 2px; margin-top: 2px; transition: color .25s ease, border-color .25s ease;">Offre de lancement — 1 acheté · 1 offert</a>
   </div>
 </div>
 

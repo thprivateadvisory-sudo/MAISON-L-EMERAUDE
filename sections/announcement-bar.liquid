@@ -1,5 +1,8 @@
-<div style="width: 100%; background: #17140F; border-bottom: 1px solid rgba(176,141,87,.14); padding: 10px 16px; text-align: center;">
-  <span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em;">{{ section.settings.text | default: "Offre de lancement · Une pièce achetée · Une pièce offerte" }}</span>
+{% assign bar_text = section.settings.text | default: "Offre de lancement · Une pièce achetée · Une pièce offerte" %}
+<div style="width: 100%; background: #17140F; border-bottom: 1px solid rgba(176,141,87,.14); padding: 10px 0; overflow: hidden;" class="marquee-wrap">
+  <div class="marquee-track" aria-hidden="true">
+    {% for i in (1..4) %}<span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em; flex-shrink: 0;">{{ bar_text }}</span><span class="marquee-dot">◆</span>{% endfor %}{% for i in (1..4) %}<span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em; flex-shrink: 0;">{{ bar_text }}</span><span class="marquee-dot">◆</span>{% endfor %}
+  </div>
 </div>
 
 {% schema %}
