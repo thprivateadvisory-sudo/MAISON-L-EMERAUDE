@@ -8,14 +8,15 @@
         <span></span>
       </button>
 
-      <a href="{{ routes.root_url }}" class="site-logo-link" aria-label="Maison L'Émeraude — Accueil">
+      <!-- Logo desktop (caché sur mobile) -->
+      <a href="{{ routes.root_url }}" class="site-logo-link logo-desktop" aria-label="Maison L'Émeraude — Accueil">
         {% if section.settings.logo_image != blank %}
           <img
             src="{{ section.settings.logo_image | image_url: width: 320 }}"
             srcset="{{ section.settings.logo_image | image_url: width: 160 }} 160w,
                     {{ section.settings.logo_image | image_url: width: 240 }} 240w,
                     {{ section.settings.logo_image | image_url: width: 320 }} 320w"
-            sizes="(max-width: 860px) 130px, 160px"
+            sizes="160px"
             alt="{{ section.settings.logo_image.alt | default: "Maison L'Émeraude" }}"
             class="site-logo-img"
             width="160"
@@ -41,6 +42,30 @@
         <a href="{{ routes.root_url }}#contact" class="nav-link">Contact</a>
       </nav>
     </div>
+
+    <!-- Logo mobile centré (enfant direct du header-inner, visible uniquement sur mobile) -->
+    <a href="{{ routes.root_url }}" class="site-logo-link logo-mobile" aria-label="Maison L'Émeraude — Accueil">
+      {% if section.settings.logo_image != blank %}
+        <img
+          src="{{ section.settings.logo_image | image_url: width: 260 }}"
+          srcset="{{ section.settings.logo_image | image_url: width: 130 }} 130w,
+                  {{ section.settings.logo_image | image_url: width: 260 }} 260w"
+          sizes="130px"
+          alt="{{ section.settings.logo_image.alt | default: "Maison L'Émeraude" }}"
+          class="site-logo-img"
+          width="130"
+          loading="eager"
+        >
+      {% else %}
+        <img
+          src="{{ 'logo.png' | asset_url }}"
+          alt="Maison L'Émeraude"
+          class="site-logo-img"
+          width="130"
+          loading="eager"
+        >
+      {% endif %}
+    </a>
 
     <a href="{{ routes.cart_url }}" class="cart-link nav-link" aria-label="Panier, {{ cart.item_count }} article{% if cart.item_count != 1 %}s{% endif %}">
       Panier{% if cart.item_count > 0 %}&nbsp;({{ cart.item_count }}){% endif %}

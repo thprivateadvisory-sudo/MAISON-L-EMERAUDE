@@ -132,9 +132,18 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
   .nav-links { display: none; }
   .hamburger-btn { display: flex; }
   .site-logo-img { width: 130px; max-width: 130px; }
-  /* Centre le logo entre hamburger et panier */
+  /* Logo desktop masqué, logo mobile centré en absolu */
+  .logo-desktop { display: none !important; }
   .header-inner { position: relative; }
-  .site-logo-link { position: absolute; left: 50%; transform: translateX(-50%); }
+  .logo-mobile {
+    display: flex !important;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
   .grid-2, .grid-2-tight { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
   .footer-grid { grid-template-columns: 1fr; row-gap: 32px; }
@@ -148,6 +157,7 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 @media (min-width: 861px) {
   .sticky-atc { display: none !important; }
   .hamburger-btn { display: none !important; }
+  .logo-mobile { display: none !important; }
 }
 
 /* ===== MAISON L'ÉMERAUDE — DESIGN UPGRADE ===== */
