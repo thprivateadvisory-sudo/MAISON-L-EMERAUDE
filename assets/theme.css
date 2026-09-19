@@ -132,6 +132,9 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
   .nav-links { display: none; }
   .hamburger-btn { display: flex; }
   .site-logo-img { width: 130px; max-width: 130px; }
+  /* Centre le logo entre hamburger et panier */
+  .header-inner { position: relative; }
+  .site-logo-link { position: absolute; left: 50%; transform: translateX(-50%); }
   .grid-2, .grid-2-tight { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
   .footer-grid { grid-template-columns: 1fr; row-gap: 32px; }
