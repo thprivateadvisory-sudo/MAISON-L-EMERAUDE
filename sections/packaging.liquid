@@ -2,34 +2,34 @@
   <div style="max-width: 1280px; margin: 0 auto;" class="grid-2">
 
     <div style="display: flex; flex-direction: column; gap: 22px;">
-      <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">L'expérience</span>
-      <h2 class="serif" style="margin: 0; font-size: clamp(24px, 3.8vw, 34px); line-height: 1.2; font-weight: 300;">Votre pièce arrive prête à être offerte.</h2>
-      <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">Nous souhaitons que l'ouverture du colis soit une expérience à part entière. La pièce est protégée, présentée dans son écrin, et prête — que vous la gardiez ou que vous l'offriez.</p>
+      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">L'expérience</span>
+      <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(24px, 3.8vw, 34px); line-height: 1.2; font-weight: 300;">Votre pièce arrive prête à être offerte.</h2>
+      <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">Nous souhaitons que l'ouverture du colis soit une expérience à part entière. La pièce est protégée, présentée dans son écrin, et prête — que vous la gardiez ou que vous l'offriez.</p>
 
       <!-- Timeline livraison -->
       <div class="delivery-steps" style="margin-top: 8px;">
-        <div class="delivery-step">
+        <div class="delivery-step ml-reveal ml-d1">
           <span class="delivery-step-num">01</span>
           <div>
             <div class="delivery-step-text">Commande confirmée</div>
             <div class="delivery-step-sub sans">Vous recevez un email de confirmation immédiatement.</div>
           </div>
         </div>
-        <div class="delivery-step">
+        <div class="delivery-step ml-reveal ml-d2">
           <span class="delivery-step-num">02</span>
           <div>
             <div class="delivery-step-text">Préparation de votre écrin</div>
             <div class="delivery-step-sub sans">Sous 24 à 48 heures ouvrées.</div>
           </div>
         </div>
-        <div class="delivery-step">
+        <div class="delivery-step ml-reveal ml-d3">
           <span class="delivery-step-num">03</span>
           <div>
             <div class="delivery-step-text">Expédition avec numéro de suivi</div>
             <div class="delivery-step-sub sans">Vous êtes notifié·e par email dès l'envoi.</div>
           </div>
         </div>
-        <div class="delivery-step">
+        <div class="delivery-step ml-reveal ml-d4">
           <span class="delivery-step-num">04</span>
           <div>
             <div class="delivery-step-text">Livraison chez vous</div>
@@ -40,7 +40,7 @@
     </div>
 
     <!-- Image de l'écrin -->
-    <div style="width: 100%; aspect-ratio: 4 / 5; overflow: hidden; background: #EAE4D7;">
+    <div class="packaging-img-wrap ml-reveal ml-d1" style="width: 100%; aspect-ratio: 4 / 5; background: #EAE4D7;">
       {% if section.settings.image %}
         <img
           src="{{ section.settings.image | image_url: width: 900 }}"

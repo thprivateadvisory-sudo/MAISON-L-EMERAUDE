@@ -1,8 +1,8 @@
-<div style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 96px) clamp(18px, 5vw, 36px);">
+<div style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 96px) clamp(18px, 5vw, 36px);" class="dark-grain">
   <div style="max-width: 480px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-    <span class="eyebrow" style="font-size: 9.5px; color: rgba(176,141,87,.75); letter-spacing: .28em;">La Maison</span>
-    <h3 class="serif" style="margin: 0; font-size: clamp(21px, 3.4vw, 27px); color: #FBF8F2; font-weight: 300; font-style: italic; line-height: 1.35;">Restez dans la Maison.</h3>
-    <p class="sans" style="margin: 0; font-size: 13.5px; line-height: 1.75; color: rgba(251,248,242,.55); font-weight: 300; max-width: 360px;">Nouvelles pièces, invitations privées, histoires de la Maison. Pas de spam.</p>
+    <span class="eyebrow ml-reveal" style="font-size: 9.5px; color: rgba(176,141,87,.75); letter-spacing: .28em;">La Maison</span>
+    <h3 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(21px, 3.4vw, 27px); color: #FBF8F2; font-weight: 300; font-style: italic; line-height: 1.35;">Restez dans la Maison.</h3>
+    <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 13.5px; line-height: 1.75; color: rgba(251,248,242,.55); font-weight: 300; max-width: 360px;">Nouvelles pièces, invitations privées, histoires de la Maison. Pas de spam.</p>
     {% form 'customer', id: 'newsletter-form' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
       {% if form.posted_successfully? %}
