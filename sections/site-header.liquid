@@ -1,4 +1,4 @@
-<div style="width: 100%; position: sticky; top: 0; z-index: 20; background: rgba(251,248,242,.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(27,24,18,.07);">
+<div style="width: 100%; position: sticky; top: 0; z-index: 20; background: rgba(251,248,242,.96); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(27,24,18,.07); overflow: hidden;">
   <div class="header-inner">
     <div class="header-left">
       <!-- Hamburger mobile -->
@@ -53,7 +53,7 @@
           sizes="130px"
           alt="{{ section.settings.logo_image.alt | default: "Maison L'Émeraude" }}"
           class="site-logo-img"
-          width="130"
+          style="height: 36px; width: auto; max-width: none; display: block; background: transparent;"
           loading="eager"
         >
       {% else %}
@@ -61,7 +61,7 @@
           src="{{ 'logo.png' | asset_url }}"
           alt="Maison L'Émeraude"
           class="site-logo-img"
-          width="130"
+          style="height: 36px; width: auto; max-width: none; display: block; background: transparent;"
           loading="eager"
         >
       {% endif %}
