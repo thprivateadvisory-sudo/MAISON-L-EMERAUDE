@@ -131,7 +131,7 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 @media (max-width: 860px) {
   .nav-links { display: none; }
   .hamburger-btn { display: flex; }
-  .site-logo-img { width: 130px; max-width: 130px; }
+  .site-logo-img { width: auto; max-width: 130px; }
   /* Logo desktop masqué, logo mobile centré */
   .logo-desktop { display: none !important; }
   .header-inner { position: relative; }
@@ -142,14 +142,11 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /* Le PNG a un fond blanc opaque : multiply sur le parent
-       fait blanc × fond crème header = crème → invisible */
-    background: #ffffff;
-    mix-blend-mode: multiply;
   }
-  /* Désactiver le double-blend sur l'image elle-même */
   .logo-mobile .site-logo-img {
-    mix-blend-mode: normal;
+    height: 36px;
+    width: auto;
+    max-width: none;
   }
   .grid-2, .grid-2-tight { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
