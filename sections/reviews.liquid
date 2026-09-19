@@ -1,10 +1,52 @@
 {% assign has_reviews = false %}
+{% assign review_count = 0 %}
+{% assign rating_sum = 0 %}
 {% for block in section.blocks %}
   {% if block.settings.text != blank %}
     {% assign has_reviews = true %}
-    {% break %}
+    {% assign review_count = review_count | plus: 1 %}
+    {% assign rating_sum = rating_sum | plus: block.settings.rating | default: 5 %}
   {% endif %}
 {% endfor %}
+
+{% if has_reviews %}
+{% assign avg_rating = rating_sum | divided_by: review_count | times: 1.0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "La Goutte d'Émeraude — Maison L'Émeraude",
+  "brand": { "@type": "Brand", "name": "Maison L'Émeraude" },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ avg_rating | round: 1 }}",
+    "reviewCount": "{{ review_count }}",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "review": [
+    {% for block in section.blocks %}
+    {% if block.settings.text != blank %}
+    {
+      "@type": "Review",
+      "reviewBody": {{ block.settings.text | json }},
+      "author": {
+        "@type": "Person",
+        "name": {{ block.settings.author | default: "Cliente" | json }}
+      },
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "{{ block.settings.rating | default: 5 }}",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}
 
 <div style="width: 100%; background: #FBF8F2; padding: clamp(72px, 11vw, 136px) clamp(18px, 5vw, 36px);">
   <div style="max-width: 1100px; margin: 0 auto;">

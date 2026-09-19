@@ -1,4 +1,7 @@
-<div class="sect" style="width: 100%;" id="product-main">
+<div class="sect" style="width: 100%;" id="product-main" itemscope itemtype="https://schema.org/Product">
+  <meta itemprop="name" content="{{ product.title }}">
+  <meta itemprop="description" content="{{ product.description | strip_html | strip_newlines }}">
+  {% if product.featured_image %}<meta itemprop="image" content="{{ product.featured_image | image_url: width: 1200 | prepend: 'https:' }}">{% endif %}
   <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
 
     <!-- Galerie produit -->
