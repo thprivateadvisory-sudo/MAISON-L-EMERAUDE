@@ -43,6 +43,125 @@
   </div>
 </div>
 
+<!-- Schema.org FAQPage — Rich Snippets Google -->
+{% if section.blocks.size > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for block in section.blocks %}
+    {
+      "@type": "Question",
+      "name": {{ block.settings.question | json }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ block.settings.answer | strip_html | strip_newlines | json }}
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+</script>
+{% else %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Quel est le délai de livraison ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Votre commande est préparée sous 24 à 48 heures ouvrées, puis expédiée avec un numéro de suivi. La livraison intervient généralement sous 3 à 7 jours ouvrés à compter de l'expédition."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment fonctionne l'offre 1 acheté · 1 offert ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront automatiquement envoyés dans le même colis."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quelle est la matière du bijou ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le collier La Goutte d'Émeraude est composé d'une chaîne fine en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable assure une bonne résistance dans le temps et un contact cutané agréable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "La pierre est-elle une vraie émeraude ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Non. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré de zircons blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible. Aucune pierre naturelle n'est utilisée."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le bijou résiste-t-il à l'eau ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nous recommandons d'éviter un contact prolongé avec l'eau (piscine, mer, bain) pour préserver la finition dorée dans le temps. Le contact occasionnel avec l'eau ne devrait pas l'endommager."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment entretenir le collier ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Essuyez-le délicatement avec un chiffon doux après le port. Rangez-le dans son écrin à l'abri de l'humidité et des produits cosmétiques. Évitez les chocs et les surfaces abrasives."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Que contient l'écrin ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Chaque pièce est présentée dans un écrin signature Maison L'Émeraude. L'écrin est inclus dans votre commande et constitue en lui-même un objet de présentation soigné — idéal pour offrir."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Puis-je offrir le bijou ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolument. La pièce arrive dans son écrin, sans bon de livraison tarifé à l'intérieur. L'ensemble est pensé pour être offert directement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment suivre ma commande ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Dès l'expédition de votre colis, vous recevrez un email avec votre numéro de suivi. Vous pourrez suivre votre livraison en temps réel via le transporteur indiqué."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment effectuer un retour ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vous disposez de 30 jours à compter de la réception pour retourner votre commande. Contactez-nous à l'adresse email indiquée pour initier la procédure. La pièce doit être retournée dans son état d'origine."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment contacter la Maison ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vous pouvez nous écrire à contact@maisonlemeraude.fr. Nous répondons dans un délai de 24 à 48 heures ouvrées."
+      }
+    }
+  ]
+}
+</script>
+{% endif %}
+
 <script>
 function toggleFaq(questionEl) {
   var item = questionEl.parentElement;
