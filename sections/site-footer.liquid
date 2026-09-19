@@ -101,6 +101,23 @@
         {% else %}
           <a href="mailto:contact@maisonlemeraude.com" class="sans" style="font-size: 11.5px; font-weight: 300; color: rgba(251,248,242,.4); transition: color .25s ease;" onmouseover="this.style.color='rgba(251,248,242,.7)'" onmouseout="this.style.color='rgba(251,248,242,.4)'">contact@maisonlemeraude.com</a>
         {% endif %}
+
+        <!-- Icônes réseaux sociaux -->
+        {% assign fb_url = section.settings.facebook_url | default: "https://www.facebook.com/share/1Sj36e8w4h/?mibextid=wwXIfr" %}
+        {% assign ig_url = section.settings.instagram_url | default: "https://www.instagram.com/maisonlemeraude?stkn=MTF5cTRldDFjcXA1dQ%3D%3D&utm_source=qr" %}
+        <div style="display: flex; gap: 10px; margin-top: 6px;">
+          <a href="{{ fb_url }}" rel="noopener" target="_blank" aria-label="Facebook" class="social-icon-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="{{ ig_url }}" rel="noopener" target="_blank" aria-label="Instagram" class="social-icon-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
+          </a>
+          {% if section.settings.tiktok_url != blank %}
+            <a href="{{ section.settings.tiktok_url }}" rel="noopener" target="_blank" aria-label="TikTok" class="social-icon-btn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.88a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/></svg>
+            </a>
+          {% endif %}
+        </div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 14px;">
@@ -118,12 +135,6 @@
         {% if pages.privacy %}<a href="{{ pages.privacy.url }}" class="footer-link">Politique de confidentialité</a>{% endif %}
         {% if pages.returns %}<a href="{{ pages.returns.url }}" class="footer-link">Politique de retour</a>{% endif %}
         {% if pages.mentions-legales %}<a href="{{ pages.mentions-legales.url }}" class="footer-link">Mentions légales</a>{% endif %}
-        {% if section.settings.instagram_url != blank %}
-          <a href="{{ section.settings.instagram_url }}" class="footer-link" rel="noopener" target="_blank">Instagram</a>
-        {% endif %}
-        {% if section.settings.pinterest_url != blank %}
-          <a href="{{ section.settings.pinterest_url }}" class="footer-link" rel="noopener" target="_blank">Pinterest</a>
-        {% endif %}
       </div>
 
     </div>
@@ -140,6 +151,22 @@
 @media (max-width: 860px) {
   .footer-main-grid { grid-template-columns: 1fr !important; row-gap: 36px !important; }
 }
+.social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(251,248,242,.15);
+  color: rgba(251,248,242,.45);
+  transition: border-color .25s ease, color .25s ease, background .25s ease;
+  text-decoration: none;
+}
+.social-icon-btn:hover {
+  border-color: rgba(176,141,87,.5);
+  color: #B08D57;
+  background: rgba(176,141,87,.06);
+}
 </style>
 
 {% schema %}
@@ -148,8 +175,9 @@
   "settings": [
     { "type": "text", "id": "contact_email", "label": "Adresse email de contact", "default": "contact@maisonlemeraude.com" },
     { "type": "textarea", "id": "tagline", "label": "Phrase d'accroche footer" },
+    { "type": "url", "id": "facebook_url", "label": "Lien Facebook" },
     { "type": "url", "id": "instagram_url", "label": "Lien Instagram" },
-    { "type": "url", "id": "pinterest_url", "label": "Lien Pinterest" }
+    { "type": "url", "id": "tiktok_url", "label": "Lien TikTok" }
   ]
 }
 {% endschema %}
