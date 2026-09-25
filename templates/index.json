@@ -23,6 +23,14 @@
         "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm"
       }
     },
+    "new-piece": {
+      "type": "new-piece",
+      "settings": {
+        "badge": "Nouveauté",
+        "eyebrow": "Nouvelle pièce de la Maison",
+        "cta": "Découvrir les boucles"
+      }
+    },
     "storytelling": {
       "type": "storytelling",
       "settings": {
@@ -165,6 +173,7 @@
     "hero",
     "piece-intro",
     "detail-macro",
+    "new-piece",
     "storytelling",
     "boutique-paris",
     "lifestyle-banner",

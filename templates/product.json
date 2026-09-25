@@ -8,9 +8,15 @@
         "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm",
         "pendant_size": "1,1 × 0,7 cm",
         "water_resistance": "Contact occasionnel possible — éviter immersion prolongée",
-        "offer_text": "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous recevrez deux bijoux dans leurs écrins respectifs. Une pour vous, une à offrir — ou deux à garder."
+        "offer_text": "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous recevrez deux bijoux dans leurs écrins respectifs. Une pour vous, une à offrir — ou deux à garder.",
+        "earrings_eyebrow": "Nouveauté de la Maison",
+        "earrings_stone": "Cristal synthétique couleur grenat, taille poire",
+        "earrings_halo": "Oxydes de zirconium blancs",
+        "earrings_setting": "Créoles dorées serties, fermeture à charnière"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

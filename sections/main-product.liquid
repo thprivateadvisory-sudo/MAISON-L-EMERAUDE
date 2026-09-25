@@ -1,5 +1,29 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- assign main_image = current_variant.featured_image | default: product.featured_image -%}
+{%- liquid
+  # Boucles d'oreilles : fiche matières et mise en avant dédiées
+  assign is_earrings = false
+  if product.title contains 'oreilles' or product.type contains 'oreilles'
+    assign is_earrings = true
+  endif
+
+  # Pièce complémentaire pour composer une parure (collier <-> boucles)
+  assign pair_product = nil
+  for p in collections.all.products
+    if p.id == product.id
+      continue
+    endif
+    if is_earrings
+      unless p.title contains 'oreilles'
+        assign pair_product = p
+        break
+      endunless
+    elsif p.title contains 'oreilles'
+      assign pair_product = p
+      break
+    endif
+  endfor
+-%}
 <div class="sect" style="width: 100%;" id="product-main">
   <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
 
@@ -40,7 +64,7 @@
     <!-- Informations produit -->
     <div style="display: flex; flex-direction: column; gap: 20px;">
 
-      <span class="eyebrow ml-reveal" style="color: #7A5C2E; font-size: 10px;">La pièce signature</span>
+      <span class="eyebrow ml-reveal" style="color: {% if is_earrings %}#7A1F2B{% else %}#7A5C2E{% endif %}; font-size: 10px;">{% if is_earrings %}{{ section.settings.earrings_eyebrow | default: 'Nouveauté de la Maison' }}{% else %}La pièce signature{% endif %}</span>
       <h1 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
 
       <!-- Prix -->
@@ -119,6 +143,17 @@
 
       <!-- Fiche matières -->
       <div style="margin-top: 8px; border-top: 1px solid rgba(27,24,18,.1);">
+        {% if is_earrings %}
+        {%- capture earring_rows -%}Pierre centrale|{{ section.settings.earrings_stone | default: "Cristal synthétique couleur grenat, taille poire" }}~Halo|{{ section.settings.earrings_halo | default: "Oxydes de zirconium blancs" }}~Monture|{{ section.settings.earrings_setting | default: "Créoles dorées serties, fermeture à charnière" }}{% if section.settings.earrings_size != blank %}~Dimensions|{{ section.settings.earrings_size }}{% endif %}{%- endcapture -%}
+        {% assign rows = earring_rows | split: '~' %}
+        {% for row in rows %}
+          {% assign cells = row | split: '|' %}
+          <div style="display: flex; justify-content: space-between; padding: 13px 0;{% unless forloop.last %} border-bottom: 1px solid rgba(27,24,18,.07);{% endunless %}">
+            <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">{{ cells[0] }}</span>
+            <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
+          </div>
+        {% endfor %}
+        {% else %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
           <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert — l'éclat de l'émeraude, sans le prix de la pierre naturelle" }}</span>
@@ -143,7 +178,28 @@
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.water_resistance }}</span>
         </div>
         {% endif %}
+        {% endif %}
       </div>
+
+      {% if is_earrings %}
+      <!-- Note de transparence -->
+      <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La pierre est un cristal synthétique couleur grenat, et non un grenat naturel — l'éclat d'une pierre précieuse, à un prix honnête.</p>
+      {% endif %}
+
+      {% if pair_product %}
+      <!-- Parure : pièce complémentaire -->
+      <a href="{{ pair_product.url }}" class="pdp-pair">
+        {% if pair_product.featured_image %}
+          <img src="{{ pair_product.featured_image | image_url: width: 160 }}" alt="" width="64" height="64" loading="lazy">
+        {% endif %}
+        <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+          <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Composez votre parure</span>
+          <span class="serif" style="font-size: 17px; color: #17140F;">{{ pair_product.title }}</span>
+          <span class="sans" style="font-size: 12px; font-weight: 300; color: #4A463D;">{{ pair_product.price | money }}</span>
+        </span>
+        <span aria-hidden="true" style="margin-left: auto; color: #B08D57; font-size: 18px;">→</span>
+      </a>
+      {% endif %}
 
     </div>
   </div>
@@ -283,7 +339,13 @@ document.addEventListener('DOMContentLoaded', function() {
     { "type": "text", "id": "chain_length", "label": "Longueur de chaîne" },
     { "type": "text", "id": "pendant_size", "label": "Dimensions du pendentif" },
     { "type": "text", "id": "water_resistance", "label": "Résistance à l'eau" },
-    { "type": "textarea", "id": "offer_text", "label": "Explication de l'offre 1+1" }
+    { "type": "textarea", "id": "offer_text", "label": "Explication de l'offre 1+1" },
+    { "type": "header", "content": "Boucles d'oreilles" },
+    { "type": "text", "id": "earrings_eyebrow", "label": "Surtitre", "default": "Nouveauté de la Maison" },
+    { "type": "text", "id": "earrings_stone", "label": "Pierre centrale" },
+    { "type": "text", "id": "earrings_halo", "label": "Halo" },
+    { "type": "text", "id": "earrings_setting", "label": "Monture" },
+    { "type": "text", "id": "earrings_size", "label": "Dimensions" }
   ]
 }
 {% endschema %}
