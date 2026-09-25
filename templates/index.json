@@ -30,6 +30,14 @@
         "body": "Maison L'Émeraude est une jeune maison de bijoux, née d'une pièce et d'une idée simple. La Goutte d'Émeraude a été imaginée pour celles qui veulent porter quelque chose de beau sans avoir à justifier pourquoi. Son vert profond. Son éclat discret. Son prix honnête. Chaque commande part dans un écrin soigné, prête à être portée ou offerte."
       }
     },
+    "boutique-paris": {
+      "type": "boutique-paris",
+      "settings": {
+        "headline": "Bientôt à Paris.",
+        "address": "Paris",
+        "opening": "Prochainement"
+      }
+    },
     "lifestyle-banner": {
       "type": "lifestyle-banner",
       "settings": {
@@ -144,5 +152,5 @@
       "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11"]
     }
   },
-  "order": ["hero", "piece-intro", "detail-macro", "storytelling", "lifestyle-banner", "offer", "packaging", "trust", "reviews", "faq"]
+  "order": ["hero", "piece-intro", "detail-macro", "storytelling", "boutique-paris", "lifestyle-banner", "offer", "packaging", "trust", "reviews", "faq"]
 }
