@@ -2,49 +2,31 @@
   <div style="max-width: 720px; margin: 0 auto;">
 
     <div style="text-align: center; margin-bottom: clamp(40px, 6vw, 64px); display: flex; flex-direction: column; align-items: center; gap: 16px;">
-      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Questions fréquentes</span>
+      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Questions fréquentes</span>
       <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(24px, 4vw, 32px); font-weight: 300;">Ce qu'il faut savoir</h2>
     </div>
 
     <div id="FaqList">
-      {% if section.blocks.size > 0 %}
-        {% for block in section.blocks %}
-          <div class="faq-item" {{ block.shopify_attributes }}>
-            <div class="faq-question" onclick="toggleFaq(this)">
+      {% for block in section.blocks %}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <h3 style="margin: 0; font-weight: inherit;">
+            <button type="button" class="faq-question" aria-expanded="false" aria-controls="FaqAnswer-{{ block.id }}" id="FaqQuestion-{{ block.id }}" onclick="toggleFaq(this)">
               <span class="faq-question-text">{{ block.settings.question }}</span>
               <span class="faq-icon" aria-hidden="true"></span>
-            </div>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">{{ block.settings.answer }}</div>
-            </div>
+            </button>
+          </h3>
+          <div class="faq-answer" id="FaqAnswer-{{ block.id }}" role="region" aria-labelledby="FaqQuestion-{{ block.id }}">
+            <div class="faq-answer-inner">{{ block.settings.answer }}</div>
           </div>
-        {% endfor %}
-      {% else %}
-        <!-- Questions par défaut si aucun block Shopify configuré -->
-        {% assign default_faqs = "Quel est le délai de livraison ?|Votre commande est préparée sous 24 à 48 heures ouvrées, puis expédiée avec un numéro de suivi. La livraison intervient généralement sous 3 à 7 jours ouvrés à compter de l'expédition.,Comment fonctionne l'offre 1 acheté · 1 offert ?|Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront automatiquement envoyés dans le même colis.,Quelle est la matière du bijou ?|Le collier La Goutte d'Émeraude est composé d'une chaîne fine en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable assure une bonne résistance dans le temps et un contact cutané agréable.,La pierre est-elle une vraie émeraude ?|Non, et nous souhaitons être transparents à ce sujet. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré de zircons blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible. Aucune pierre naturelle n'est utilisée.,Le bijou résiste-t-il à l'eau ?|Nous recommandons d'éviter un contact prolongé avec l'eau (piscine, mer, bain) pour préserver la finition dorée dans le temps. Le contact occasionnel avec l'eau ne devrait pas l'endommager.,Comment entretenir le collier ?|Essuyez-le délicatement avec un chiffon doux après le port. Rangez-le dans son écrin à l'abri de l'humidité et des produits cosmétiques. Évitez les chocs et les surfaces abrasives.,Que contient l'écrin ?|Chaque pièce est présentée dans un écrin signature Maison L'Émeraude. L'écrin est inclus dans votre commande et constitue en lui-même un objet de présentation soigné — idéal pour offrir.,Puis-je offrir le bijou ?|Absolument. La pièce arrive dans son écrin, sans bon de livraison tarifé à l'intérieur. L'ensemble est pensé pour être offert directement.,Comment suivre ma commande ?|Dès l'expédition de votre colis, vous recevrez un email avec votre numéro de suivi. Vous pourrez suivre votre livraison en temps réel via le transporteur indiqué.,Comment effectuer un retour ?|Vous disposez de 30 jours à compter de la réception pour retourner votre commande. Contactez-nous à l'adresse indiquée en bas de page pour initier la procédure. La pièce doit être retournée dans son état d'origine.,Comment contacter la Maison ?|Vous pouvez nous écrire à l'adresse email indiquée dans la section Contact, en bas de cette page. Nous répondons dans un délai de 24 à 48 heures ouvrées." | split: "," %}
-
-        {% for faq_pair in default_faqs %}
-          {% assign parts = faq_pair | split: "|" %}
-          {% if parts.size >= 2 %}
-            <div class="faq-item">
-              <div class="faq-question" onclick="toggleFaq(this)">
-                <span class="faq-question-text">{{ parts[0] }}</span>
-                <span class="faq-icon" aria-hidden="true"></span>
-              </div>
-              <div class="faq-answer">
-                <div class="faq-answer-inner">{{ parts[1] }}</div>
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      {% endif %}
+        </div>
+      {% endfor %}
     </div>
 
   </div>
 </div>
 
-<!-- Schema.org FAQPage — Rich Snippets Google -->
 {% if section.blocks.size > 0 %}
+<!-- Schema.org FAQPage -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -63,121 +45,25 @@
   ]
 }
 </script>
-{% else %}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Quel est le délai de livraison ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Votre commande est préparée sous 24 à 48 heures ouvrées, puis expédiée avec un numéro de suivi. La livraison intervient généralement sous 3 à 7 jours ouvrés à compter de l'expédition."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Comment fonctionne l'offre 1 acheté · 1 offert ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront automatiquement envoyés dans le même colis."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Quelle est la matière du bijou ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Le collier La Goutte d'Émeraude est composé d'une chaîne fine en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable assure une bonne résistance dans le temps et un contact cutané agréable."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "La pierre est-elle une vraie émeraude ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Non. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré de zircons blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible. Aucune pierre naturelle n'est utilisée."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Le bijou résiste-t-il à l'eau ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Nous recommandons d'éviter un contact prolongé avec l'eau (piscine, mer, bain) pour préserver la finition dorée dans le temps. Le contact occasionnel avec l'eau ne devrait pas l'endommager."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Comment entretenir le collier ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Essuyez-le délicatement avec un chiffon doux après le port. Rangez-le dans son écrin à l'abri de l'humidité et des produits cosmétiques. Évitez les chocs et les surfaces abrasives."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Que contient l'écrin ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Chaque pièce est présentée dans un écrin signature Maison L'Émeraude. L'écrin est inclus dans votre commande et constitue en lui-même un objet de présentation soigné — idéal pour offrir."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Puis-je offrir le bijou ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Absolument. La pièce arrive dans son écrin, sans bon de livraison tarifé à l'intérieur. L'ensemble est pensé pour être offert directement."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Comment suivre ma commande ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Dès l'expédition de votre colis, vous recevrez un email avec votre numéro de suivi. Vous pourrez suivre votre livraison en temps réel via le transporteur indiqué."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Comment effectuer un retour ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Vous disposez de 30 jours à compter de la réception pour retourner votre commande. Contactez-nous à l'adresse email indiquée pour initier la procédure. La pièce doit être retournée dans son état d'origine."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Comment contacter la Maison ?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Vous pouvez nous écrire à contact@maisonlemeraude.fr. Nous répondons dans un délai de 24 à 48 heures ouvrées."
-      }
-    }
-  ]
-}
-</script>
 {% endif %}
 
 <script>
-function toggleFaq(questionEl) {
-  var item = questionEl.parentElement;
-  var answer = item.querySelector('.faq-answer');
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
   var isOpen = item.classList.contains('open');
 
   // Fermer tous les autres
   document.querySelectorAll('.faq-item.open').forEach(function(el) {
     el.classList.remove('open');
     el.querySelector('.faq-answer').classList.remove('visible');
+    el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
   });
 
   // Ouvrir celui-ci si ce n'était pas déjà ouvert
   if (!isOpen) {
     item.classList.add('open');
-    answer.classList.add('visible');
+    item.querySelector('.faq-answer').classList.add('visible');
+    btn.setAttribute('aria-expanded', 'true');
   }
 }
 </script>
@@ -195,6 +81,7 @@ function toggleFaq(questionEl) {
         { "type": "richtext", "id": "answer", "label": "Réponse" }
       ]
     }
-  ]
+  ],
+  "presets": [{ "name": "FAQ" }]
 }
 {% endschema %}

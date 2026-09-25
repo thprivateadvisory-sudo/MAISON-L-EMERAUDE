@@ -1,25 +1,19 @@
+{% assign contact_email = settings.contact_email | default: "contact@maisonlemeraude.fr" %}
 <!-- Section Contact -->
 <div id="contact" style="width: 100%; background: #F3EEE3; padding: clamp(64px, 10vw, 100px) clamp(18px, 5vw, 36px);">
   <div style="max-width: 1100px; margin: 0 auto;">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 80px); align-items: start;" class="grid-pdp">
 
       <div style="display: flex; flex-direction: column; gap: 20px;">
-        <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Contact</span>
+        <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Contact</span>
         <h2 class="serif" style="margin: 0; font-size: clamp(24px, 3.8vw, 34px); font-weight: 300; line-height: 1.2;">Une question ?</h2>
         <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.85; color: #4A463D; letter-spacing: .015em;">Nous sommes disponibles pour répondre à toutes vos questions — sur votre commande, votre bijou, ou simplement pour en savoir plus sur la Maison.</p>
         <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px;">
-          {% if section.settings.contact_email != blank %}
-            <a href="mailto:{{ section.settings.contact_email }}" class="sans" style="font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; display: flex; align-items: center; gap: 10px; transition: color .2s ease;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-              {{ section.settings.contact_email }}
-            </a>
-          {% else %}
-            <a href="mailto:contact@maisonlemeraude.com" class="sans" style="font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; display: flex; align-items: center; gap: 10px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
-              contact@maisonlemeraude.com
-            </a>
-          {% endif %}
-          <span class="sans" style="font-size: 12px; font-weight: 300; color: #9c968a; letter-spacing: .03em;">Réponse sous 24 à 48 heures ouvrées</span>
+          <a href="mailto:{{ contact_email }}" class="sans" style="font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; display: flex; align-items: center; gap: 10px; transition: color .2s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.5" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+            {{ contact_email }}
+          </a>
+          <span class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558; letter-spacing: .03em;">Réponse sous 24 à 48 heures ouvrées</span>
         </div>
       </div>
 
@@ -36,7 +30,7 @@
               <p class="sans" style="font-size: 13px; color: #c0392b; font-weight: 300;">{{ form.errors | default_errors }}</p>
             {% endif %}
             <div>
-              <label class="eyebrow" style="font-size: 9px; color: #9c968a; display: block; margin-bottom: 7px;" for="ContactName">Votre prénom</label>
+              <label class="eyebrow" style="font-size: 9px; color: #6b6558; display: block; margin-bottom: 7px;" for="ContactName">Votre prénom</label>
               <input
                 type="text"
                 id="ContactName"
@@ -49,7 +43,7 @@
               >
             </div>
             <div>
-              <label class="eyebrow" style="font-size: 9px; color: #9c968a; display: block; margin-bottom: 7px;" for="ContactEmail">Email</label>
+              <label class="eyebrow" style="font-size: 9px; color: #6b6558; display: block; margin-bottom: 7px;" for="ContactEmail">Email</label>
               <input
                 type="email"
                 id="ContactEmail"
@@ -62,7 +56,7 @@
               >
             </div>
             <div>
-              <label class="eyebrow" style="font-size: 9px; color: #9c968a; display: block; margin-bottom: 7px;" for="ContactMessage">Message</label>
+              <label class="eyebrow" style="font-size: 9px; color: #6b6558; display: block; margin-bottom: 7px;" for="ContactMessage">Message</label>
               <textarea
                 id="ContactMessage"
                 name="contact[body]"
@@ -91,29 +85,25 @@
 
       <div style="display: flex; flex-direction: column; gap: 20px;">
         <a href="{{ routes.root_url }}" aria-label="Maison L'Émeraude — Accueil" style="display: inline-flex; flex-direction: column; gap: 3px; transition: opacity .25s ease;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">
-          <span class="eyebrow" style="font-size: 8px; letter-spacing: .36em; color: rgba(251,248,242,.32);">Maison</span>
+          <span class="eyebrow" style="font-size: 8px; letter-spacing: .36em; color: rgba(251,248,242,.6);">Maison</span>
           <span class="serif" style="font-size: 22px; font-weight: 300; letter-spacing: .2em; color: #FBF8F2; text-transform: uppercase; line-height: 1;">L'Émeraude</span>
           <span style="display: block; width: 20px; height: 1px; background: rgba(176,141,87,.4); margin-top: 7px;"></span>
         </a>
-        <p class="sans" style="font-size: 12px; font-weight: 300; line-height: 1.9; letter-spacing: .025em; color: rgba(251,248,242,.4); max-width: 220px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
-        {% if section.settings.contact_email != blank %}
-          <a href="mailto:{{ section.settings.contact_email }}" class="sans" style="font-size: 11.5px; font-weight: 300; color: rgba(251,248,242,.4); transition: color .25s ease;" onmouseover="this.style.color='rgba(251,248,242,.7)'" onmouseout="this.style.color='rgba(251,248,242,.4)'">{{ section.settings.contact_email }}</a>
-        {% else %}
-          <a href="mailto:contact@maisonlemeraude.com" class="sans" style="font-size: 11.5px; font-weight: 300; color: rgba(251,248,242,.4); transition: color .25s ease;" onmouseover="this.style.color='rgba(251,248,242,.7)'" onmouseout="this.style.color='rgba(251,248,242,.4)'">contact@maisonlemeraude.com</a>
-        {% endif %}
+        <p class="sans" style="font-size: 12px; font-weight: 300; line-height: 1.9; letter-spacing: .025em; color: rgba(251,248,242,.68); max-width: 220px;">{{ section.settings.tagline | default: "Jeune maison de bijoux, née d'une pierre et d'une lumière." }}</p>
+        <a href="mailto:{{ contact_email }}" class="sans" style="font-size: 11.5px; font-weight: 300; color: rgba(251,248,242,.68); transition: color .25s ease;" onmouseover="this.style.color='#FBF8F2'" onmouseout="this.style.color='rgba(251,248,242,.68)'">{{ contact_email }}</a>
 
         <!-- Icônes réseaux sociaux -->
-        {% assign fb_url = section.settings.facebook_url | default: "https://www.facebook.com/share/1Sj36e8w4h/?mibextid=wwXIfr" %}
-        {% assign ig_url = section.settings.instagram_url | default: "https://www.instagram.com/maisonlemeraude?stkn=MTF5cTRldDFjcXA1dQ%3D%3D&utm_source=qr" %}
+        {% assign fb_url = section.settings.facebook_url | default: "https://www.facebook.com/share/1Sj36e8w4h/" %}
+        {% assign ig_url = section.settings.instagram_url | default: "https://www.instagram.com/maisonlemeraude/" %}
         <div style="display: flex; gap: 10px; margin-top: 6px;">
-          <a href="{{ fb_url }}" rel="noopener" target="_blank" aria-label="Facebook" class="social-icon-btn">
+          <a href="{{ fb_url }}" rel="noopener" target="_blank" aria-label="Facebook (nouvel onglet)" class="social-icon-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
-          <a href="{{ ig_url }}" rel="noopener" target="_blank" aria-label="Instagram" class="social-icon-btn">
+          <a href="{{ ig_url }}" rel="noopener" target="_blank" aria-label="Instagram (nouvel onglet)" class="social-icon-btn">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
           </a>
           {% if section.settings.tiktok_url != blank %}
-            <a href="{{ section.settings.tiktok_url }}" rel="noopener" target="_blank" aria-label="TikTok" class="social-icon-btn">
+            <a href="{{ section.settings.tiktok_url }}" rel="noopener" target="_blank" aria-label="TikTok (nouvel onglet)" class="social-icon-btn">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.88a8.16 8.16 0 0 0 4.77 1.52V7.02a4.85 4.85 0 0 1-1-.33z"/></svg>
             </a>
           {% endif %}
@@ -121,27 +111,33 @@
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 14px;">
-        <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.28); margin-bottom: 4px; letter-spacing: .22em;">Navigation</span>
+        <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.6); margin-bottom: 4px; letter-spacing: .22em;">Navigation</span>
         <a href="{{ routes.root_url }}#maison" class="footer-link">La Maison</a>
         <a href="{{ routes.root_url }}#piece" class="footer-link">Le bijou</a>
-        <a href="{{ routes.root_url }}#offre" class="footer-link">L'offre de lancement</a>
+        {% if settings.offer_active %}<a href="{{ routes.root_url }}#offre" class="footer-link">L'offre de lancement</a>{% endif %}
         <a href="{{ routes.root_url }}#faq" class="footer-link">FAQ</a>
         <a href="{{ routes.root_url }}#contact" class="footer-link">Contact</a>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 14px;">
-        <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.28); margin-bottom: 4px; letter-spacing: .22em;">Informations</span>
-        {% if pages.cgv %}<a href="{{ pages.cgv.url }}" class="footer-link">Conditions générales de vente</a>{% endif %}
-        {% if pages.privacy %}<a href="{{ pages.privacy.url }}" class="footer-link">Politique de confidentialité</a>{% endif %}
-        {% if pages.returns %}<a href="{{ pages.returns.url }}" class="footer-link">Politique de retour</a>{% endif %}
-        {% if pages.mentions-legales %}<a href="{{ pages.mentions-legales.url }}" class="footer-link">Mentions légales</a>{% endif %}
+        <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.6); margin-bottom: 4px; letter-spacing: .22em;">Informations</span>
+        {%- comment -%} Politiques Shopify (Paramètres → Politiques) : toujours présentes une fois remplies. Les pages du thème ne servent que de secours. {%- endcomment -%}
+        {%- assign has_terms = false -%}
+        {%- assign has_legal = false -%}
+        {%- for policy in shop.policies -%}
+          {%- if policy.url contains 'terms-of-service' %}{% assign has_terms = true %}{% endif -%}
+          {%- if policy.url contains 'legal-notice' %}{% assign has_legal = true %}{% endif %}
+        <a href="{{ policy.url }}" class="footer-link">{{ policy.title }}</a>
+        {%- endfor %}
+        {% unless has_terms %}{% if pages.cgv != empty %}<a href="{{ pages.cgv.url }}" class="footer-link">Conditions générales de vente</a>{% endif %}{% endunless %}
+        {% unless has_legal %}{% if pages.mentions-legales != empty %}<a href="{{ pages.mentions-legales.url }}" class="footer-link">Mentions légales</a>{% endif %}{% endunless %}
       </div>
 
     </div>
 
     <div style="border-top: 1px solid rgba(251,248,242,.07); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center;">
-      <span class="sans" style="font-size: 10.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.28);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
-      <span class="sans" style="font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.2); letter-spacing: .04em;">Paiement sécurisé · Livraison suivie</span>
+      <span class="sans" style="font-size: 10.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.6);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
+      <span class="sans" style="font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.6); letter-spacing: .04em;">Paiement sécurisé · Livraison suivie</span>
     </div>
 
   </div>
@@ -173,7 +169,7 @@
 {
   "name": "Pied de page & Contact",
   "settings": [
-    { "type": "text", "id": "contact_email", "label": "Adresse email de contact", "default": "contact@maisonlemeraude.com" },
+    { "type": "paragraph", "content": "L'adresse email de contact se règle dans Paramètres du thème → Contact." },
     { "type": "textarea", "id": "tagline", "label": "Phrase d'accroche footer" },
     { "type": "url", "id": "facebook_url", "label": "Lien Facebook" },
     { "type": "url", "id": "instagram_url", "label": "Lien Instagram" },

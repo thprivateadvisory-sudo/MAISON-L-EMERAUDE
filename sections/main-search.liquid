@@ -1,0 +1,31 @@
+<div class="sect" style="width: 100%;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <h1 class="serif" style="font-size: clamp(26px, 4.5vw, 34px); font-weight: 300; margin: 0 0 28px;">Recherche</h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px;">
+      <label for="SearchInput" class="visually-hidden">Rechercher</label>
+      <input type="search" id="SearchInput" name="q" value="{{ search.terms | escape }}" placeholder="Rechercher une pièce…" class="sans" style="flex: 1; min-width: 220px; padding: 12px 14px; border: 1px solid rgba(27,24,18,.22); background: transparent; font-size: 14px; font-weight: 300; color: #17140F;">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="btn btn-dark">Rechercher</button>
+    </form>
+
+    {% if search.performed %}
+      <p class="sans" style="font-size: 13px; font-weight: 300; color: #6b6558; margin: 0 0 28px;">
+        {{ search.results_count }} résultat{% if search.results_count > 1 %}s{% endif %} pour « {{ search.terms | escape }} »
+      </p>
+      {% if search.results_count == 0 %}
+        <p class="sans" style="color: #4A463D; font-size: 14px; font-weight: 300;">{{ 'general.search.no_results' | t }}</p>
+      {% else %}
+        <div class="grid-4">
+          {% for item in search.results %}
+            {% render 'product-card', item: item %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Résultats de recherche", "settings": [] }
+{% endschema %}

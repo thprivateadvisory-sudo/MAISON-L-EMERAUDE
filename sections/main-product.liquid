@@ -1,17 +1,18 @@
-<div class="sect" style="width: 100%;" id="product-main" itemscope itemtype="https://schema.org/Product">
-  <meta itemprop="name" content="{{ product.title }}">
-  <meta itemprop="description" content="{{ product.description | strip_html | strip_newlines }}">
-  {% if product.featured_image %}<meta itemprop="image" content="{{ product.featured_image | image_url: width: 1200 | prepend: 'https:' }}">{% endif %}
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign main_image = current_variant.featured_image | default: product.featured_image -%}
+<div class="sect" style="width: 100%;" id="product-main">
   <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
 
     <!-- Galerie produit -->
     <div class="pdp-gallery">
       <div style="overflow: hidden; background: #F3EEE3;">
         <img
-          src="{{ product.featured_image | image_url: width: 1000 }}"
-          srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 1000 }} 1000w"
+          src="{{ main_image | image_url: width: 1000 }}"
+          srcset="{{ main_image | image_url: width: 600 }} 600w, {{ main_image | image_url: width: 1000 }} 1000w"
           sizes="(max-width: 860px) 100vw, 50vw"
-          alt="{{ product.featured_image.alt | default: product.title }}"
+          width="1000"
+          height="{{ 1000 | divided_by: main_image.aspect_ratio | round }}"
+          alt="{{ main_image.alt | default: product.title }}"
           id="MainProductImage"
           style="width: 100%; height: auto; display: block; transition: opacity .3s ease;"
           loading="eager"
@@ -20,13 +21,17 @@
       {% if product.images.size > 1 %}
         <div class="pdp-thumbs" id="PdpThumbs">
           {% for image in product.images %}
-            <img
-              src="{{ image | image_url: width: 200 }}"
+            <button
+              type="button"
+              class="pdp-thumb{% if image.id == main_image.id %} active{% endif %}"
               data-full="{{ image | image_url: width: 1000 }}"
-              alt="{{ image.alt | default: product.title }}"
-              class="pdp-thumb{% if forloop.first %} active{% endif %}"
-              style="cursor: pointer;"
+              data-alt="{{ image.alt | default: product.title | escape }}"
+              data-image-id="{{ image.id }}"
+              aria-label="Afficher la photo {{ forloop.index }}"
+              aria-pressed="{% if image.id == main_image.id %}true{% else %}false{% endif %}"
             >
+              <img src="{{ image | image_url: width: 200 }}" alt="" width="64" height="64" loading="lazy">
+            </button>
           {% endfor %}
         </div>
       {% endif %}
@@ -35,36 +40,35 @@
     <!-- Informations produit -->
     <div style="display: flex; flex-direction: column; gap: 20px;">
 
-      <span class="eyebrow ml-reveal" style="color: #B08D57; font-size: 10px;">La pièce signature</span>
+      <span class="eyebrow ml-reveal" style="color: #7A5C2E; font-size: 10px;">La pièce signature</span>
       <h1 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
 
       <!-- Prix -->
-      <div style="display: flex; align-items: baseline; gap: 8px; margin-top: -4px;">
-        {% if product.compare_at_price > product.price %}
-          <span class="compare-price">{{ product.compare_at_price | money }}</span>
-        {% endif %}
-        <span class="price">{{ product.price | money }}</span>
-        {% if product.compare_at_price > product.price %}
-          <span class="sans" style="font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #B08D57; padding: 3px 8px; border: 1px solid rgba(176,141,87,.4);">Offre de lancement</span>
-        {% endif %}
+      <div style="display: flex; align-items: baseline; gap: 8px; margin-top: -4px; flex-wrap: wrap;" id="ProductPrice">
+        <span class="compare-price" data-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}><span class="visually-hidden">Prix de référence :</span>{{ current_variant.compare_at_price | money }}</span>
+        <span class="price" data-price>{{ current_variant.price | money }}</span>
+        <span class="sans" style="font-size: 11px; font-weight: 300; color: #6b6558;">TTC</span>
       </div>
 
+      {% if settings.offer_active %}
       <!-- Offre 1+1 encadrée -->
       <div class="offer-box">
         <span class="offer-box-title">Offre de lancement — 1 pièce achetée · 1 pièce offerte</span>
         <p class="offer-box-content" style="margin: 0;">{{ section.settings.offer_text | default: "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous recevrez deux bijoux dans leurs écrins respectifs. Une pour vous, une à offrir — ou deux à garder." }}</p>
+        {% if settings.offer_end_date != blank %}<p class="offer-box-content" style="margin: 0; font-weight: 400; color: #17140F;">Jusqu'au {{ settings.offer_end_date }} inclus · une pièce offerte par commande · dans la limite des stocks.</p>{% endif %}
       </div>
+      {% endif %}
 
       <!-- Description -->
       <div class="sans" style="font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .01em;">{{ product.description }}</div>
 
       <!-- Formulaire -->
-      {% form 'product', product %}
+      {% form 'product', product, id: 'ProductForm' %}
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
             <div>
-              <label class="eyebrow" style="font-size: 10px; color: #6b6558; display: block; margin-bottom: 8px;">{{ option.name }}</label>
-              <select name="options[{{ option.name | escape }}]" class="sans" style="padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; width: 100%; max-width: 240px;">
+              <label class="eyebrow" for="Option-{{ forloop.index }}" style="font-size: 10px; color: #6b6558; display: block; margin-bottom: 8px;">{{ option.name }}</label>
+              <select id="Option-{{ forloop.index }}" data-option-index="{{ forloop.index0 }}" class="sans product-option" style="padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; width: 100%; max-width: 240px;">
                 {% for value in option.values %}
                   <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
                 {% endfor %}
@@ -73,7 +77,7 @@
           {% endfor %}
         {% endunless %}
 
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="id" value="{{ current_variant.id }}" id="ProductVariantId">
 
         <div style="display: flex; gap: 12px; margin-top: 8px; align-items: stretch; flex-wrap: wrap;">
           <input type="number" name="quantity" value="1" min="1" class="qty-input" aria-label="Quantité" style="flex-shrink: 0;">
@@ -81,10 +85,10 @@
             type="submit"
             class="btn btn-dark"
             id="AddToCartBtn"
-            {% unless product.selected_or_first_available_variant.available %}disabled style="opacity:.45; cursor:not-allowed;"{% endunless %}
-            style="flex-grow: 1; padding: 14px 24px;"
+            style="flex-grow: 1; padding: 14px 24px;{% unless current_variant.available %} opacity: .45; cursor: not-allowed;{% endunless %}"
+            {% unless current_variant.available %}disabled{% endunless %}
           >
-            {% if product.selected_or_first_available_variant.available %}
+            {% if current_variant.available %}
               {{ 'products.product.add_to_cart' | t }}
             {% else %}
               {{ 'products.product.sold_out' | t }}
@@ -101,11 +105,11 @@
         </div>
         <div class="trust-row">
           <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-          Livraison suivie · Expédition sous 24–48h ouvrées
+          {% if settings.free_shipping %}Livraison offerte{% else %}Livraison suivie{% endif %} · Expédition sous {{ settings.prep_time }}
         </div>
         <div class="trust-row">
           <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-          Retours acceptés sous 30 jours
+          Retours acceptés sous {{ settings.return_days }} jours{% if settings.free_returns %} · gratuits{% endif %}
         </div>
         <div class="trust-row">
           <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
@@ -116,26 +120,26 @@
       <!-- Fiche matières -->
       <div style="margin-top: 8px; border-top: 1px solid rgba(27,24,18,.1);">
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
+          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert — l'éclat de l'émeraude, sans le prix de la pierre naturelle" }}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Métal</span>
+          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Métal</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.metal | default: "Acier inoxydable, finition dorée à l'or fin" }}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Longueur</span>
+          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Longueur</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
         </div>
         {% if section.settings.pendant_size != blank %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Pendentif</span>
+          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pendentif</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.pendant_size }}</span>
         </div>
         {% endif %}
         {% if section.settings.water_resistance != blank %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0;">
-          <span class="eyebrow" style="font-size: 10px; color: #9c968a; white-space: nowrap; margin-right: 16px;">Résistance</span>
+          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Résistance</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.water_resistance }}</span>
         </div>
         {% endif %}
@@ -149,42 +153,101 @@
 <div class="sticky-atc hidden" id="StickyATC">
   <div class="sticky-atc-info">
     <span class="sticky-atc-name">{{ product.title }}</span>
-    <span class="sticky-atc-price">{{ product.price | money }} · 1 acheté · 1 offert</span>
+    <span class="sticky-atc-price"><span data-price>{{ current_variant.price | money }}</span>{% if settings.offer_active %} · 1 acheté · 1 offert{% endif %}</span>
   </div>
-  <button class="sticky-atc-btn" id="StickyATCBtn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-    {% if product.selected_or_first_available_variant.available %}Ajouter{% else %}Épuisé{% endif %}
+  <button type="button" class="sticky-atc-btn" id="StickyATCBtn" {% unless current_variant.available %}disabled{% endunless %}>
+    {% if current_variant.available %}Ajouter{% else %}Épuisé{% endif %}
   </button>
 </div>
 
+<script type="application/json" id="ProductVariantsJSON">{{ product.variants | json }}</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // --- Galerie produit ---
   var mainImg = document.getElementById('MainProductImage');
   var thumbs = document.querySelectorAll('.pdp-thumb');
 
+  function showThumb(thumb) {
+    var fullSrc = thumb.getAttribute('data-full');
+    if (!mainImg || !fullSrc) return;
+
+    // Marquer la vignette active immédiatement
+    thumbs.forEach(function(t) { t.classList.remove('active'); t.setAttribute('aria-pressed', 'false'); });
+    thumb.classList.add('active');
+    thumb.setAttribute('aria-pressed', 'true');
+
+    // Fondu + swap — on retire srcset pour forcer l'usage de src
+    mainImg.style.opacity = '0';
+    setTimeout(function() {
+      mainImg.removeAttribute('srcset');
+      mainImg.removeAttribute('sizes');
+      mainImg.src = fullSrc;
+      mainImg.alt = thumb.getAttribute('data-alt') || mainImg.alt;
+      mainImg.style.opacity = '1';
+    }, 150);
+  }
+
   thumbs.forEach(function(thumb) {
-    thumb.addEventListener('click', function() {
-      var clicked = this;
-      var fullSrc = clicked.getAttribute('data-full');
-      if (!mainImg || !fullSrc) return;
-
-      // Marquer la vignette active immédiatement
-      thumbs.forEach(function(t) { t.classList.remove('active'); });
-      clicked.classList.add('active');
-
-      // Fondu + swap — on retire srcset pour forcer l'usage de src
-      mainImg.style.opacity = '0';
-      setTimeout(function() {
-        mainImg.removeAttribute('srcset');
-        mainImg.removeAttribute('sizes');
-        mainImg.src = fullSrc;
-        mainImg.style.opacity = '1';
-      }, 150);
-    });
+    thumb.addEventListener('click', function() { showThumb(this); });
   });
 
+  // --- Sélection de variante ---
+  var variantsEl = document.getElementById('ProductVariantsJSON');
+  var variants = variantsEl ? JSON.parse(variantsEl.textContent) : [];
+  var selects = document.querySelectorAll('.product-option');
+  var idInput = document.getElementById('ProductVariantId');
+  var addBtn = document.getElementById('AddToCartBtn');
+  var stickyBtnEl = document.getElementById('StickyATCBtn');
+  var moneyFormat = {{ shop.money_format | json }};
+
+  function formatMoney(cents) {
+    var amount = (cents / 100).toFixed(2);
+    var withComma = amount.replace('.', ',');
+    return moneyFormat
+      .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/, withComma)
+      .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/, Math.round(cents / 100))
+      .replace(/\{\{\s*amount_no_decimals\s*\}\}/, Math.round(cents / 100))
+      .replace(/\{\{\s*amount\s*\}\}/, amount);
+  }
+
+  function onOptionChange() {
+    var chosen = Array.prototype.map.call(selects, function(s) { return s.value; });
+    var variant = variants.find(function(v) {
+      return v.options.every(function(opt, i) { return opt === chosen[i]; });
+    });
+    var available = !!(variant && variant.available);
+
+    if (variant) {
+      idInput.value = variant.id;
+      document.querySelectorAll('[data-price]').forEach(function(el) { el.textContent = formatMoney(variant.price); });
+      var compare = document.querySelector('[data-compare]');
+      if (compare) {
+        compare.hidden = !(variant.compare_at_price > variant.price);
+        if (!compare.hidden) compare.lastChild.textContent = formatMoney(variant.compare_at_price);
+      }
+      if (variant.featured_image) {
+        var thumb = document.querySelector('.pdp-thumb[data-image-id="' + variant.featured_image.id + '"]');
+        if (thumb) showThumb(thumb);
+      }
+      var url = new URL(window.location.href);
+      url.searchParams.set('variant', variant.id);
+      window.history.replaceState({}, '', url.toString());
+    }
+
+    [addBtn, stickyBtnEl].forEach(function(b) {
+      if (!b) return;
+      b.disabled = !available;
+      b.style.opacity = available ? '' : '.45';
+      b.style.cursor = available ? '' : 'not-allowed';
+    });
+    if (addBtn) addBtn.textContent = !variant ? {{ 'products.product.unavailable' | t | json }} : (available ? {{ 'products.product.add_to_cart' | t | json }} : {{ 'products.product.sold_out' | t | json }});
+    if (stickyBtnEl) stickyBtnEl.textContent = available ? 'Ajouter' : (variant ? 'Épuisé' : 'Indisponible');
+  }
+
+  selects.forEach(function(s) { s.addEventListener('change', onOptionChange); });
+
   // --- Sticky Add to Cart (mobile) ---
-  var mainBtn = document.getElementById('AddToCartBtn');
+  var mainBtn = addBtn;
   var stickyBar = document.getElementById('StickyATC');
   var stickyBtn = document.getElementById('StickyATCBtn');
 
@@ -205,11 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (stickyBtn) {
     stickyBtn.addEventListener('click', function() {
-      var form = document.querySelector('form[action*="/cart/add"]');
-      if (form) {
-        var tempBtn = form.querySelector('[type="submit"]');
-        if (tempBtn) tempBtn.click();
-      }
+      if (addBtn && !addBtn.disabled) addBtn.click();
     });
   }
 });

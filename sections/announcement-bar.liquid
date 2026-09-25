@@ -1,15 +1,20 @@
+{%- if settings.offer_active -%}
 {% assign bar_text = section.settings.text | default: "Offre de lancement · Une pièce achetée · Une pièce offerte" %}
-<div style="width: 100%; background: #17140F; border-bottom: 1px solid rgba(176,141,87,.14); padding: 10px 0; overflow: hidden;" class="marquee-wrap">
+{% if settings.offer_end_date != blank %}{% assign bar_text = bar_text | append: " · Jusqu'au " | append: settings.offer_end_date %}{% endif %}
+<div style="width: 100%; background: #17140F; border-bottom: 1px solid rgba(176,141,87,.14); padding: 10px 0; overflow: hidden; position: relative;" class="marquee-wrap" id="AnnouncementBar">
+  <p class="visually-hidden">{{ bar_text }}</p>
   <div class="marquee-track" aria-hidden="true">
-    {% for i in (1..4) %}<span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em; flex-shrink: 0;">{{ bar_text }}</span><span class="marquee-dot">◆</span>{% endfor %}{% for i in (1..4) %}<span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em; flex-shrink: 0;">{{ bar_text }}</span><span class="marquee-dot">◆</span>{% endfor %}
+    {% for i in (1..8) %}<span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em; flex-shrink: 0;">{{ bar_text }}</span><span class="marquee-dot">◆</span>{% endfor %}
   </div>
+  <button type="button" class="marquee-toggle" aria-pressed="false" aria-label="Mettre en pause le défilement" onclick="var w=document.getElementById('AnnouncementBar');var p=w.classList.toggle('paused');this.setAttribute('aria-pressed',p);this.setAttribute('aria-label',p?'Relancer le défilement':'Mettre en pause le défilement');this.innerHTML=p?'&#9654;':'&#10074;&#10074;';">&#10074;&#10074;</button>
 </div>
+{%- endif -%}
 
 {% schema %}
 {
   "name": "Bandeau d'annonce",
   "settings": [
-    { "type": "text", "id": "text", "label": "Texte", "default": "Offre de lancement · Une pièce achetée · Une pièce offerte" }
+    { "type": "text", "id": "text", "label": "Texte", "default": "Offre de lancement · Une pièce achetée · Une pièce offerte", "info": "La date de fin (Paramètres du thème → Offre de lancement) est ajoutée automatiquement." }
   ]
 }
 {% endschema %}

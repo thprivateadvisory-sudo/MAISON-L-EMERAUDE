@@ -13,7 +13,11 @@
   <title>{{ page_title }}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
   {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  {% if template.name == 'cart' or template.name == 'search' or template.name == '404' %}
+    <meta name="robots" content="noindex, follow">
+  {% else %}
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  {% endif %}
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="{{ shop.name }}">
@@ -22,22 +26,27 @@
   <meta property="og:title" content="{{ page_title | escape }}">
   {% if page_description %}<meta property="og:description" content="{{ page_description | escape }}">{% endif %}
   <meta property="og:url" content="{{ canonical_url }}">
-  {% if product.featured_image %}
-    <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+  {%- liquid
+    if template.name == 'product' and product.featured_image
+      assign og_image = product.featured_image
+    elsif settings.share_image != blank
+      assign og_image = settings.share_image
+    endif
+  -%}
+  {% if og_image %}
+    <meta property="og:image" content="https:{{ og_image | image_url: width: 1200 }}">
+    <meta property="og:image:secure_url" content="https:{{ og_image | image_url: width: 1200 }}">
     <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-  {% elsif settings.share_image %}
-    <meta property="og:image" content="{{ settings.share_image | image_url: width: 1200 }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:height" content="{{ 1200 | divided_by: og_image.aspect_ratio | round }}">
+    <meta property="og:image:alt" content="{{ og_image.alt | default: page_title | escape }}">
   {% endif %}
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@maisonlemeraude">
+  {% if settings.twitter_handle != blank %}<meta name="twitter:site" content="@{{ settings.twitter_handle | remove: '@' }}">{% endif %}
   <meta name="twitter:title" content="{{ page_title | escape }}">
   {% if page_description %}<meta name="twitter:description" content="{{ page_description | escape }}">{% endif %}
-  {% if product.featured_image %}<meta name="twitter:image" content="{{ product.featured_image | image_url: width: 1200 }}">{% elsif settings.share_image %}<meta name="twitter:image" content="{{ settings.share_image | image_url: width: 1200 }}">{% endif %}
+  {% if og_image %}<meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">{% endif %}
 
   <!-- Schema.org WebSite + Organisation (toutes les pages) -->
   <script type="application/ld+json">
@@ -67,14 +76,14 @@
         "url": {{ shop.url | json }},
         "logo": {
           "@type": "ImageObject",
-          "url": {{ 'logo.png' | asset_url | json }},
-          "width": 400,
-          "height": 100
+          "url": {{ 'logo.png' | asset_url | prepend: 'https:' | json }},
+          "width": 360,
+          "height": 110
         },
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "customer service",
-          "email": "contact@maisonlemeraude.fr",
+          "email": {{ settings.contact_email | default: 'contact@maisonlemeraude.fr' | json }},
           "availableLanguage": "French"
         },
         "sameAs": [
@@ -96,10 +105,11 @@
     "name": {{ product.title | json }},
     "description": {{ product.description | strip_html | strip_newlines | json }},
     "url": {{ request.origin | append: product.url | json }},
-    {% if product.featured_image %}
+    {% if product.images.size > 0 %}
     "image": [
-      {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}{% for img in product.images %}{% unless forloop.first == true and product.images.size == 1 %},
-      {{ img | image_url: width: 1200 | prepend: 'https:' | json }}{% endunless %}{% endfor %}
+      {%- for img in product.images -%}
+      {{ img | image_url: width: 1200 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}
+      {%- endfor %}
     ],
     {% endif %}
     "sku": {{ product.selected_or_first_available_variant.sku | json }},
@@ -124,6 +134,7 @@
         "@type": "Organization",
         "name": "Maison L'Émeraude"
       },
+      {%- if settings.free_shipping %}
       "shippingDetails": {
         "@type": "OfferShippingDetails",
         "shippingRate": {
@@ -151,12 +162,14 @@
           "addressCountry": "FR"
         }
       },
+      {%- endif %}
       "hasMerchantReturnPolicy": {
         "@type": "MerchantReturnPolicy",
+        "applicableCountry": "FR",
         "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
-        "merchantReturnDays": 30,
+        "merchantReturnDays": {{ settings.return_days | default: 30 }},
         "returnMethod": "https://schema.org/ReturnByMail",
-        "returnFees": "https://schema.org/FreeReturn"
+        "returnFees": {% if settings.free_returns %}"https://schema.org/FreeReturn"{% else %}"https://schema.org/ReturnFeesCustomerResponsibility"{% endif %}
       }
     }
   }
@@ -187,26 +200,25 @@
   </script>
   {% endif %}
 
-  <!-- Fonts -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@300;400;500&display=swap">
+  <!-- Polices auto-hébergées (pas d'appel à Google Fonts : RGPD + performance) -->
+  {{ 'montserrat.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  {{ 'cormorant-garamond.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
   <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
 
   <!-- Preload image héro pour Core Web Vitals -->
   {% if template == 'index' %}
-  <link rel="preload" as="image" href="{{ 'paris.jpg' | asset_url }}" fetchpriority="high">
+  <link rel="preload" as="image" href="{{ 'paris.jpg' | asset_url }}" imagesrcset="{{ 'paris-600.jpg' | asset_url }} 600w, {{ 'paris.jpg' | asset_url }} 1145w" imagesizes="100vw" fetchpriority="high">
   {% endif %}
   {% if template == 'product' and product.featured_image %}
-  <link rel="preload" as="image" href="{{ product.featured_image | image_url: width: 1000 }}" fetchpriority="high">
+  <link rel="preload" as="image" href="{{ product.featured_image | image_url: width: 1000 }}" imagesrcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 1000 }} 1000w" imagesizes="(max-width: 860px) 100vw, 50vw" fetchpriority="high">
   {% endif %}
 
   {{ content_for_header }}
 </head>
-<body>
+<body class="template-{{ template.name }}">
+  <a class="skip-link" href="#MainContent">Aller au contenu</a>
   {% sections 'header-group' %}
-  <main id="MainContent">
+  <main id="MainContent" tabindex="-1">
     {{ content_for_layout }}
   </main>
   {% sections 'footer-group' %}

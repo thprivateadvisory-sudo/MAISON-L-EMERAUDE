@@ -1,0 +1,30 @@
+<div class="sect" style="width: 100%;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: clamp(40px, 6vw, 64px);">
+      <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Collection</span>
+      <h1 class="serif" style="margin: 0; font-size: clamp(26px, 4.5vw, 38px); font-weight: 300;">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="sans" style="max-width: 560px; font-size: 14px; font-weight: 300; line-height: 1.85; color: #4A463D;">{{ collection.description }}</div>
+      {% endif %}
+    </div>
+
+    {% paginate collection.products by 24 %}
+      {% if collection.products.size == 0 %}
+        <p class="sans" style="text-align: center; color: #4A463D; font-size: 14px; font-weight: 300;">Aucune pièce dans cette collection pour le moment.</p>
+      {% else %}
+        <div class="grid-4">
+          {% for item in collection.products %}
+            {% render 'product-card', item: item %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if paginate.pages > 1 %}
+        <nav class="sans" aria-label="Pagination" style="margin-top: 48px; text-align: center; font-size: 13px;">{{ paginate | default_pagination: next: 'Suivant', previous: 'Précédent' }}</nav>
+      {% endif %}
+    {% endpaginate %}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Collection", "settings": [] }
+{% endschema %}
