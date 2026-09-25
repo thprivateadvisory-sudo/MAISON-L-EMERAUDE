@@ -29,6 +29,15 @@
     ]
   },
   {
+    "name": "Offre parure",
+    "settings": [
+      { "type": "checkbox", "id": "bundle_active", "label": "Offre parure active (collier + boucles d'oreilles)", "default": true },
+      { "type": "number", "id": "bundle_price", "label": "Prix de la parure (€)", "default": 45, "info": "Le prix barré et l'économie sont calculés à partir des prix des deux produits." },
+      { "type": "text", "id": "bundle_discount_code", "label": "Code de réduction appliqué", "default": "PARURE", "info": "Laisser vide si la remise est une réduction automatique." },
+      { "type": "paragraph", "content": "La remise doit exister dans Shopify : Remises → Créer une réduction → « Achetez X, obtenez Y ». Le client achète le collier, il obtient les boucles d'oreilles avec une réduction de montant égale à l'économie affichée (ex. 8,90 €), limitée à 1 utilisation par commande. Le code doit être identique à celui saisi ci-dessus." }
+    ]
+  },
+  {
     "name": "Livraison & retours",
     "settings": [
       { "type": "text", "id": "prep_time", "label": "Délai de préparation", "default": "24 à 48 heures ouvrées" },

@@ -1,0 +1,111 @@
+{%- comment -%}
+  Offre parure : ajoute les deux pièces au panier en un clic, puis applique le code de réduction.
+  Paramètres : piece_a, piece_b (produits). Réglages : Paramètres du thème → Offre parure.
+  Sans offre active ou si une pièce est épuisée, affiche un simple lien vers piece_b.
+{%- endcomment -%}
+{%- liquid
+  assign variant_a = piece_a.selected_or_first_available_variant
+  assign variant_b = piece_b.first_available_variant
+  assign bundle_ok = false
+  if settings.bundle_active and variant_a.available and variant_b.available and settings.bundle_price > 0
+    assign bundle_ok = true
+  endif
+  assign regular_total = variant_a.price | plus: variant_b.price
+  assign bundle_total = settings.bundle_price | times: 100 | round
+  assign bundle_saving = regular_total | minus: bundle_total
+  if bundle_saving <= 0
+    assign bundle_ok = false
+  endif
+-%}
+
+{%- if bundle_ok -%}
+<div class="bundle-card">
+  <div class="bundle-head">
+    <span class="bundle-eyebrow">Composez votre parure</span>
+    <span class="bundle-badge">−{{ bundle_saving | money }}</span>
+  </div>
+
+  <div class="bundle-pieces">
+    {% for piece in (1..2) %}
+      {% if forloop.first %}{% assign p = piece_a %}{% else %}{% assign p = piece_b %}{% endif %}
+      <a href="{{ p.url }}" class="bundle-piece">
+        {% if p.featured_image %}
+          <img src="{{ p.featured_image | image_url: width: 200 }}" alt="" width="72" height="72" loading="lazy">
+        {% endif %}
+        <span class="bundle-piece-name">{{ p.title }}</span>
+        <span class="bundle-piece-price">{% if forloop.first %}{{ variant_a.price | money }}{% else %}{{ variant_b.price | money }}{% endif %}</span>
+      </a>
+      {% if forloop.first %}<span class="bundle-plus" aria-hidden="true">+</span>{% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="bundle-total">
+    <span class="bundle-total-label">Les deux bijoux</span>
+    <span class="bundle-prices">
+      <s class="bundle-old"><span class="visually-hidden">Prix séparés :</span>{{ regular_total | money }}</s>
+      <span class="bundle-new">{{ bundle_total | money }}</span>
+    </span>
+  </div>
+
+  <button
+    type="button"
+    class="btn btn-dark bundle-btn"
+    data-bundle-add
+    data-variant-a="{{ variant_a.id }}"
+    data-variant-b="{{ variant_b.id }}"
+    data-code="{{ settings.bundle_discount_code | strip | escape }}"
+  >Ajouter la parure au panier · {{ bundle_total | money }}</button>
+
+  <p class="bundle-note">Un clic ajoute le collier et les boucles d'oreilles à votre panier. La remise de {{ bundle_saving | money }} est appliquée automatiquement.</p>
+  <p class="bundle-error" role="alert" hidden>Un souci est survenu lors de l'ajout. Merci de réessayer.</p>
+</div>
+
+<script>
+if (!window.mlBundleInit) {
+  window.mlBundleInit = true;
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-bundle-add]');
+    if (!btn || btn.disabled) return;
+    var card = btn.closest('.bundle-card');
+    var err = card ? card.querySelector('.bundle-error') : null;
+    var label = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Ajout en cours…';
+    if (err) err.hidden = true;
+
+    fetch({{ routes.cart_add_url | append: '.js' | json }}, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ items: [
+        { id: Number(btn.getAttribute('data-variant-a')), quantity: 1 },
+        { id: Number(btn.getAttribute('data-variant-b')), quantity: 1 }
+      ] })
+    }).then(function(res) {
+      if (!res.ok) throw new Error('cart');
+      var code = btn.getAttribute('data-code');
+      var cartUrl = {{ routes.cart_url | json }};
+      // /discount/CODE enregistre le code puis renvoie vers le panier
+      window.location.href = code
+        ? '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(cartUrl)
+        : cartUrl;
+    }).catch(function() {
+      btn.disabled = false;
+      btn.textContent = label;
+      if (err) err.hidden = false;
+    });
+  });
+}
+</script>
+{%- else -%}
+<a href="{{ piece_b.url }}" class="pdp-pair">
+  {% if piece_b.featured_image %}
+    <img src="{{ piece_b.featured_image | image_url: width: 160 }}" alt="" width="64" height="64" loading="lazy">
+  {% endif %}
+  <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+    <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Composez votre parure</span>
+    <span class="serif" style="font-size: 17px; color: #17140F;">{{ piece_b.title }}</span>
+    <span class="sans" style="font-size: 12px; font-weight: 300; color: #4A463D;">{{ piece_b.price | money }}</span>
+  </span>
+  <span aria-hidden="true" style="margin-left: auto; color: #B08D57; font-size: 18px;">→</span>
+</a>
+{%- endif -%}
