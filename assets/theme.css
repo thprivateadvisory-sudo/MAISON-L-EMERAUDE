@@ -423,3 +423,18 @@ html { scroll-behavior: smooth; }
   .btn::after { display: none; }
   #MainProductImage, .packaging-img-wrap img { transition: opacity .3s ease !important; }
 }
+
+/* ---- BOUTIQUE — BIENTÔT À PARIS ---- */
+.boutique-img-wrap { position: relative; width: 100%; aspect-ratio: 1 / 1; overflow: hidden; background: #EAE4D7; }
+.boutique-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 50%; transition: transform 1.2s cubic-bezier(.2,.6,.2,1); }
+.boutique-img-wrap:hover img { transform: scale(1.025); }
+.boutique-badge { position: absolute; top: clamp(14px, 2vw, 22px); left: clamp(14px, 2vw, 22px); padding: 9px 16px; background: rgba(251,248,242,.94); color: #17140F; font-size: 9px; font-weight: 400; letter-spacing: .24em; text-transform: uppercase; }
+.boutique-badge::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #1F4A3A; margin-right: 10px; vertical-align: 1px; }
+.boutique-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid rgba(27,24,18,.1); border-bottom: 1px solid rgba(27,24,18,.1); margin-top: 6px; }
+.boutique-detail { display: flex; flex-direction: column; gap: 6px; padding: 18px 0; }
+.boutique-detail + .boutique-detail { border-left: 1px solid rgba(27,24,18,.1); padding-left: 24px; }
+.boutique-detail-label { font-size: 9.5px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #B08D57; }
+.boutique-detail-value { font-size: 19px; font-weight: 400; color: #17140F; }
+@media (max-width: 860px) {
+  .boutique-img-wrap { aspect-ratio: 4 / 5; }
+}
