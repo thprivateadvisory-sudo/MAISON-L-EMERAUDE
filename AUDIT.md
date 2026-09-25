@@ -20,7 +20,7 @@ Tous les points corrigeables dans le code ont été traités. Validation : Shopi
 | 1.4 Offre 1+1 | ✅ réglages globaux `offer_active` + `offer_end_date` (bandeau, fiche, panier, menu) · ⚠️ créer la réduction « Achetez X, obtenez Y » dans l'admin |
 | 1.5 Pages légales | ✅ pied de page basé sur les politiques Shopify · ⚠️ remplir Paramètres → Politiques (CGV, mentions légales, médiateur) |
 | 1.6 RGPD | ✅ polices auto-hébergées, lien confidentialité newsletter · ⚠️ activer la bannière cookies Shopify |
-| 2.1 Email | ✅ `contact@maisonlemeraude.fr` partout (le domaine .com n'existe pas) |
+| 2.1 Email | ✅ `maisonlemeraude@outlook.fr` partout (adresse confirmée) |
 | 2.2 Livraison / retours | ✅ réglages `free_shipping` / `free_returns` (décochés par défaut) pilotant site + schéma · TTC + frais de port au panier |
 | 2.3 Divers | ✅ faux bouton retiré de l'image d'offre (recadrée), liens sociaux nettoyés, `twitter:site` en réglage, fautes corrigées |
 | 3.x Bugs | ✅ tous corrigés (sticky, variantes, style dupliqué, moyenne des avis, étoiles, padding sticky ATC, scroll-margin, image panier, remises au panier) · microdata supprimée |

@@ -5,7 +5,7 @@
     "theme_version": "1.1.0",
     "theme_author": "Maison L'Émeraude",
     "theme_documentation_url": "https://maisonlemeraude.fr",
-    "theme_support_email": "contact@maisonlemeraude.fr"
+    "theme_support_email": "maisonlemeraude@outlook.fr"
   },
   {
     "name": "Partage & réseaux",
@@ -17,7 +17,7 @@
   {
     "name": "Contact",
     "settings": [
-      { "type": "text", "id": "contact_email", "label": "Adresse email de contact", "default": "contact@maisonlemeraude.fr" }
+      { "type": "text", "id": "contact_email", "label": "Adresse email de contact", "default": "maisonlemeraude@outlook.fr" }
     ]
   },
   {
