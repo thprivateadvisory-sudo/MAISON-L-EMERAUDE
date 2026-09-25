@@ -187,11 +187,9 @@
       {% endif %}
 
       {% if pair_product %}
-      <!-- Parure : pièce complémentaire -->
-      <a href="{{ pair_product.url }}" class="pdp-pair">
-        {% if pair_product.featured_image %}
-          <img src="{{ pair_product.featured_image | image_url: width: 160 }}" alt="" width="64" height="64" loading="lazy">
-        {% endif %}
+      <!-- Parure : pièce complémentaire / offre duo -->
+      {% render 'bundle-offer', piece_a: product, piece_b: pair_product %}
+      {% endif %}
         <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
           <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Composez votre parure</span>
           <span class="serif" style="font-size: 17px; color: #17140F;">{{ pair_product.title }}</span>
