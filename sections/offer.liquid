@@ -1,5 +1,16 @@
 {%- if settings.offer_active -%}
-{% assign featured_product = section.settings.product | default: collections.all.products.first %}
+{%- liquid
+  # Pièce signature (collier) : on écarte les boucles d'oreilles du choix par défaut
+  assign featured_product = section.settings.product
+  if featured_product == blank
+    for p in collections.all.products
+      unless p.title contains 'oreilles'
+        assign featured_product = p
+        break
+      endunless
+    endfor
+  endif
+-%}
 
 <div id="offre" style="width: 100%; background: #F3EEE3; padding: clamp(72px, 12vw, 140px) clamp(18px, 5vw, 36px);">
   <div style="max-width: 1100px; margin: 0 auto;">

@@ -1,4 +1,15 @@
-{% assign featured_product = section.settings.product | default: collections.all.products.first %}
+{%- liquid
+  # Pièce signature (collier) : on écarte les boucles d'oreilles du choix par défaut
+  assign featured_product = section.settings.product
+  if featured_product == blank
+    for p in collections.all.products
+      unless p.title contains 'oreilles'
+        assign featured_product = p
+        break
+      endunless
+    endfor
+  endif
+-%}
 
 <div id="piece" style="width: 100%; background: #FBF8F2;">
   <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; min-height: 640px;" class="piece-discover-grid">
