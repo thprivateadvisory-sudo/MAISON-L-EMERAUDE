@@ -1,1 +1,41 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Maison L'Émeraude",
+    "theme_version": "1.1.0",
+    "theme_author": "Maison L'Émeraude",
+    "theme_documentation_url": "https://maisonlemeraude.fr",
+    "theme_support_email": "maisonlemeraude@outlook.fr"
+  },
+  {
+    "name": "Partage & réseaux",
+    "settings": [
+      { "type": "image_picker", "id": "share_image", "label": "Image de partage (réseaux sociaux)", "info": "Affichée quand l'accueil est partagé sur WhatsApp, Facebook, Instagram… Format conseillé : 1200 × 630 px." },
+      { "type": "text", "id": "twitter_handle", "label": "Compte X / Twitter (sans @)", "info": "Laisser vide si la Maison n'a pas de compte." }
+    ]
+  },
+  {
+    "name": "Contact",
+    "settings": [
+      { "type": "text", "id": "contact_email", "label": "Adresse email de contact", "default": "maisonlemeraude@outlook.fr" }
+    ]
+  },
+  {
+    "name": "Offre de lancement",
+    "settings": [
+      { "type": "checkbox", "id": "offer_active", "label": "Offre 1 acheté · 1 offert active", "default": true, "info": "Décocher à la fin de l'offre : tous les messages (bandeau, fiche, panier) disparaissent." },
+      { "type": "text", "id": "offer_end_date", "label": "Date de fin de l'offre", "info": "Obligatoire pour une promotion. Ex : 31 octobre 2026. Affichée à côté de l'offre." },
+      { "type": "paragraph", "content": "Pour que la pièce offerte apparaisse dans le panier et la commande, créez une réduction automatique « Achetez X, obtenez Y » (Remises → Créer une réduction)." }
+    ]
+  },
+  {
+    "name": "Livraison & retours",
+    "settings": [
+      { "type": "text", "id": "prep_time", "label": "Délai de préparation", "default": "24 à 48 heures ouvrées" },
+      { "type": "text", "id": "shipping_delay", "label": "Délai de livraison", "default": "3 à 7 jours ouvrés" },
+      { "type": "range", "id": "return_days", "label": "Délai de retour", "min": 14, "max": 60, "step": 1, "unit": "j", "default": 30 },
+      { "type": "checkbox", "id": "free_shipping", "label": "Livraison offerte", "default": false, "info": "Cocher uniquement si c'est le cas : l'information est affichée sur le site et transmise à Google." },
+      { "type": "checkbox", "id": "free_returns", "label": "Retours gratuits", "default": false, "info": "Cocher uniquement si les frais de retour sont pris en charge par la Maison." }
+    ]
+  }
+]

@@ -8,15 +8,17 @@
           src="{{ section.settings.image | image_url: width: 1200 }}"
           srcset="{{ section.settings.image | image_url: width: 700 }} 700w, {{ section.settings.image | image_url: width: 1200 }} 1200w"
           sizes="(max-width: 860px) 100vw, 50vw"
-          alt="Façade de la future boutique Maison L'Émeraude à Paris"
-          width="1254" height="1254"
+          alt="{{ section.settings.image.alt | default: "Façade de la future boutique Maison L'Émeraude à Paris" }}"
+          width="1200" height="{{ 1200 | divided_by: section.settings.image.aspect_ratio | round }}"
           loading="lazy"
         >
       {% else %}
         <img
           src="{{ 'boutique-paris.jpg' | asset_url }}"
+          srcset="{{ 'boutique-paris-600.jpg' | asset_url }} 600w, {{ 'boutique-paris.jpg' | asset_url }} 1100w"
+          sizes="(max-width: 860px) 100vw, 50vw"
           alt="Façade de la future boutique Maison L'Émeraude à Paris, vitrine en travaux avec la bannière « Bientôt à Paris »"
-          width="1254" height="1254"
+          width="1100" height="1100"
           loading="lazy"
         >
       {% endif %}
@@ -25,7 +27,7 @@
 
     <!-- Texte -->
     <div style="display: flex; flex-direction: column; gap: 22px;">
-      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">{{ section.settings.eyebrow | default: "La Boutique" }}</span>
+      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">{{ section.settings.eyebrow | default: "La Boutique" }}</span>
       <span class="ornament-grow ml-reveal" style="width: 28px; margin: 0;"></span>
       <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.4vw, 42px); line-height: 1.15; font-weight: 300;">{{ section.settings.headline | default: "Bientôt à Paris." }}</h2>
       <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em; max-width: 480px;">{{ section.settings.body | default: "La Maison prépare sa première adresse. Une boutique pensée comme un écrin, où découvrir nos pièces, les essayer et se laisser conseiller. Les travaux avancent — nous avons hâte de vous y accueillir." }}</p>

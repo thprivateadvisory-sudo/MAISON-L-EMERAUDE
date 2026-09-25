@@ -1,3 +1,4 @@
+{% assign featured_product = section.settings.product | default: collections.all.products.first %}
 {% assign has_reviews = false %}
 {% assign review_count = 0 %}
 {% assign rating_sum = 0 %}
@@ -5,17 +6,33 @@
   {% if block.settings.text != blank %}
     {% assign has_reviews = true %}
     {% assign review_count = review_count | plus: 1 %}
-    {% assign rating_sum = rating_sum | plus: block.settings.rating | default: 5 %}
+    {% assign rating_sum = rating_sum | plus: block.settings.rating %}
   {% endif %}
 {% endfor %}
 
 {% if has_reviews %}
-{% assign avg_rating = rating_sum | divided_by: review_count | times: 1.0 %}
+{% assign avg_rating = rating_sum | times: 1.0 | divided_by: review_count %}
+{% assign avg_rounded = avg_rating | round %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Product",
-  "name": "La Goutte d'Émeraude — Maison L'Émeraude",
+  {%- if featured_product %}
+  "@id": {{ request.origin | append: featured_product.url | append: '#product' | json }},
+  "name": {{ featured_product.title | json }},
+  "url": {{ request.origin | append: featured_product.url | json }},
+  {%- if featured_product.featured_image %}
+  "image": {{ featured_product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }},
+  {%- endif %}
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ featured_product.price | divided_by: 100.0 | json }},
+    "availability": {% if featured_product.available %}"https://schema.org/InStock"{% else %}"https://schema.org/OutOfStock"{% endif %}
+  },
+  {%- else %}
+  "name": "La Goutte d'Émeraude",
+  {%- endif %}
   "brand": { "@type": "Brand", "name": "Maison L'Émeraude" },
   "aggregateRating": {
     "@type": "AggregateRating",
@@ -55,17 +72,16 @@
 
       <!-- ===== ÉTAT AVEC VRAIS AVIS ===== -->
       <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 72px);">
-        <span class="eyebrow ml-reveal" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Avis clients</span>
-        {% assign total = section.blocks.size %}
+        <span class="eyebrow ml-reveal" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Avis clients</span>
         <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); font-weight: 300;">Ce qu'elles en disent</h2>
         <!-- Note globale -->
         <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
-          <div style="display: flex; gap: 3px;">
+          <div style="display: flex; gap: 3px;" role="img" aria-label="Note moyenne : {{ avg_rating | round: 1 }} sur 5">
             {% for i in (1..5) %}
-              <svg width="14" height="14" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#B08D57" stroke="none"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" {% if i <= avg_rounded %}fill="#B08D57" stroke="none"{% else %}fill="none" stroke="#C8B89A" stroke-width="1.5"{% endif %}/></svg>
             {% endfor %}
           </div>
-          <span class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558;">{{ total }} avis</span>
+          <span class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558;">{{ avg_rating | round: 1 | replace: '.', ',' }}/5 · {{ review_count }} avis</span>
         </div>
       </div>
 
@@ -75,10 +91,10 @@
             <div style="padding: clamp(24px, 3vw, 32px); border: 1px solid rgba(27,24,18,.1); display: flex; flex-direction: column; gap: 14px; background: #FBF8F2;" {{ block.shopify_attributes }}>
 
               <!-- Étoiles -->
-              <div style="display: flex; gap: 3px;">
-                {% assign stars = block.settings.rating | default: 5 %}
+              <div style="display: flex; gap: 3px;" role="img" aria-label="Note : {{ block.settings.rating }} sur 5">
+                {% assign stars = block.settings.rating %}
                 {% for i in (1..5) %}
-                  <svg width="13" height="13" viewBox="0 0 24 24">
+                  <svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true">
                     {% if i <= stars %}
                       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="#B08D57" stroke="none"/>
                     {% else %}
@@ -96,11 +112,11 @@
                 <div>
                   <span class="sans" style="font-size: 12.5px; font-weight: 400; color: #17140F; display: block;">{{ block.settings.author | default: "Cliente" }}</span>
                   {% if block.settings.date != blank %}
-                    <span class="sans" style="font-size: 11px; font-weight: 300; color: #9c968a; display: block; margin-top: 2px;">{{ block.settings.date }}</span>
+                    <span class="sans" style="font-size: 11px; font-weight: 300; color: #6b6558; display: block; margin-top: 2px;">{{ block.settings.date }}</span>
                   {% endif %}
                 </div>
                 {% if block.settings.verified %}
-                  <span class="sans" style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #B08D57; letter-spacing: .06em; text-transform: uppercase;">
+                  <span class="sans" style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #7A5C2E; letter-spacing: .06em; text-transform: uppercase;">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                     Achat vérifié
                   </span>
@@ -121,7 +137,7 @@
 
         <!-- Gauche : intention éditoriale -->
         <div style="display: flex; flex-direction: column; gap: 28px;">
-          <span class="eyebrow" style="font-size: 10px; color: #B08D57; letter-spacing: .28em;">Avis clients</span>
+          <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Avis clients</span>
           <h2 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 36px); font-weight: 300; line-height: 1.2;">Les premiers témoignages arrivent.</h2>
           <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La Maison vient d'ouvrir. Les premières pièces sont en route. Les premiers avis seront publiés ici, de clientes ayant réellement reçu et porté leur bijou — sans filtre, sans mise en scène.</p>
 
@@ -132,7 +148,7 @@
 
           <!-- Ce que nos clientes pourront partager -->
           <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
-            <span class="eyebrow" style="font-size: 9px; color: #9c968a; letter-spacing: .18em;">Après réception, elles pourront témoigner sur</span>
+            <span class="eyebrow" style="font-size: 9px; color: #6b6558; letter-spacing: .18em;">Après réception, elles pourront témoigner sur</span>
             <div style="display: flex; flex-direction: column; gap: 7px;">
               <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>La qualité du bijou</span>
               <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>L'expérience d'ouverture de l'écrin</span>
@@ -141,8 +157,8 @@
           </div>
         </div>
 
-        <!-- Droite : aperçu visuel de la section à venir -->
-        <div style="display: flex; flex-direction: column; gap: 16px;">
+        <!-- Droite : aperçu visuel de la section à venir (décoratif) -->
+        <div style="display: flex; flex-direction: column; gap: 16px;" aria-hidden="true">
 
           <!-- 3 cartes "en attente" au design sobre -->
           {% for i in (1..3) %}
@@ -161,7 +177,7 @@
               <!-- Auteur placeholder -->
               <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
                 <div style="height: 8px; background: rgba(27,24,18,.06); border-radius: 1px; width: 30%;"></div>
-                <span class="sans" style="font-size: 9.5px; letter-spacing: .08em; color: rgba(27,24,18,.2); text-transform: uppercase;">Bientôt</span>
+                <span class="sans" style="font-size: 9.5px; letter-spacing: .08em; color: #6b6558; text-transform: uppercase;">Bientôt</span>
               </div>
             </div>
           {% endfor %}
@@ -183,7 +199,9 @@
 {% schema %}
 {
   "name": "Avis clients",
-  "settings": [],
+  "settings": [
+    { "type": "product", "id": "product", "label": "Pièce évaluée" }
+  ],
   "blocks": [
     {
       "type": "review",

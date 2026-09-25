@@ -11,14 +11,14 @@
     "piece-intro": {
       "type": "piece-intro",
       "settings": {
-        "description": "Une goutte d'émeraude entourée d'un halo de zircons blancs, suspendue à une chaîne fine en acier doré. La première pièce de la Maison."
+        "description": "Une goutte de cristal vert émeraude entourée d'un halo de pierres blanches, suspendue à une chaîne fine en acier doré. La première pièce de la Maison."
       }
     },
     "detail-macro": {
       "type": "detail-macro",
       "settings": {
         "stone": "Cristal synthétique vert, taille goutte",
-        "secondary_stone": "Zircons blancs (halo)",
+        "secondary_stone": "Oxydes de zirconium blancs (halo)",
         "metal": "Acier inoxydable, finition dorée à l'or fin",
         "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm"
       }
@@ -50,24 +50,21 @@
       "settings": {
         "headline": "Une pour vous.<br>Une à offrir.",
         "body": "Pour fêter l'ouverture de la Maison, nous avons décidé d'offrir une seconde pièce à chaque commande passée pendant cette période de lancement. Deux bijoux. Deux écrins. Un seul prix.",
-        "delivery": "3 à 7 jours ouvrés",
         "disclaimer": "Offre valable pendant la période de lancement uniquement, dans la limite des stocks disponibles. Un seul bijou supplémentaire par commande."
       }
     },
     "packaging": {
-      "type": "packaging",
-      "settings": {
-        "delivery_time": "3 à 7 jours ouvrés"
-      }
+      "type": "packaging"
     },
     "trust": {
       "type": "trust",
       "settings": {
-        "shipping_delay": "3 à 7 jours ouvrés",
         "return_policy": "Retour simple, à partir de la réception"
       }
     },
-    "reviews": { "type": "reviews" },
+    "reviews": {
+      "type": "reviews"
+    },
     "faq": {
       "type": "faq",
       "blocks": {
@@ -82,21 +79,21 @@
           "type": "question",
           "settings": {
             "question": "Comment fonctionne l'offre 1 acheté · 1 offert ?",
-            "answer": "<p>Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront envoyés dans le même colis. Deux La Goutte d'Émeraude. Un seul règlement.</p>"
+            "answer": "<p>Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte (une pièce offerte par commande). Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront envoyés dans le même colis. L'offre est valable jusqu'à la date indiquée sur le site, dans la limite des stocks disponibles.</p>"
           }
         },
         "q3": {
           "type": "question",
           "settings": {
             "question": "Quelle est la matière du bijou ?",
-            "answer": "<p>La chaîne et la monture sont en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable résiste à l'oxydation dans le temps et convient aux peaux sensibles.</p>"
+            "answer": "<p>La chaîne et la monture sont en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable résiste bien à l'oxydation dans le temps.</p>"
           }
         },
         "q4": {
           "type": "question",
           "settings": {
             "question": "La pierre est-elle une vraie émeraude ?",
-            "answer": "<p>Non, et nous souhaitons être transparents à ce sujet. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré de zircons blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible, sans prétendre être une pierre naturelle. C'est un choix délibéré de notre part.</p>"
+            "answer": "<p>Non, et nous souhaitons être transparents à ce sujet. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré d'oxydes de zirconium blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible, sans prétendre être une pierre naturelle. C'est un choix délibéré de notre part.</p>"
           }
         },
         "q5": {
@@ -145,12 +142,36 @@
           "type": "question",
           "settings": {
             "question": "Comment contacter la Maison ?",
-            "answer": "<p>Vous pouvez nous écrire via le formulaire de contact en bas de cette page, ou directement par email. Nous répondons dans un délai de 24 à 48 heures ouvrées.</p>"
+            "answer": "<p>Vous pouvez nous écrire via le formulaire de contact en bas de cette page, ou directement à maisonlemeraude@outlook.fr. Nous répondons dans un délai de 24 à 48 heures ouvrées.</p>"
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10", "q11"]
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8",
+        "q9",
+        "q10",
+        "q11"
+      ]
     }
   },
-  "order": ["hero", "piece-intro", "detail-macro", "storytelling", "boutique-paris", "lifestyle-banner", "offer", "packaging", "trust", "reviews", "faq"]
+  "order": [
+    "hero",
+    "piece-intro",
+    "detail-macro",
+    "storytelling",
+    "boutique-paris",
+    "lifestyle-banner",
+    "offer",
+    "packaging",
+    "trust",
+    "reviews",
+    "faq"
+  ]
 }
