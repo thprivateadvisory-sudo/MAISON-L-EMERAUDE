@@ -26,7 +26,7 @@
 <div id="nouveaute" class="np-section">
   <div class="np-grid">
 
-    <!-- Galerie -->
+    {% # Galerie %}
     <div class="np-gallery ml-reveal">
       <div class="np-main">
         <span class="np-badge">{{ section.settings.badge | default: 'Nouveauté' }}</span>
@@ -60,13 +60,13 @@
       {% endif %}
     </div>
 
-    <!-- Texte -->
+    {% # Texte %}
     <div class="np-text">
       <span class="eyebrow ml-reveal" style="color: #7A1F2B; font-size: 10px; letter-spacing: .28em;">{{ section.settings.eyebrow | default: 'Nouvelle pièce de la Maison' }}</span>
       <span class="ornament ml-reveal" style="margin: 0; background: #7A1F2B;"></span>
       <h2 class="serif ml-reveal ml-d1 np-title">{{ new_product.title }}</h2>
-      <p class="serif ml-reveal ml-d1 np-tagline">{{ section.settings.tagline | default: 'Deux gouttes rouge profond, cerclées de lumière. Pour un regard qui ne passe pas inaperçu.' }}</p>
-      <p class="sans ml-reveal ml-d2 np-desc">{{ section.settings.description | default: "Une pierre taillée en poire, couleur grenat, entourée d'un halo de pierres blanches et suspendue à une fine créole dorée sertie. Elles bougent avec vous, accrochent la lumière à chaque mouvement — et subliment aussi bien une tenue du soir qu'un simple col roulé." }}</p>
+      <p class="serif ml-reveal ml-d1 np-tagline">{{ section.settings.tagline | default: 'Deux gouttes rouge grenat, entourées de pierres blanches.' }}</p>
+      <p class="sans ml-reveal ml-d2 np-desc">{{ section.settings.description | default: "Une pierre taillée en poire, couleur grenat, entourée d'un halo de pierres blanches et suspendue à une fine créole dorée sertie. Légères, elles se portent aussi bien le soir qu'au quotidien." }}</p>
 
       <ul class="np-chips ml-reveal ml-d2">
         <li>Taille poire</li>
@@ -92,7 +92,7 @@
           </span>
           <span class="trust-row">
             <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-            Retours {{ settings.return_days }} jours · Écrin signature prêt à offrir
+            Retours {{ settings.return_days }} jours · Écrin prêt à offrir
           </span>
         </div>
       </div>

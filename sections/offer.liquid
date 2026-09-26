@@ -15,18 +15,18 @@
 <div id="offre" style="width: 100%; background: #F3EEE3; padding: clamp(72px, 12vw, 140px) clamp(18px, 5vw, 36px);">
   <div style="max-width: 1100px; margin: 0 auto;">
 
-    <!-- Titre éditorial -->
+    {% # Titre éditorial %}
     <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; margin-bottom: clamp(48px, 7vw, 80px); max-width: 600px; margin-left: auto; margin-right: auto;">
       <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Offre de lancement</span>
       <span style="display: block; width: 24px; height: 1px; background: rgba(176,141,87,.6);"></span>
       <h2 class="serif" style="margin: 0; font-size: clamp(26px, 4.5vw, 38px); line-height: 1.2; font-weight: 300;">{{ section.settings.headline | default: "Une pour vous.<br>Une à offrir." }}</h2>
-      <p class="sans" style="margin: 0; font-size: 14px; line-height: 1.85; color: #4A463D; font-weight: 300; max-width: 480px; letter-spacing: .015em;">{{ section.settings.body | default: "Pour fêter l'ouverture de la Maison, nous avons décidé d'offrir une seconde pièce à chaque commande passée pendant cette période de lancement. Deux bijoux. Deux écrins. Un seul prix." }}</p>
+      <p class="sans" style="margin: 0; font-size: 14px; line-height: 1.85; color: #4A463D; font-weight: 300; max-width: 480px; letter-spacing: .015em;">{{ section.settings.body | default: "Pour l'ouverture de la boutique, une seconde pièce identique est offerte pour toute commande passée pendant la période de lancement. Vous recevez deux bijoux, chacun dans son écrin, pour le prix d'un." }}</p>
     </div>
 
-    <!-- Image + Explication -->
+    {% # Image + Explication %}
     <div class="grid-2" style="align-items: start; gap: clamp(36px, 5vw, 80px);">
 
-      <!-- Image -->
+      {% # Image %}
       <div style="width: 100%; overflow: hidden; background: #EAE4D7;">
         <img
           src="{{ 'offer-lancement.jpg' | asset_url }}"
@@ -40,7 +40,7 @@
         >
       </div>
 
-      <!-- Explication concrète -->
+      {% # Explication concrète %}
       <div style="display: flex; flex-direction: column; gap: 32px;">
 
         <div style="display: flex; flex-direction: column; gap: 24px;">
@@ -55,14 +55,14 @@
             <span class="serif" style="font-size: 13px; font-style: italic; color: #7A5C2E; flex-shrink: 0; width: 20px; padding-top: 2px;">2</span>
             <div>
               <div class="sans" style="font-size: 10px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; color: #17140F; margin-bottom: 6px;">Nous préparons deux écrins</div>
-              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Votre commande est préparée avec deux pièces identiques dans leurs écrins respectifs, soigneusement emballés.</p>
+              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Nous emballons deux pièces identiques, chacune dans son écrin.</p>
             </div>
           </div>
           <div style="display: flex; gap: 20px; align-items: flex-start;">
             <span class="serif" style="font-size: 13px; font-style: italic; color: #7A5C2E; flex-shrink: 0; width: 20px; padding-top: 2px;">3</span>
             <div>
               <div class="sans" style="font-size: 10px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; color: #17140F; margin-bottom: 6px;">Vous recevez deux bijoux</div>
-              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Deux La Goutte d'Émeraude. Deux écrins signature. Un seul colis suivi, livré sous {{ settings.shipping_delay }} après expédition.</p>
+              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Les deux bijoux arrivent ensemble dans un colis suivi, sous {{ settings.shipping_delay }} après expédition.</p>
             </div>
           </div>
         </div>

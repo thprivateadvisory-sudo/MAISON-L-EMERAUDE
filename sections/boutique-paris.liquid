@@ -1,7 +1,7 @@
 <div id="boutique" class="sect" style="width: 100%; background: #FBF8F2;">
   <div style="max-width: 1280px; margin: 0 auto;" class="grid-2">
 
-    <!-- Photo de la façade -->
+    {% # Photo de la façade %}
     <div class="boutique-img-wrap ml-reveal">
       {% if section.settings.image %}
         <img
@@ -25,12 +25,12 @@
       <span class="boutique-badge sans">{{ section.settings.badge | default: "Ouverture prochaine" }}</span>
     </div>
 
-    <!-- Texte -->
+    {% # Texte %}
     <div style="display: flex; flex-direction: column; gap: 22px;">
       <span class="eyebrow ml-reveal" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">{{ section.settings.eyebrow | default: "La Boutique" }}</span>
       <span class="ornament-grow ml-reveal" style="width: 28px; margin: 0;"></span>
       <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.4vw, 42px); line-height: 1.15; font-weight: 300;">{{ section.settings.headline | default: "Bientôt à Paris." }}</h2>
-      <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em; max-width: 480px;">{{ section.settings.body | default: "La Maison prépare sa première adresse. Une boutique pensée comme un écrin, où découvrir nos pièces, les essayer et se laisser conseiller. Les travaux avancent — nous avons hâte de vous y accueillir." }}</p>
+      <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em; max-width: 480px;">{{ section.settings.body | default: "La Maison prépare l'ouverture de sa première boutique à Paris. Vous pourrez y découvrir et essayer nos bijoux, et être conseillée sur place. L'adresse et la date d'ouverture seront annoncées très prochainement." }}</p>
 
       <div class="boutique-details ml-reveal ml-d3">
         <div class="boutique-detail">
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <p class="serif ml-reveal ml-d3" style="margin: 4px 0 0; font-size: 16px; font-style: italic; line-height: 1.6; color: #6b6558;">{{ section.settings.note | default: "En attendant, nos bijoux vous attendent ici, en ligne." }}</p>
+      <p class="serif ml-reveal ml-d3" style="margin: 4px 0 0; font-size: 16px; font-style: italic; line-height: 1.6; color: #6b6558;">{{ section.settings.note | default: "En attendant, toutes nos pièces sont disponibles sur le site." }}</p>
 
       <div class="ml-reveal ml-d4" style="display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-top: 6px;">
         <a href="#piece" class="btn">Découvrir le bijou</a>

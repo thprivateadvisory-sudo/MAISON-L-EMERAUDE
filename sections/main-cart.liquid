@@ -25,16 +25,16 @@
         endif
       -%}
       {% if bundle_applied %}
-      <!-- Rappel offre parure -->
+      {% # Rappel offre parure %}
       <div class="offer-box" style="margin-bottom: 32px;">
         <span class="offer-box-title">Offre parure appliquée</span>
         <p class="offer-box-content" style="margin: 0;">Le collier et les boucles d'oreilles vous sont proposés au prix de la parure. La remise est déjà déduite du total ci-dessous.</p>
       </div>
       {% elsif settings.offer_active %}
-      <!-- Rappel offre 1+1 -->
+      {% # Rappel offre 1+1 %}
       <div class="offer-box" style="margin-bottom: 32px;">
         <span class="offer-box-title">Offre de lancement incluse</span>
-        <p class="offer-box-content" style="margin: 0;">Votre commande inclut une seconde pièce offerte. Vous recevrez deux bijoux dans leurs écrins respectifs, dans un seul colis.{% if settings.offer_end_date != blank %} Offre valable jusqu'au {{ settings.offer_end_date }} inclus.{% endif %}</p>
+        <p class="offer-box-content" style="margin: 0;">Une seconde pièce identique est offerte avec votre commande. Vous recevrez deux bijoux, chacun dans son écrin, dans le même colis.{% if settings.offer_end_date != blank %} Offre valable jusqu'au {{ settings.offer_end_date }} inclus.{% endif %}</p>
       </div>
       {% endif %}
 
@@ -91,7 +91,7 @@
           </div>
         </div>
 
-        <!-- Réassurance pré-checkout -->
+        {% # Réassurance pré-checkout %}
         <div style="margin-top: 28px; display: flex; flex-direction: column; gap: 10px; padding: 20px; background: #F8F4ED;">
           <div class="trust-row">
             <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>

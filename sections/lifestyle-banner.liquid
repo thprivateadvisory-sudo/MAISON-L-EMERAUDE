@@ -12,9 +12,9 @@
       loading="lazy"
     >
   {% else %}
-    <!-- Bannière typographique quand pas d'image lifestyle disponible -->
+    {% # Bannière typographique quand pas d'image lifestyle disponible %}
     <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; min-height: 260px;">
-      <span class="serif" style="font-size: clamp(18px, 4vw, 36px); font-style: italic; color: rgba(251,248,242,.6); letter-spacing: .08em; text-align: center; padding: 0 20px;">{{ section.settings.caption | default: "Une pièce. Un écrin. Une intention." }}</span>
+      <span class="serif" style="font-size: clamp(18px, 4vw, 36px); font-style: italic; color: rgba(251,248,242,.6); letter-spacing: .08em; text-align: center; padding: 0 20px;">{{ section.settings.caption | default: "Livré dans son écrin, prêt à offrir." }}</span>
     </div>
   {% endif %}
   {% if section.settings.image %}
@@ -31,7 +31,7 @@
   "name": "Bandeau lifestyle",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Photo lifestyle (à différencier du hero)" },
-    { "type": "text", "id": "caption", "label": "Légende", "default": "Une pièce. Un écrin. Une intention." },
+    { "type": "text", "id": "caption", "label": "Légende", "default": "Livré dans son écrin, prêt à offrir." },
     { "type": "text", "id": "focal_point", "label": "Point focal (ex : 50% 30%)", "default": "50% 50%" },
     { "type": "checkbox", "id": "show_fallback", "label": "Afficher le bandeau même sans image", "default": false }
   ]

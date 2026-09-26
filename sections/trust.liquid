@@ -10,7 +10,7 @@
         </svg>
         <div>
           <div class="sans" style="font-size: 12px; font-weight: 400; letter-spacing: .06em; color: #17140F; margin-bottom: 4px;">Paiement sécurisé</div>
-          <div class="sans" style="font-size: 11.5px; font-weight: 300; color: #6b6558; line-height: 1.5;">Transactions cryptées et protégées</div>
+          <div class="sans" style="font-size: 11.5px; font-weight: 300; color: #6b6558; line-height: 1.5;">Données bancaires chiffrées</div>
         </div>
       </div>
 
@@ -34,7 +34,7 @@
         </svg>
         <div>
           <div class="sans" style="font-size: 12px; font-weight: 400; letter-spacing: .06em; color: #17140F; margin-bottom: 4px;">Retours {{ settings.return_days }} jours{% if settings.free_returns %} · gratuits{% endif %}</div>
-          <div class="sans" style="font-size: 11.5px; font-weight: 300; color: #6b6558; line-height: 1.5;">{{ section.settings.return_policy | default: "Retour simple, à partir de la réception" }}</div>
+          <div class="sans" style="font-size: 11.5px; font-weight: 300; color: #6b6558; line-height: 1.5;">{{ section.settings.return_policy | default: "À compter de la réception du colis" }}</div>
         </div>
       </div>
 
@@ -57,7 +57,7 @@
 {
   "name": "Réassurance",
   "settings": [
-    { "type": "text", "id": "return_policy", "label": "Politique de retour", "default": "Retour simple, à partir de la réception" }
+    { "type": "text", "id": "return_policy", "label": "Politique de retour", "default": "À compter de la réception du colis" }
   ]
 }
 {% endschema %}

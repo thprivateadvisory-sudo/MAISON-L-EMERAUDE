@@ -1,14 +1,14 @@
 <div style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 96px) clamp(18px, 5vw, 36px);" class="dark-grain">
   <div style="max-width: 480px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px;">
     <span class="eyebrow ml-reveal" style="font-size: 9.5px; color: #C9A96E; letter-spacing: .28em;">La Maison</span>
-    <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(21px, 3.4vw, 27px); color: #FBF8F2; font-weight: 300; font-style: italic; line-height: 1.35;">Restez dans la Maison.</h2>
-    <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 13.5px; line-height: 1.75; color: rgba(251,248,242,.55); font-weight: 300; max-width: 360px;">Nouvelles pièces, invitations privées, histoires de la Maison. Pas de spam.</p>
+    <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(21px, 3.4vw, 27px); color: #FBF8F2; font-weight: 300; font-style: italic; line-height: 1.35;">Recevez nos nouveautés.</h2>
+    <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 13.5px; line-height: 1.75; color: rgba(251,248,242,.55); font-weight: 300; max-width: 360px;">Nouvelles pièces et offres, en avant-première. Un email de temps en temps, pas plus.</p>
     {% form 'customer', id: 'newsletter-form' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
       {% if form.posted_successfully? %}
         <div style="display: flex; align-items: center; gap: 10px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-          <p class="sans" style="color: #B08D57; font-size: 13px; font-weight: 300; margin: 0;">Inscription confirmée. À bientôt.</p>
+          <p class="sans" style="color: #B08D57; font-size: 13px; font-weight: 300; margin: 0;">Merci, votre inscription est bien enregistrée.</p>
         </div>
       {% else %}
         {% if form.errors %}

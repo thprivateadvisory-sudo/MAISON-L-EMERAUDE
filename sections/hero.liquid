@@ -16,7 +16,7 @@
     src="{{ 'paris.jpg' | asset_url }}"
     srcset="{{ 'paris-600.jpg' | asset_url }} 600w, {{ 'paris.jpg' | asset_url }} 1145w"
     sizes="100vw"
-    alt="Femme portant le collier La Goutte d'Émeraude — pendentif en cristal vert et chaîne dorée — dans une rue de Paris"
+    alt="Femme portant le collier La Goutte d'Émeraude, pendentif en cristal vert sur chaîne dorée, dans une rue de Paris"
     width="1145"
     height="1374"
     style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 30%;"
@@ -29,12 +29,12 @@
     <span class="eyebrow ha1" style="color: rgba(176,141,87,.92); font-size: 10px; letter-spacing: .32em;">{{ section.settings.brand_name | default: "Maison L'Émeraude" }}</span>
     <span class="ha2" style="display: block; width: 28px; height: 1px; background: rgba(176,141,87,.65); margin: 0 auto;"></span>
     <h1 class="serif hero-title ha3" style="margin: 0; line-height: 1.06; color: #FBF8F2;">{{ section.settings.headline | default: "La Goutte d'Émeraude" }}</h1>
-    <p class="serif ha4" style="margin: 0; font-size: clamp(15px, 2vw, 19px); font-style: italic; line-height: 1.65; color: rgba(251,248,242,.82); max-width: 400px; font-weight: 300;">{{ section.settings.subheadline | default: "Un bijou imaginé pour capter la lumière." }}</p>
+    <p class="serif ha4" style="margin: 0; font-size: clamp(15px, 2vw, 19px); font-style: italic; line-height: 1.65; color: rgba(251,248,242,.82); max-width: 400px; font-weight: 300;">{{ section.settings.subheadline | default: "Le collier signature de la Maison, en cristal vert et finition dorée." }}</p>
     <div class="ha5" style="display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap; justify-content: center; align-items: center;">
       <a href="{{ featured_product.url | default: '#piece' }}" class="btn btn-light" style="min-width: 190px;">Découvrir la pièce</a>
       <a href="#nouveaute" class="btn btn-light" style="min-width: 190px; background: rgba(122,31,43,.55); border-color: rgba(201,169,110,.6);">Nouveauté · Boucles</a>
     </div>
-    {% if settings.offer_active %}<a href="#offre" class="sans ha6" style="font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(251,248,242,.68); border-bottom: 1px solid rgba(251,248,242,.22); padding-bottom: 2px; margin-top: 2px; transition: color .25s ease, border-color .25s ease;">Offre de lancement — 1 acheté · 1 offert</a>{% endif %}
+    {% if settings.offer_active %}<a href="#offre" class="sans ha6" style="font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(251,248,242,.68); border-bottom: 1px solid rgba(251,248,242,.22); padding-bottom: 2px; margin-top: 2px; transition: color .25s ease, border-color .25s ease;">Offre de lancement : 1 acheté · 1 offert</a>{% endif %}
   </div>
 </div>
 
@@ -45,7 +45,7 @@
     { "type": "product", "id": "product", "label": "Pièce mise en avant" },
     { "type": "text", "id": "brand_name", "label": "Nom de la Maison", "default": "Maison L'Émeraude" },
     { "type": "text", "id": "headline", "label": "Titre principal", "default": "La Goutte d'Émeraude" },
-    { "type": "text", "id": "subheadline", "label": "Sous-titre", "default": "Un bijou imaginé pour capter la lumière." }
+    { "type": "text", "id": "subheadline", "label": "Sous-titre", "default": "Le collier signature de la Maison, en cristal vert et finition dorée." }
   ]
 }
 {% endschema %}

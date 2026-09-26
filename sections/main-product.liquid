@@ -27,7 +27,7 @@
 <div class="sect" style="width: 100%;" id="product-main">
   <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
 
-    <!-- Galerie produit -->
+    {% # Galerie produit %}
     <div class="pdp-gallery">
       <div style="overflow: hidden; background: #F3EEE3;">
         <img
@@ -61,13 +61,13 @@
       {% endif %}
     </div>
 
-    <!-- Informations produit -->
+    {% # Informations produit %}
     <div style="display: flex; flex-direction: column; gap: 20px;">
 
       <span class="eyebrow ml-reveal" style="color: {% if is_earrings %}#7A1F2B{% else %}#7A5C2E{% endif %}; font-size: 10px;">{% if is_earrings %}{{ section.settings.earrings_eyebrow | default: 'Nouveauté de la Maison' }}{% else %}La pièce signature{% endif %}</span>
       <h1 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
 
-      <!-- Prix -->
+      {% # Prix %}
       <div style="display: flex; align-items: baseline; gap: 8px; margin-top: -4px; flex-wrap: wrap;" id="ProductPrice">
         <span class="compare-price" data-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}><span class="visually-hidden">Prix de référence :</span>{{ current_variant.compare_at_price | money }}</span>
         <span class="price" data-price>{{ current_variant.price | money }}</span>
@@ -75,18 +75,18 @@
       </div>
 
       {% if settings.offer_active %}
-      <!-- Offre 1+1 encadrée -->
+      {% # Offre 1+1 encadrée %}
       <div class="offer-box">
-        <span class="offer-box-title">Offre de lancement — 1 pièce achetée · 1 pièce offerte</span>
-        <p class="offer-box-content" style="margin: 0;">{{ section.settings.offer_text | default: "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous recevrez deux bijoux dans leurs écrins respectifs. Une pour vous, une à offrir — ou deux à garder." }}</p>
+        <span class="offer-box-title">Offre de lancement : 1 pièce achetée · 1 pièce offerte</span>
+        <p class="offer-box-content" style="margin: 0;">{{ section.settings.offer_text | default: "Pendant le lancement, une seconde pièce identique est offerte avec chaque commande. Vous recevez deux bijoux, chacun dans son écrin : un pour vous, un à offrir." }}</p>
         {% if settings.offer_end_date != blank %}<p class="offer-box-content" style="margin: 0; font-weight: 400; color: #17140F;">Jusqu'au {{ settings.offer_end_date }} inclus · une pièce offerte par commande · dans la limite des stocks.</p>{% endif %}
       </div>
       {% endif %}
 
-      <!-- Description -->
+      {% # Description %}
       <div class="sans" style="font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .01em;">{{ product.description }}</div>
 
-      <!-- Formulaire -->
+      {% # Formulaire %}
       {% form 'product', product, id: 'ProductForm' %}
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
@@ -121,7 +121,7 @@
         </div>
       {% endform %}
 
-      <!-- Réassurance sous bouton -->
+      {% # Réassurance sous bouton %}
       <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px;">
         <div class="trust-row">
           <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
@@ -137,11 +137,11 @@
         </div>
         <div class="trust-row">
           <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-          Écrin signature inclus — prêt à offrir
+          Écrin inclus, prêt à offrir
         </div>
       </div>
 
-      <!-- Fiche matières -->
+      {% # Fiche matières %}
       <div style="margin-top: 8px; border-top: 1px solid rgba(27,24,18,.1);">
         {% if is_earrings %}
         {%- capture earring_rows -%}Pierre centrale|{{ section.settings.earrings_stone | default: "Cristal synthétique couleur grenat, taille poire" }}~Halo|{{ section.settings.earrings_halo | default: "Oxydes de zirconium blancs" }}~Monture|{{ section.settings.earrings_setting | default: "Créoles dorées serties, fermeture à charnière" }}{% if section.settings.earrings_size != blank %}~Dimensions|{{ section.settings.earrings_size }}{% endif %}{%- endcapture -%}
@@ -156,7 +156,7 @@
         {% else %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
           <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert — l'éclat de l'émeraude, sans le prix de la pierre naturelle" }}</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert, taille goutte" }}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
           <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Métal</span>
@@ -164,7 +164,7 @@
         </div>
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
           <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Longueur</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.chain_length | default: "40 cm, rallonge jusqu'à 45 cm" }}</span>
         </div>
         {% if section.settings.pendant_size != blank %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
@@ -182,28 +182,20 @@
       </div>
 
       {% if is_earrings %}
-      <!-- Note de transparence -->
-      <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La pierre est un cristal synthétique couleur grenat, et non un grenat naturel — l'éclat d'une pierre précieuse, à un prix honnête.</p>
+      {% # Note de transparence %}
+      <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La pierre est un cristal synthétique couleur grenat, et non un grenat naturel.</p>
       {% endif %}
 
       {% if pair_product %}
-      <!-- Parure : pièce complémentaire / offre duo -->
+      {% # Parure : pièce complémentaire / offre duo %}
       {% render 'bundle-offer', piece_a: product, piece_b: pair_product %}
-      {% endif %}
-        <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
-          <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Composez votre parure</span>
-          <span class="serif" style="font-size: 17px; color: #17140F;">{{ pair_product.title }}</span>
-          <span class="sans" style="font-size: 12px; font-weight: 300; color: #4A463D;">{{ pair_product.price | money }}</span>
-        </span>
-        <span aria-hidden="true" style="margin-left: auto; color: #B08D57; font-size: 18px;">→</span>
-      </a>
       {% endif %}
 
     </div>
   </div>
 </div>
 
-<!-- Sticky Add to Cart (mobile) -->
+{% # Sticky Add to Cart (mobile) %}
 <div class="sticky-atc hidden" id="StickyATC">
   <div class="sticky-atc-info">
     <span class="sticky-atc-name">{{ product.title }}</span>

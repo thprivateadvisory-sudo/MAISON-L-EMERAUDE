@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <!-- Favicon -->
+  {% # Favicon %}
   <link rel="icon" type="image/png" sizes="192x192" href="{{ 'favicon-192.png' | asset_url }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ 'favicon-32.png' | asset_url }}">
   <link rel="apple-touch-icon" sizes="180x180" href="{{ 'apple-touch-icon.png' | asset_url }}">
 
-  <!-- SEO -->
+  {% # SEO %}
   <title>{{ page_title }}{% unless page_title contains shop.name %} · {{ shop.name }}{% endunless %}</title>
   {% if page_description %}<meta name="description" content="{{ page_description | escape }}">{% endif %}
   <link rel="canonical" href="{{ canonical_url }}">
@@ -19,7 +19,7 @@
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   {% endif %}
 
-  <!-- Open Graph -->
+  {% # Open Graph %}
   <meta property="og:site_name" content="{{ shop.name }}">
   <meta property="og:locale" content="fr_FR">
   <meta property="og:type" content="{% if template == 'product' %}product{% else %}website{% endif %}">
@@ -41,14 +41,14 @@
     <meta property="og:image:alt" content="{{ og_image.alt | default: page_title | escape }}">
   {% endif %}
 
-  <!-- Twitter Card -->
+  {% # Twitter Card %}
   <meta name="twitter:card" content="summary_large_image">
   {% if settings.twitter_handle != blank %}<meta name="twitter:site" content="@{{ settings.twitter_handle | remove: '@' }}">{% endif %}
   <meta name="twitter:title" content="{{ page_title | escape }}">
   {% if page_description %}<meta name="twitter:description" content="{{ page_description | escape }}">{% endif %}
   {% if og_image %}<meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">{% endif %}
 
-  <!-- Schema.org WebSite + Organisation (toutes les pages) -->
+  {% # Schema.org WebSite + Organisation (toutes les pages) %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -58,7 +58,7 @@
         "@id": "{{ shop.url }}/#website",
         "url": {{ shop.url | json }},
         "name": "Maison L'Émeraude",
-        "description": "Bijoux fins inspirés de l'émeraude — colliers, pendentifs et pièces signature de la Maison L'Émeraude.",
+        "description": "Colliers et boucles d'oreilles en cristal et finition dorée, livrés dans leur écrin.",
         "inLanguage": "fr-FR",
         "potentialAction": {
           "@type": "SearchAction",
@@ -95,7 +95,7 @@
   }
   </script>
 
-  <!-- Schema.org Product (page produit) -->
+  {% # Schema.org Product (page produit) %}
   {% if template == 'product' %}
   <script type="application/ld+json">
   {
@@ -176,7 +176,7 @@
   </script>
   {% endif %}
 
-  <!-- Schema.org BreadcrumbList -->
+  {% # Schema.org BreadcrumbList %}
   {% if template == 'product' %}
   <script type="application/ld+json">
   {
@@ -200,12 +200,12 @@
   </script>
   {% endif %}
 
-  <!-- Polices auto-hébergées (pas d'appel à Google Fonts : RGPD + performance) -->
+  {% # Polices auto-hébergées (pas d'appel à Google Fonts : RGPD + performance) %}
   {{ 'montserrat.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
   {{ 'cormorant-garamond.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
   <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
 
-  <!-- Preload image héro pour Core Web Vitals -->
+  {% # Preload image héro pour Core Web Vitals %}
   {% if template == 'index' %}
   <link rel="preload" as="image" href="{{ 'paris.jpg' | asset_url }}" imagesrcset="{{ 'paris-600.jpg' | asset_url }} 600w, {{ 'paris.jpg' | asset_url }} 1145w" imagesizes="100vw" fetchpriority="high">
   {% endif %}
