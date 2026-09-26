@@ -14,10 +14,10 @@
 <div id="piece" style="width: 100%; background: #FBF8F2;">
   <div style="max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; min-height: 640px;" class="piece-discover-grid">
 
-    <!-- Galerie avec vignettes -->
+    {% # Galerie avec vignettes %}
     <div style="display: flex; flex-direction: column; gap: 0; background: #F3EEE3;">
 
-      <!-- Image principale -->
+      {% # Image principale %}
       <div style="overflow: hidden; flex: 1;">
         {% if featured_product and featured_product.images.size > 0 %}
           <img
@@ -44,7 +44,7 @@
         {% endif %}
       </div>
 
-      <!-- Vignettes -->
+      {% # Vignettes %}
       {% if featured_product and featured_product.images.size > 1 %}
         <div style="display: flex; gap: 3px; background: #FBF8F2; padding: 3px 0 0 0;" id="HomeGalleryThumbs">
           {% for image in featured_product.images limit: 4 %}
@@ -72,7 +72,7 @@
 
     </div>
 
-    <!-- Texte + CTA -->
+    {% # Texte + CTA %}
     <div style="display: flex; flex-direction: column; justify-content: center; gap: 28px; padding: clamp(48px, 7vw, 96px) clamp(32px, 5.5vw, 80px);">
       <span class="eyebrow" style="color: #7A5C2E; font-size: 10px; letter-spacing: .28em;">La pièce signature</span>
       <span class="ornament" style="margin: 0;"></span>
@@ -102,7 +102,7 @@
             </span>
             <span class="trust-row">
               <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-              Écrin signature inclus
+              Écrin inclus
             </span>
           </div>
         </div>

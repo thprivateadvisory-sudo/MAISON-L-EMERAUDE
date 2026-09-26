@@ -8,7 +8,7 @@
         sizes="(max-width: 860px) 100vw, 50vw"
         width="1000"
         height="1200"
-        alt="Gros plan du pendentif — cristal synthétique vert entouré d'un halo de pierres blanches"
+        alt="Gros plan du pendentif en cristal synthétique vert entouré d'un halo de pierres blanches"
         style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 55%;"
         loading="lazy"
       >
@@ -16,15 +16,15 @@
 
     <div style="display: flex; flex-direction: column; gap: 22px;">
       <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Le détail</span>
-      <h2 class="serif" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); line-height: 1.25; font-weight: 300;">Une pierre conçue pour capter la lumière.</h2>
-      <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La pierre centrale est un cristal synthétique vert, taillé en goutte, entouré d'un halo de pierres blanches. Elle restitue la profondeur visuelle de l'émeraude — sans le coût d'une pierre naturelle.</p>
+      <h2 class="serif" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); line-height: 1.25; font-weight: 300;">Une pierre taillée en goutte.</h2>
+      <p class="sans" style="margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La pierre centrale est un cristal synthétique vert, taillé en goutte et entouré d'un halo de pierres blanches. Elle rappelle le vert profond de l'émeraude, pour un prix bien plus doux qu'une pierre naturelle.</p>
 
-      <!-- Note de transparence -->
+      {% # Note de transparence %}
       <div style="background: rgba(27,24,18,.04); border-left: 2px solid #B08D57; padding: 14px 18px;">
-        <p class="sans" style="margin: 0; font-size: 12.5px; font-weight: 300; line-height: 1.75; color: #4A463D; font-style: italic;">Nous précisons que la pierre utilisée est un cristal synthétique, et non une émeraude naturelle. Cette transparence est pour nous une question d'intégrité.</p>
+        <p class="sans" style="margin: 0; font-size: 12.5px; font-weight: 300; line-height: 1.75; color: #4A463D; font-style: italic;">À noter : la pierre est un cristal synthétique, et non une émeraude naturelle.</p>
       </div>
 
-      <!-- Fiche matières -->
+      {% # Fiche matières %}
       <ul class="sans" style="list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 0; font-size: 13.5px; color: #17140F;">
         <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding: 13px 0;">
           <span style="color: #6b6558; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 400;">Pierre centrale</span>
@@ -40,7 +40,7 @@
         </li>
         <li style="display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.1);">
           <span style="color: #6b6558; font-size: 10px; letter-spacing: .12em; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-weight: 400;">Chaîne</span>
-          <span style="font-weight: 300; text-align: right; max-width: 60%;">{{ section.settings.chain_length | default: "40 cm — rallonge incluse jusqu'à 45 cm" }}</span>
+          <span style="font-weight: 300; text-align: right; max-width: 60%;">{{ section.settings.chain_length | default: "40 cm, rallonge jusqu'à 45 cm" }}</span>
         </li>
       </ul>
     </div>

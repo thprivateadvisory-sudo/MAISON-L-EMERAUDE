@@ -5,7 +5,7 @@
       "settings": {
         "brand_name": "Maison L'Émeraude",
         "headline": "La Goutte d'Émeraude",
-        "subheadline": "Un bijou imaginé pour capter la lumière."
+        "subheadline": "Le collier signature de la Maison, en cristal vert et finition dorée."
       }
     },
     "piece-intro": {
@@ -20,7 +20,7 @@
         "stone": "Cristal synthétique vert, taille goutte",
         "secondary_stone": "Oxydes de zirconium blancs (halo)",
         "metal": "Acier inoxydable, finition dorée à l'or fin",
-        "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm"
+        "chain_length": "40 cm, rallonge jusqu'à 45 cm"
       }
     },
     "new-piece": {
@@ -34,8 +34,8 @@
     "storytelling": {
       "type": "storytelling",
       "settings": {
-        "quote": "Nous voulions créer une pièce belle à voir, douce à porter. Ni plus, ni moins.",
-        "body": "Maison L'Émeraude est une jeune maison de bijoux, née d'une pièce et d'une idée simple. La Goutte d'Émeraude a été imaginée pour celles qui veulent porter quelque chose de beau sans avoir à justifier pourquoi. Son vert profond. Son éclat discret. Son prix honnête. Chaque commande part dans un écrin soigné, prête à être portée ou offerte."
+        "quote": "Un bijou que l'on porte tous les jours, et que l'on a plaisir à offrir.",
+        "body": "Maison L'Émeraude est une jeune maison de bijoux. Notre première création, La Goutte d'Émeraude, est un collier au vert profond et à l'éclat discret, proposé à un prix juste. Chaque commande est expédiée dans son écrin, prête à être portée ou offerte."
       }
     },
     "boutique-paris": {
@@ -49,7 +49,7 @@
     "lifestyle-banner": {
       "type": "lifestyle-banner",
       "settings": {
-        "caption": "Une pièce. Un écrin. Une intention.",
+        "caption": "Livré dans son écrin, prêt à offrir.",
         "show_fallback": false
       }
     },
@@ -57,7 +57,7 @@
       "type": "offer",
       "settings": {
         "headline": "Une pour vous.<br>Une à offrir.",
-        "body": "Pour fêter l'ouverture de la Maison, nous avons décidé d'offrir une seconde pièce à chaque commande passée pendant cette période de lancement. Deux bijoux. Deux écrins. Un seul prix.",
+        "body": "Pour l'ouverture de la boutique, une seconde pièce identique est offerte pour toute commande passée pendant la période de lancement. Vous recevez deux bijoux, chacun dans son écrin, pour le prix d'un.",
         "disclaimer": "Offre valable pendant la période de lancement uniquement, dans la limite des stocks disponibles. Un seul bijou supplémentaire par commande."
       }
     },
@@ -67,7 +67,7 @@
     "trust": {
       "type": "trust",
       "settings": {
-        "return_policy": "Retour simple, à partir de la réception"
+        "return_policy": "À compter de la réception du colis"
       }
     },
     "reviews": {
@@ -101,7 +101,7 @@
           "type": "question",
           "settings": {
             "question": "La pierre est-elle une vraie émeraude ?",
-            "answer": "<p>Non, et nous souhaitons être transparents à ce sujet. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte, entouré d'oxydes de zirconium blancs. Elle offre l'éclat visuel de l'émeraude à un prix accessible, sans prétendre être une pierre naturelle. C'est un choix délibéré de notre part.</p>"
+            "answer": "<p>Non. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte et entouré d'oxydes de zirconium blancs. Elle a la couleur et l'éclat de l'émeraude, pour un prix bien plus accessible qu'une pierre naturelle.</p>"
           }
         },
         "q5": {
@@ -122,21 +122,21 @@
           "type": "question",
           "settings": {
             "question": "Que contient l'écrin ?",
-            "answer": "<p>Chaque pièce est présentée dans l'écrin signature Maison L'Émeraude. L'écrin est inclus dans votre commande et constitue en lui-même un objet de présentation soigné — pensé pour être offert sans emballage supplémentaire.</p>"
+            "answer": "<p>Chaque bijou est livré dans l'écrin Maison L'Émeraude, inclus dans votre commande. Il suffit à lui seul pour un cadeau : pas besoin d'emballage supplémentaire.</p>"
           }
         },
         "q8": {
           "type": "question",
           "settings": {
             "question": "Puis-je offrir le bijou directement ?",
-            "answer": "<p>Absolument. La pièce arrive dans son écrin, sans bon de livraison tarifé à l'intérieur. L'ensemble est pensé pour être offert directement, tel quel.</p>"
+            "answer": "<p>Oui. Le bijou arrive dans son écrin et aucun document indiquant le prix n'est glissé dans le colis. Vous pouvez l'offrir tel quel.</p>"
           }
         },
         "q9": {
           "type": "question",
           "settings": {
             "question": "Comment suivre ma commande ?",
-            "answer": "<p>Dès l'expédition de votre colis, vous recevrez un email avec votre numéro de suivi. Vous pourrez suivre votre livraison en temps réel via le lien indiqué dans cet email.</p>"
+            "answer": "<p>Dès l'expédition de votre colis, vous recevez un email avec votre numéro de suivi et le lien pour suivre la livraison.</p>"
           }
         },
         "q10": {

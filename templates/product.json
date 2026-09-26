@@ -3,12 +3,12 @@
     "main": {
       "type": "main-product",
       "settings": {
-        "stone": "Cristal synthétique vert — l'éclat de l'émeraude, sans le prix de la pierre naturelle",
+        "stone": "Cristal synthétique vert, taille goutte",
         "metal": "Acier inoxydable, finition dorée à l'or fin",
-        "chain_length": "40 cm — rallonge incluse jusqu'à 45 cm",
+        "chain_length": "40 cm, rallonge jusqu'à 45 cm",
         "pendant_size": "1,1 × 0,7 cm",
-        "water_resistance": "Contact occasionnel possible — éviter immersion prolongée",
-        "offer_text": "Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte. Vous recevrez deux bijoux dans leurs écrins respectifs. Une pour vous, une à offrir — ou deux à garder.",
+        "water_resistance": "Éviter l'immersion prolongée",
+        "offer_text": "Pendant le lancement, une seconde pièce identique est offerte avec chaque commande. Vous recevez deux bijoux, chacun dans son écrin : un pour vous, un à offrir.",
         "earrings_eyebrow": "Nouveauté de la Maison",
         "earrings_stone": "Cristal synthétique couleur grenat, taille poire",
         "earrings_halo": "Oxydes de zirconium blancs",

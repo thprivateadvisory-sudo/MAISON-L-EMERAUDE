@@ -201,11 +201,11 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
   .logo-mobile { display: none !important; }
 }
 
-/* ===== MAISON L'ÉMERAUDE — DESIGN UPGRADE ===== */
+/* ===== ANIMATIONS & FINITIONS ===== */
 
 html { scroll-behavior: smooth; }
 
-/* Hero title — plus dramatique */
+/* Titre hero */
 .hero-title { font-size: clamp(46px, 7.5vw, 88px); letter-spacing: -.022em; }
 
 /* ---- SCROLL REVEAL ---- */
