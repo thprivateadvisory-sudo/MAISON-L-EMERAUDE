@@ -4,6 +4,7 @@
 |---|---|
 | `out/maison-lemeraude-tiktok-A.mp4` | « Achetez-en un. Le 2e est offert. » (offre en premier) |
 | `out/maison-lemeraude-tiktok-B.mp4` | « Le cadeau qu'elle va adorer. » (émotion / cadeau) |
+| `out/maison-lemeraude-tiktok-A-voix-off.mp4` | Version A + voix off féminine (`voix.py`, Kokoro TTS, licence Apache 2.0), son normalisé à −14 LUFS |
 
 1080×1920 · 30 i/s · 28,5 s · H.264 + AAC · musique générée, libre de droits.
 
