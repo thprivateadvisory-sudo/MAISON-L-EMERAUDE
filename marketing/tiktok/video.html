@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Maison L'Émeraude · TikTok</title>
+<style>
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 300 500; src: url('media/cormorant-garamond.woff2') format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 300 500; src: url('media/cormorant-garamond-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Montserrat'; font-weight: 300 500; src: url('media/montserrat.woff2') format('woff2'); }
+
+:root {
+  --ink: #17140F;
+  --cream: #FBF8F2;
+  --paper: #F3EEE3;
+  --green: #0F3B2E;
+  --gold: #B08D57;
+  --gold-d: #7A5C2E;
+  --wine: #7A1F2B;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--ink); }
+.serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+body { font-feature-settings: 'lnum' 1; font-variant-numeric: lining-nums; }
+.sans { font-family: 'Montserrat', 'Helvetica Neue', sans-serif; }
+
+#stage { position: relative; width: 1080px; height: 1920px; overflow: hidden; }
+.scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center; will-change: transform; }
+.shade { position: absolute; inset: 0; }
+.center { position: absolute; left: 70px; right: 70px; text-align: center; }
+
+.eyebrow { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 30px; letter-spacing: .28em; text-transform: uppercase; }
+.big { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; line-height: 1.02; letter-spacing: -.005em; }
+.body { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 38px; line-height: 1.4; }
+.tshadow { text-shadow: 0 4px 30px rgba(0,0,0,.55), 0 1px 3px rgba(0,0,0,.4); }
+
+/* Rappel permanent de l'offre */
+#pill { position: absolute; top: 200px; left: 50%; transform: translateX(-50%); padding: 18px 36px; background: var(--wine); color: var(--cream);
+  font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 30px; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25); opacity: 0; z-index: 20; }
+
+/* Scène 1 : accroche */
+#badge { position: absolute; right: 90px; top: 1180px; width: 250px; height: 250px; border-radius: 50%; background: var(--gold); color: var(--ink);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; box-shadow: 0 16px 50px rgba(0,0,0,.4); }
+#badge b { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 92px; line-height: .9; }
+#badge span { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 26px; letter-spacing: .16em; text-transform: uppercase; }
+
+/* Scène 2 : caractéristiques */
+.feat { display: flex; align-items: center; justify-content: center; gap: 18px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 38px; color: var(--ink); margin-top: 22px; }
+.feat i { display: inline-block; width: 16px; height: 16px; background: var(--gold); transform: rotate(45deg); }
+
+/* Scène 6 : téléphone */
+#phone { position: absolute; left: 50%; top: 560px; width: 640px; height: 1180px; margin-left: -320px; border-radius: 70px; background: #0c0b09;
+  padding: 22px; box-shadow: 0 40px 90px rgba(0,0,0,.45), inset 0 0 0 3px #2a2722; }
+#screen { position: relative; width: 100%; height: 100%; border-radius: 50px; overflow: hidden; background: var(--cream); }
+.notch { position: absolute; top: 16px; left: 50%; width: 170px; height: 44px; margin-left: -85px; border-radius: 30px; background: #0c0b09; z-index: 5; }
+.urlbar { position: absolute; top: 76px; left: 24px; right: 24px; height: 64px; border-radius: 32px; background: #ECE6DA; display: flex; align-items: center;
+  padding: 0 28px; font-family: 'Montserrat', sans-serif; font-size: 27px; color: var(--ink); z-index: 4; }
+.urlbar .lock { width: 18px; height: 22px; border: 3px solid #6b6558; border-radius: 4px; margin-right: 16px; position: relative; top: 3px; }
+.urlbar .caret { display: inline-block; width: 2px; height: 30px; background: var(--ink); margin-left: 2px; }
+.view { position: absolute; top: 160px; left: 0; right: 0; bottom: 0; opacity: 0; }
+.site-head { height: 92px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid rgba(27,24,18,.1); background: var(--cream); }
+.site-head img { height: 50px; }
+.btn { display: block; margin: 0 36px; padding: 30px 0; text-align: center; font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 24px;
+  letter-spacing: .2em; text-transform: uppercase; background: var(--ink); color: var(--cream); }
+.tap { position: absolute; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; background: rgba(255,255,255,.55);
+  border: 4px solid rgba(255,255,255,.95); box-shadow: 0 6px 24px rgba(0,0,0,.3); opacity: 0; z-index: 10; }
+.step-cap { position: absolute; top: 250px; left: 60px; right: 60px; text-align: center; opacity: 0; }
+.step-num { display: inline-flex; width: 84px; height: 84px; border-radius: 50%; background: var(--gold); color: var(--ink); align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 58px; margin-bottom: 14px; }
+.step-txt { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 68px; line-height: 1.05; color: var(--cream); }
+.step-txt em { color: #E3C48F; font-style: italic; }
+
+/* Scène 7 : fin */
+.trust { display: flex; justify-content: center; gap: 26px; flex-wrap: wrap; font-family: 'Montserrat', sans-serif; font-size: 29px; font-weight: 400; color: rgba(251,248,242,.9); letter-spacing: .04em; }
+.trust span { display: inline-flex; align-items: center; gap: 12px; }
+.trust span i { width: 12px; height: 12px; background: var(--gold); transform: rotate(45deg); display: inline-block; }
+.cta { display: inline-block; padding: 34px 64px; background: var(--cream); color: var(--ink); font-family: 'Montserrat', sans-serif; font-weight: 500;
+  font-size: 34px; letter-spacing: .18em; text-transform: uppercase; }
+.arrow { width: 60px; height: 60px; border-right: 7px solid var(--cream); border-bottom: 7px solid var(--cream); transform: rotate(45deg); margin: 0 auto; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · Accroche -->
+  <section class="scene" id="s1">
+    <div class="bg" id="s1bg" style="background-image:url('media/paris.jpg'); background-position: 50% 30%;"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(10,9,7,.72) 0%, rgba(10,9,7,.25) 38%, rgba(10,9,7,0) 55%, rgba(10,9,7,.55) 100%);"></div>
+    <div class="center" style="top: 250px;">
+      <div class="eyebrow tshadow" id="s1eye" style="color:#E3C48F;">Offre de lancement</div>
+      <div class="big tshadow" id="s1title" style="font-size: 124px; color: var(--cream); margin-top: 30px;"></div>
+    </div>
+    <div id="badge"><b>1+1</b><span>offert</span></div>
+  </section>
+
+  <!-- 2 · Le produit -->
+  <section class="scene" id="s2" style="background: #F4F2EF;">
+    <div class="bg" id="s2bg" style="background-image:url('media/necklace_full.jpg'); background-size: 1200px auto; background-repeat: no-repeat; background-position: 50% 340px; background-color:#F4F2EF;"></div>
+    <div class="center" style="top: 1400px;">
+      <div class="big" id="s2title" style="font-size: 96px; color: var(--ink);">La Goutte d'Émeraude</div>
+      <div id="s2feats" style="margin-top: 26px;">
+        <div class="feat"><i></i>Cristal vert taillé en goutte</div>
+        <div class="feat"><i></i>Halo de pierres blanches</div>
+        <div class="feat"><i></i>Chaîne dorée · 40 à 45 cm</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Porté -->
+  <section class="scene" id="s3">
+    <div class="bg" id="s3bg" style="background-image:url('media/closeup.jpg');"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(10,9,7,0) 45%, rgba(10,9,7,.78) 100%);"></div>
+    <div class="center" style="top: 1300px;">
+      <div class="big tshadow" id="s3title" style="font-size: 110px; color: var(--cream);">Élégante le jour.<br><em>Inoubliable</em> le soir.</div>
+    </div>
+  </section>
+
+  <!-- 4 · L'écrin -->
+  <section class="scene" id="s4">
+    <div class="bg" id="s4bg" style="background-image:url('media/ecrin.jpg');"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(10,9,7,.15) 0%, rgba(10,9,7,0) 25%, rgba(10,9,7,.1) 45%, rgba(10,9,7,.88) 78%);"></div>
+    <div class="center" style="top: 1330px;">
+      <div class="big tshadow" id="s4title" style="font-size: 104px; color: var(--cream);">Livré dans son écrin,<br><em>prêt à offrir.</em></div>
+    </div>
+  </section>
+
+  <!-- 5 · L'offre -->
+  <section class="scene" id="s5" style="background: #FFFFFF;">
+    <div class="bg" id="s5bg" style="background-image:url('media/offer-lancement.jpg'); background-size: 2000px auto; background-repeat: no-repeat; background-position: 50% 285px; transform-origin: 50% 85%;"></div>
+    <div class="shade" style="background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 61%, rgba(255,255,255,0) 66%);"></div>
+    <div class="center" style="top: 330px;">
+      <div class="eyebrow" style="color: var(--gold-d);">Pendant le lancement</div>
+      <div class="big" id="s5a" style="font-size: 150px; color: var(--green); margin-top: 26px;">1 acheté</div>
+      <div class="big" id="s5b" style="font-size: 150px; color: var(--wine);"><em>=</em> 1 offert</div>
+      <div class="body" id="s5c" style="color: #4A463D; margin-top: 26px;">Une pour vous. Une à offrir.</div>
+    </div>
+  </section>
+
+  <!-- 6 · Comment commander -->
+  <section class="scene" id="s6" style="background: radial-gradient(120% 80% at 50% 40%, #174d3c 0%, #0F3B2E 55%, #0a2a20 100%);">
+    <div class="center" style="top: 150px;">
+      <div class="eyebrow" style="color:#E3C48F; font-size: 28px;">Commander en 3 étapes</div>
+    </div>
+    <div class="step-cap" id="cap1"><div class="step-num">1</div><div class="step-txt">Allez sur<br><em>maisonlemeraude.fr</em></div></div>
+    <div class="step-cap" id="cap2"><div class="step-num">2</div><div class="step-txt">Ajoutez le collier<br><em>au panier</em></div></div>
+    <div class="step-cap" id="cap3"><div class="step-num">3</div><div class="step-txt">Validez : vous recevez<br><em>2 colliers</em></div></div>
+
+    <div id="phone"><div id="screen">
+      <div class="notch"></div>
+      <div class="urlbar"><span class="lock"></span><span id="url"></span><span class="caret" id="caret"></span></div>
+
+      <!-- vue accueil -->
+      <div class="view" id="v1">
+        <div class="site-head"><img src="media/logo.png" alt=""></div>
+        <div style="position:relative; height: 820px; background: url('media/paris.jpg') center 25%/cover;">
+          <div style="position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.6));"></div>
+          <div style="position:absolute; left:0; right:0; bottom: 70px; text-align:center; color: var(--cream);">
+            <div class="sans" style="font-size: 18px; letter-spacing:.24em; text-transform: uppercase;">Collier signature</div>
+            <div class="serif" style="font-size: 60px; margin-top: 10px;">La Goutte d'Émeraude</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- vue fiche produit -->
+      <div class="view" id="v2">
+        <div class="site-head"><img src="media/logo.png" alt=""></div>
+        <div style="height: 470px; background: #F4F2EF url('media/necklace_full.jpg') center 60%/115% no-repeat;"></div>
+        <div style="padding: 30px 36px 0;">
+          <div class="sans" style="font-size: 17px; letter-spacing:.22em; color: var(--gold-d); text-transform: uppercase;">Collier</div>
+          <div class="serif" style="font-size: 50px; color: var(--ink); margin-top: 8px;">La Goutte d'Émeraude</div>
+          <div class="sans" style="margin-top: 16px; display:inline-block; padding: 10px 16px; background: var(--wine); color: var(--cream); font-size: 17px; letter-spacing: .12em; text-transform: uppercase;">1 acheté = 1 offert</div>
+        </div>
+        <div style="height: 34px;"></div>
+        <div class="btn" id="atc">Ajouter au panier</div>
+      </div>
+
+      <!-- vue panier -->
+      <div class="view" id="v3">
+        <div class="site-head"><img src="media/logo.png" alt=""></div>
+        <div style="padding: 34px 36px 0;">
+          <div class="serif" style="font-size: 52px; color: var(--ink);">Votre panier</div>
+          <div style="display:flex; gap: 22px; align-items:center; margin-top: 26px; padding-bottom: 24px; border-bottom: 1px solid rgba(27,24,18,.12);">
+            <div style="width: 130px; height: 130px; background: #F4F2EF url('media/necklace_full.jpg') center 72%/220% no-repeat; flex-shrink:0;"></div>
+            <div>
+              <div class="serif" style="font-size: 34px; color: var(--ink);">La Goutte d'Émeraude</div>
+              <div class="sans" style="font-size: 19px; color:#6b6558; margin-top: 6px;">Quantité : 1</div>
+            </div>
+          </div>
+          <div id="gift" style="margin-top: 24px; padding: 22px 24px; background: var(--paper); border-left: 5px solid var(--gold);">
+            <div class="sans" style="font-size: 17px; font-weight: 500; letter-spacing: .16em; color: var(--wine); text-transform: uppercase;">Offre de lancement incluse</div>
+            <div class="sans" style="font-size: 21px; line-height: 1.5; color:#4A463D; margin-top: 8px;">Un 2<sup>e</sup> collier identique est offert. Deux écrins, un seul colis.</div>
+          </div>
+        </div>
+        <div style="height: 40px;"></div>
+        <div class="btn" id="checkout">Commander</div>
+        <div class="sans" style="text-align:center; font-size: 18px; color:#6b6558; margin-top: 22px; letter-spacing:.04em;">Paiement sécurisé · Livraison suivie</div>
+      </div>
+
+      <div class="tap" id="tap"></div>
+    </div></div>
+  </section>
+
+  <!-- 7 · Appel à l'action -->
+  <section class="scene" id="s7">
+    <div class="bg" id="s7bg" style="background-image:url('media/ecrin.jpg'); filter: blur(6px) brightness(.55);"></div>
+    <div class="shade" style="background: linear-gradient(180deg, rgba(15,59,46,.78), rgba(10,9,7,.88));"></div>
+    <div class="center" style="top: 300px;">
+      <img src="media/logo.png" alt="" id="s7logo" style="width: 520px; filter: brightness(0) invert(1); opacity: .95;">
+      <div class="eyebrow" style="color:#E3C48F; margin-top: 90px;">Offre de lancement · durée limitée</div>
+      <div class="big" id="s7title" style="font-size: 128px; color: var(--cream); margin-top: 30px;">1 acheté<br><em style="color:#E3C48F;">= 1 offert</em></div>
+      <div style="margin-top: 70px;" class="trust">
+        <span><i></i>Paiement sécurisé</span><span><i></i>Livraison suivie</span><span><i></i>Retours 30 jours</span>
+      </div>
+      <div style="margin-top: 80px;"><span class="cta" id="cta">Commander maintenant</span></div>
+      <div class="sans" style="margin-top: 36px; font-size: 32px; color: rgba(251,248,242,.85); letter-spacing: .06em;">maisonlemeraude.fr</div>
+      <div id="arrowWrap" style="margin-top: 50px;"><div class="arrow"></div></div>
+    </div>
+  </section>
+
+  <div id="pill">1 acheté = 1 offert</div>
+</div>
+
+<script>
+const params = new URLSearchParams(location.search);
+const VARIANT = params.get('v') || 'A';
+const HOOKS = {
+  A: "Achetez-en un.<br><em style='color:#E3C48F'>Le 2<sup style='font-size:.5em'>e</sup> est offert.</em>",
+  B: "Le cadeau<br>qu'elle va<br><em style='color:#E3C48F'>adorer.</em>"
+};
+document.getElementById('s1title').innerHTML = HOOKS[VARIANT] || HOOKS.A;
+
+// Découpage (secondes)
+const T = { s1: [0, 3.2], s2: [3.2, 6.6], s3: [6.6, 9.4], s4: [9.4, 12.2], s5: [12.2, 15.6], s6: [15.6, 24.0], s7: [24.0, 28.5] };
+const DURATION = 28.5;
+window.DURATION = DURATION;
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+const ease = k => 1 - Math.pow(1 - clamp(k), 3);
+const easeIO = k => { k = clamp(k); return k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2; };
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const $ = id => document.getElementById(id);
+const FADE = 0.28;
+
+function sceneOpacity(t, [a, b], first, last) {
+  const fin = first ? 1 : ease(prog(t, a, a + FADE));
+  const fout = last ? 1 : 1 - prog(t, b, b + FADE);
+  return (t >= a && t < b + FADE) ? Math.min(fin, fout) : 0;
+}
+function rise(el, t, start, dist = 50, dur = .45) {
+  const k = ease(prog(t, start, start + dur));
+  el.style.opacity = k;
+  el.style.transform = `translateY(${(1 - k) * dist}px)`;
+}
+function pop(el, t, start, dur = .35) {
+  const k = prog(t, start, start + dur);
+  const s = k === 0 ? 0 : 1 + Math.sin(k * Math.PI) * .12 * (1 - k) + (ease(k) - 1) * .4;
+  el.style.opacity = ease(k);
+  el.style.transform = `scale(${Math.max(0, s)})`;
+}
+
+function seek(t) {
+  const ids = ['s1', 's2', 's3', 's4', 's5', 's6', 's7'];
+  ids.forEach((id, i) => $(id).style.opacity = sceneOpacity(t, T[id], i === 0, i === ids.length - 1));
+  // Ordre d'empilement : la scène entrante passe au-dessus
+  ids.forEach((id, i) => $(id).style.zIndex = t >= T[id][0] ? i + 1 : 0);
+
+  // 1 · Accroche : texte visible dès la 1re image
+  const p1 = prog(t, ...T.s1);
+  $('s1bg').style.transform = `scale(${lerp(1.18, 1.04, easeIO(p1))})`;
+  rise($('s1eye'), t, 0, 20, .25);
+  rise($('s1title'), t, 0.05, 40, .35);
+  const b = $('badge');
+  pop(b, t, 1.0);
+  if (t > 1.35) b.style.transform = `scale(${1 + Math.sin((t - 1.35) * 7) * .04}) rotate(-8deg)`;
+
+  // 2 · Zoom vers le pendentif
+  const p2 = prog(t, ...T.s2);
+  const z = lerp(1, 1.75, easeIO(p2));
+  $('s2bg').style.transformOrigin = '50% 62%';
+  $('s2bg').style.transform = `scale(${z}) translateY(${lerp(0, -40, easeIO(p2))}px)`;
+  rise($('s2title'), t, T.s2[0] + .2);
+  [...$('s2feats').children].forEach((f, i) => rise(f, t, T.s2[0] + .75 + i * .45, 30, .35));
+
+  // 3 · Porté
+  const p3 = prog(t, ...T.s3);
+  $('s3bg').style.transform = `scale(${lerp(1.08, 1.2, p3)}) translateY(${lerp(20, -30, p3)}px)`;
+  rise($('s3title'), t, T.s3[0] + .25);
+
+  // 4 · Écrin
+  const p4 = prog(t, ...T.s4);
+  $('s4bg').style.transform = `scale(${lerp(1.25, 1.08, easeIO(p4))})`;
+  rise($('s4title'), t, T.s4[0] + .25);
+
+  // 5 · Offre
+  const p5 = prog(t, ...T.s5);
+  $('s5bg').style.transform = `scale(${lerp(1, 1.06, p5)})`;
+  pop($('s5a'), t, T.s5[0] + .2);
+  pop($('s5b'), t, T.s5[0] + .7);
+  rise($('s5c'), t, T.s5[0] + 1.3, 30);
+
+  // Rappel de l'offre (scènes 2 à 4)
+  const pill = $('pill');
+  const pin = ease(prog(t, T.s2[0] + .3, T.s2[0] + .7));
+  const pout = 1 - prog(t, T.s5[0] - .1, T.s5[0] + .15);
+  pill.style.opacity = Math.min(pin, pout);
+
+  // 6 · Comment commander
+  const s6 = T.s6[0];
+  const st = [s6, s6 + 2.6, s6 + 5.4, T.s6[1]];
+  ['cap1', 'cap2', 'cap3'].forEach((id, i) => {
+    const el = $(id);
+    const k = Math.min(ease(prog(t, st[i] + .05, st[i] + .4)), 1 - prog(t, st[i + 1] - .15, st[i + 1] + .05));
+    el.style.opacity = k;
+    el.style.transform = `translateY(${(1 - k) * 30}px)`;
+  });
+  const ph = $('phone');
+  const kin = ease(prog(t, s6, s6 + .5));
+  ph.style.transform = `translateY(${(1 - kin) * 400}px)`;
+
+  // Saisie de l'adresse
+  const full = 'maisonlemeraude.fr';
+  const typed = Math.floor(clamp((t - s6 - .45) / .9) * full.length);
+  $('url').textContent = full.slice(0, typed);
+  $('caret').style.opacity = (t < s6 + 1.6 && Math.floor(t * 3) % 2 === 0) ? 1 : 0;
+
+  // Enchaînement des vues
+  const v1 = t >= s6 + 1.4 && t < st[1] + .1 ? ease(prog(t, s6 + 1.4, s6 + 1.7)) : 0;
+  const v2 = t >= st[1] && t < st[2] + .1 ? ease(prog(t, st[1], st[1] + .3)) : 0;
+  const v3 = t >= st[2] ? ease(prog(t, st[2], st[2] + .3)) : 0;
+  $('v1').style.opacity = v1; $('v2').style.opacity = v2; $('v3').style.opacity = v3;
+  $('v1').style.transform = `translateY(${-prog(t, s6 + 1.9, st[1]) * 80}px)`;
+
+  // Appuis simulés
+  const tap = $('tap');
+  const center = el => {
+    const r = el.getBoundingClientRect(), s = $('screen').getBoundingClientRect();
+    return { x: r.left - s.left + r.width * .62, y: r.top - s.top + r.height / 2 };
+  };
+  const taps = [ { at: st[1] + 1.2, ...center($('atc')) }, { at: st[2] + 1.7, ...center($('checkout')) } ];
+  let tapOp = 0;
+  taps.forEach(tp => {
+    const k = prog(t, tp.at - .45, tp.at + .35);
+    if (k > 0 && k < 1) {
+      tap.style.left = tp.x + 'px'; tap.style.top = tp.y + 'px';
+      const press = t < tp.at ? 1 : 1 - prog(t, tp.at, tp.at + .15) * .25;
+      tapOp = t < tp.at ? ease(prog(t, tp.at - .45, tp.at - .2)) : 1 - prog(t, tp.at + .1, tp.at + .35);
+      tap.style.transform = `scale(${press})`;
+    }
+  });
+  tap.style.opacity = tapOp;
+  const atc = $('atc');
+  const added = t >= taps[0].at;
+  atc.textContent = added ? 'Ajouté au panier ✓' : 'Ajouter au panier';
+  atc.style.background = added ? 'var(--green)' : 'var(--ink)';
+  const co = $('checkout');
+  co.style.background = t >= taps[1].at ? 'var(--green)' : 'var(--ink)';
+  co.textContent = t >= taps[1].at ? 'Commande confirmée ✓' : 'Commander';
+  const gift = $('gift');
+  const gk = ease(prog(t, st[2] + .5, st[2] + .9));
+  gift.style.opacity = gk;
+  gift.style.transform = `translateX(${(1 - gk) * 60}px)`;
+
+  // 7 · Appel à l'action
+  const s7 = T.s7[0];
+  $('s7bg').style.transform = `scale(${lerp(1.1, 1.2, prog(t, s7, T.s7[1]))})`;
+  rise($('s7logo'), t, s7 + .15, 30);
+  rise($('s7title'), t, s7 + .4, 40);
+  const cta = $('cta');
+  pop(cta, t, s7 + 1.0);
+  if (t > s7 + 1.35) cta.style.transform = `scale(${1 + Math.sin((t - s7) * 6) * .035})`;
+  const aw = $('arrowWrap');
+  aw.style.opacity = ease(prog(t, s7 + 1.4, s7 + 1.8));
+  aw.style.transform = `translateY(${Math.abs(Math.sin((t - s7) * 4)) * 22}px)`;
+}
+window.seek = seek;
+seek(parseFloat(params.get('t') || '0'));
+</script>
+</body>
+</html>
