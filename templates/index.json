@@ -5,7 +5,7 @@
       "settings": {
         "brand_name": "Maison L'Émeraude",
         "headline": "La Goutte d'Émeraude",
-        "subheadline": "Le collier signature de la Maison, en cristal vert et finition dorée."
+        "subheadline": "Colliers, boucles d'oreilles et bracelets en cristal, finition dorée, livrés dans leur écrin."
       }
     },
     "piece-intro": {
@@ -27,8 +27,7 @@
       "type": "new-piece",
       "settings": {
         "badge": "Nouveauté",
-        "eyebrow": "Nouvelle pièce de la Maison",
-        "cta": "Découvrir les boucles"
+        "eyebrow": "Nouvelle pièce de la Maison"
       }
     },
     "storytelling": {
@@ -152,11 +151,19 @@
             "question": "Comment contacter la Maison ?",
             "answer": "<p>Vous pouvez nous écrire via le formulaire de contact en bas de cette page, ou directement à maisonlemeraude@outlook.fr. Nous répondons dans un délai de 24 à 48 heures ouvrées.</p>"
           }
+        },
+        "q12": {
+          "type": "question",
+          "settings": {
+            "question": "Comment fonctionne l'offre parure ?",
+            "answer": "<p>Le collier, les boucles d'oreilles et le bracelet pris ensemble bénéficient d'une remise sur la parure complète. Un bouton ajoute les trois pièces au panier et applique la remise automatiquement. La parure collier + boucles d'oreilles reste aussi proposée à prix réduit. Les remises parure ne se cumulent pas avec l'offre de lancement : la plus avantageuse s'applique.</p>"
+          }
         }
       },
       "block_order": [
         "q1",
         "q2",
+        "q12",
         "q3",
         "q4",
         "q5",
@@ -167,13 +174,36 @@
         "q10",
         "q11"
       ]
+    },
+    "trust-bar": {
+      "type": "trust-bar"
+    },
+    "collection-grid": {
+      "type": "collection-grid",
+      "settings": {
+        "limit": 6,
+        "eyebrow": "La Collection",
+        "title": "Les bijoux de la Maison",
+        "subtitle": "Chaque pièce est expédiée dans son écrin, avec suivi, et reste échangeable ou remboursable pendant 30 jours."
+      }
+    },
+    "parure": {
+      "type": "parure",
+      "settings": {
+        "eyebrow": "La parure",
+        "title": "Collier, boucles et bracelet, assortis.",
+        "body": "Les trois pièces de la Maison se portent ensemble ou séparément. Prises ensemble, elles bénéficient d'une remise, appliquée automatiquement au panier."
+      }
     }
   },
   "order": [
     "hero",
+    "trust-bar",
+    "collection-grid",
+    "new-piece",
+    "parure",
     "piece-intro",
     "detail-macro",
-    "new-piece",
     "storytelling",
     "boutique-paris",
     "lifestyle-banner",

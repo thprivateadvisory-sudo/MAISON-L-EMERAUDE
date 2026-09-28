@@ -1,0 +1,99 @@
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
+{%- liquid
+  assign piece_handles = piece_handles | split: '|'
+  assign piece_necklace = all_products[piece_handles[0]]
+  assign piece_earrings = all_products[piece_handles[1]]
+  assign piece_bracelet = all_products[piece_handles[2]]
+-%}
+
+{%- if piece_necklace.id and piece_earrings.id and piece_bracelet.id -%}
+<div id="parure" class="parure-section">
+  <div class="parure-inner">
+    <div class="parure-head">
+      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #C9A96E; letter-spacing: .28em;">{{ section.settings.eyebrow }}</span>
+      <span class="ornament ml-reveal"></span>
+      <h2 class="serif ml-reveal ml-d1 parure-title">{{ section.settings.title }}</h2>
+      <p class="sans ml-reveal ml-d2 parure-body">{{ section.settings.body }}</p>
+    </div>
+
+    <div class="parure-grid">
+      <div class="parure-pieces ml-reveal">
+        {% for i in (1..3) %}
+          {% case i %}
+            {% when 1 %}{% assign p = piece_necklace %}
+            {% when 2 %}{% assign p = piece_earrings %}
+            {% else %}{% assign p = piece_bracelet %}
+          {% endcase %}
+          <a href="{{ p.url }}" class="parure-piece">
+            <span class="parure-img">
+              {% if p.featured_image %}
+                <img
+                  src="{{ p.featured_image | image_url: width: 500 }}"
+                  srcset="{{ p.featured_image | image_url: width: 300 }} 300w, {{ p.featured_image | image_url: width: 500 }} 500w"
+                  sizes="(max-width: 860px) 33vw, 200px"
+                  width="500"
+                  height="500"
+                  alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                  loading="lazy"
+                >
+              {% endif %}
+            </span>
+            <span class="parure-name">{{ p.title }}</span>
+            <span class="parure-price">{{ p.price | money }}</span>
+          </a>
+        {% endfor %}
+      </div>
+
+      <div class="parure-offer ml-reveal ml-d2">
+        {% render 'bundle-offer', mode: 'trio', piece_a: piece_necklace, piece_b: piece_earrings, piece_c: piece_bracelet, compact: true %}
+        {% render 'bundle-offer', mode: 'duo', piece_a: piece_necklace, piece_b: piece_earrings, compact: true %}
+        <ul class="parure-trust">
+          <li>Trois écrins, un seul colis suivi</li>
+          <li>Retours {{ settings.return_days }} jours</li>
+          <li>Paiement sécurisé</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.parure-section { width: 100%; background: #17140F; color: #FBF8F2; padding: clamp(64px, 10vw, 120px) clamp(18px, 5vw, 36px); }
+.parure-inner { max-width: 1150px; margin: 0 auto; }
+.parure-head { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: clamp(36px, 6vw, 64px); }
+.parure-title { margin: 0; font-size: clamp(28px, 4.4vw, 46px); font-weight: 300; line-height: 1.12; color: #FBF8F2; }
+.parure-body { margin: 0; max-width: 520px; font-size: 13.5px; font-weight: 300; line-height: 1.85; color: rgba(251,248,242,.74); }
+.parure-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.parure-pieces { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 2vw, 18px); }
+.parure-piece { display: flex; flex-direction: column; gap: 8px; text-align: center; }
+.parure-img { display: block; aspect-ratio: 1; overflow: hidden; background: #FFFFFF; }
+.parure-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.25,.46,.45,.94); }
+.parure-piece:hover .parure-img img { transform: scale(1.05); }
+.parure-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(14px, 1.6vw, 17px); line-height: 1.25; color: #FBF8F2; }
+.parure-price { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 300; color: rgba(251,248,242,.62); }
+.parure-offer { display: flex; flex-direction: column; gap: 14px; color: #17140F; }
+.parure-offer .bundle-card { background: #FBF8F2; }
+.parure-offer .pdp-pair { display: none; }
+.parure-trust { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.parure-trust li { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.7); }
+.parure-trust li::before { content: '✓'; color: #C9A96E; margin-right: 6px; }
+@media (max-width: 860px) {
+  .parure-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .parure-piece:hover .parure-img img { transform: none; }
+}
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Parure complète",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "La parure" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Collier, boucles et bracelet, assortis." },
+    { "type": "textarea", "id": "body", "label": "Texte", "default": "Les trois pièces de la Maison se portent ensemble ou séparément. Prises ensemble, elles bénéficient d'une remise, appliquée automatiquement au panier." }
+  ],
+  "presets": [{ "name": "Parure complète" }]
+}
+{% endschema %}

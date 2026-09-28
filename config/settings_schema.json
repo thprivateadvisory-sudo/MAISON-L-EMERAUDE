@@ -38,10 +38,30 @@
     ]
   },
   {
+    "name": "Parure complète",
+    "settings": [
+      { "type": "checkbox", "id": "trio_active", "label": "Offre parure complète active (collier + boucles d'oreilles + bracelet)", "default": true },
+      { "type": "range", "id": "trio_percent", "label": "Remise sur la parure complète", "min": 5, "max": 40, "step": 1, "unit": "%", "default": 20 },
+      { "type": "text", "id": "trio_discount_code", "label": "Code de réduction appliqué", "default": "PARURE3" },
+      { "type": "paragraph", "content": "Créez la remise dans Shopify : Remises → Créer une réduction → « Montant de réduction sur les produits » → code PARURE3 (identique à celui ci-dessus), pourcentage identique au réglage ci-dessus, s'applique aux 3 produits (collier, boucles, bracelet), exigence minimale : 3 articles, 1 utilisation par commande." }
+    ]
+  },
+  {
+    "name": "Pièces de la Maison",
+    "settings": [
+      { "type": "paragraph", "content": "Facultatif. Par défaut, les pièces sont reconnues par leur titre (« bracelet », « oreilles », le reste est le collier). Choisissez-les ici si un titre ne contient pas ces mots." },
+      { "type": "product", "id": "piece_necklace", "label": "Collier" },
+      { "type": "product", "id": "piece_earrings", "label": "Boucles d'oreilles" },
+      { "type": "product", "id": "piece_bracelet", "label": "Bracelet" }
+    ]
+  },
+  {
     "name": "Livraison & retours",
     "settings": [
       { "type": "text", "id": "prep_time", "label": "Délai de préparation", "default": "24 à 48 heures ouvrées" },
       { "type": "text", "id": "shipping_delay", "label": "Délai de livraison", "default": "3 à 7 jours ouvrés" },
+      { "type": "range", "id": "delivery_min_days", "label": "Livraison estimée : au plus tôt (jours ouvrés après commande)", "min": 1, "max": 20, "step": 1, "unit": "j", "default": 4 },
+      { "type": "range", "id": "delivery_max_days", "label": "Livraison estimée : au plus tard (jours ouvrés après commande)", "min": 2, "max": 30, "step": 1, "unit": "j", "default": 9 },
       { "type": "range", "id": "return_days", "label": "Délai de retour", "min": 14, "max": 60, "step": 1, "unit": "j", "default": 30 },
       { "type": "checkbox", "id": "free_shipping", "label": "Livraison offerte", "default": false, "info": "Cocher uniquement si c'est le cas : l'information est affichée sur le site et transmise à Google." },
       { "type": "checkbox", "id": "free_returns", "label": "Retours gratuits", "default": false, "info": "Cocher uniquement si les frais de retour sont pris en charge par la Maison." }

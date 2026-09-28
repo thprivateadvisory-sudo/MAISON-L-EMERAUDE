@@ -1,46 +1,76 @@
 {%- comment -%}
-  Offre parure : ajoute les deux pièces au panier en un clic, puis applique le code de réduction.
-  Paramètres : piece_a, piece_b (produits). Réglages : Paramètres du thème → Offre parure.
-  Sans offre active ou si une pièce est épuisée, affiche un simple lien vers piece_b.
+  Offre parure : ajoute les pièces au panier en un clic, puis applique le code de réduction.
+  Paramètres : mode ('duo' ou 'trio'), piece_a, piece_b, piece_c (trio), compact (facultatif).
+  Duo : prix fixe (Paramètres du thème → Offre parure). Trio : remise en % (→ Parure complète).
+  Sans offre active ou si une pièce est épuisée : duo → simple lien vers piece_b, trio → rien.
 {%- endcomment -%}
 {%- liquid
+  assign is_trio = false
+  if mode == 'trio'
+    assign is_trio = true
+  endif
+
   assign variant_a = piece_a.selected_or_first_available_variant
   assign variant_b = piece_b.first_available_variant
+  assign variant_c = piece_c.first_available_variant
+
   assign bundle_ok = false
-  if settings.bundle_active and variant_a.available and variant_b.available and settings.bundle_price > 0
-    assign bundle_ok = true
+  if is_trio
+    if settings.trio_active and settings.trio_percent > 0 and variant_a.available and variant_b.available and variant_c.available
+      assign bundle_ok = true
+    endif
+    assign regular_total = variant_a.price | plus: variant_b.price | plus: variant_c.price
+    assign off_a = variant_a.price | times: settings.trio_percent | divided_by: 100.0 | round
+    assign off_b = variant_b.price | times: settings.trio_percent | divided_by: 100.0 | round
+    assign off_c = variant_c.price | times: settings.trio_percent | divided_by: 100.0 | round
+    assign bundle_saving = off_a | plus: off_b | plus: off_c
+    assign bundle_total = regular_total | minus: bundle_saving
+    assign bundle_code = settings.trio_discount_code | strip
+    assign piece_count = 3
+  else
+    if settings.bundle_active and settings.bundle_price > 0 and variant_a.available and variant_b.available
+      assign bundle_ok = true
+    endif
+    assign regular_total = variant_a.price | plus: variant_b.price
+    assign bundle_total = settings.bundle_price | times: 100 | round
+    assign bundle_saving = regular_total | minus: bundle_total
+    assign bundle_code = settings.bundle_discount_code | strip
+    assign piece_count = 2
   endif
-  assign regular_total = variant_a.price | plus: variant_b.price
-  assign bundle_total = settings.bundle_price | times: 100 | round
-  assign bundle_saving = regular_total | minus: bundle_total
   if bundle_saving <= 0
     assign bundle_ok = false
   endif
 -%}
 
 {%- if bundle_ok -%}
-<div class="bundle-card">
+<div class="bundle-card{% if is_trio %} bundle-card--trio{% endif %}{% if compact %} bundle-card--compact{% endif %}">
   <div class="bundle-head">
-    <span class="bundle-eyebrow">Composez votre parure</span>
+    <span class="bundle-eyebrow">{% if is_trio %}La parure complète · {{ settings.trio_percent }} % de remise{% else %}Parure collier + boucles{% endif %}</span>
     <span class="bundle-badge">−{{ bundle_saving | money }}</span>
   </div>
 
+  {% unless compact %}
   <div class="bundle-pieces">
-    {% for piece in (1..2) %}
-      {% if forloop.first %}{% assign p = piece_a %}{% else %}{% assign p = piece_b %}{% endif %}
+    {% for i in (1..piece_count) %}
+      {% case i %}
+        {% when 1 %}{% assign p = piece_a %}{% assign v = variant_a %}
+        {% when 2 %}{% assign p = piece_b %}{% assign v = variant_b %}
+        {% else %}{% assign p = piece_c %}{% assign v = variant_c %}
+      {% endcase %}
+      {% unless forloop.first %}<span class="bundle-plus" aria-hidden="true">+</span>{% endunless %}
       <a href="{{ p.url }}" class="bundle-piece">
         {% if p.featured_image %}
           <img src="{{ p.featured_image | image_url: width: 200 }}" alt="" width="72" height="72" loading="lazy">
         {% endif %}
         <span class="bundle-piece-name">{{ p.title }}</span>
-        <span class="bundle-piece-price">{% if forloop.first %}{{ variant_a.price | money }}{% else %}{{ variant_b.price | money }}{% endif %}</span>
+        <span class="bundle-piece-price">{{ v.price | money }}</span>
       </a>
-      {% if forloop.first %}<span class="bundle-plus" aria-hidden="true">+</span>{% endif %}
     {% endfor %}
   </div>
+  {% endunless %}
 
   <div class="bundle-total">
-    <span class="bundle-total-label">Les deux bijoux</span>
+    <span class="bundle-total-label">{% if is_trio %}Les trois bijoux{% else %}Les deux bijoux{% endif %}</span>
     <span class="bundle-prices">
       <s class="bundle-old"><span class="visually-hidden">Prix séparés :</span>{{ regular_total | money }}</s>
       <span class="bundle-new">{{ bundle_total | money }}</span>
@@ -49,14 +79,15 @@
 
   <button
     type="button"
-    class="btn btn-dark bundle-btn"
+    class="btn {% if is_trio %}btn-dark{% endif %} bundle-btn"
     data-bundle-add
-    data-variant-a="{{ variant_a.id }}"
-    data-variant-b="{{ variant_b.id }}"
-    data-code="{{ settings.bundle_discount_code | strip | escape }}"
-  >Ajouter la parure au panier · {{ bundle_total | money }}</button>
+    data-variants="{{ variant_a.id }},{{ variant_b.id }}{% if is_trio %},{{ variant_c.id }}{% endif %}"
+    data-code="{{ bundle_code | escape }}"
+  >{% if is_trio %}Ajouter la parure complète{% else %}Ajouter collier + boucles{% endif %} · {{ bundle_total | money }}</button>
 
-  <p class="bundle-note">Un clic ajoute le collier et les boucles d'oreilles à votre panier. La remise de {{ bundle_saving | money }} est appliquée automatiquement.</p>
+  {% unless compact %}
+  <p class="bundle-note">Un clic ajoute les {{ piece_count }} bijoux à votre panier, chacun dans son écrin. La remise de {{ bundle_saving | money }} est appliquée automatiquement.</p>
+  {% endunless %}
   <p class="bundle-error" role="alert" hidden>Un souci est survenu lors de l'ajout. Merci de réessayer.</p>
 </div>
 
@@ -73,13 +104,14 @@ if (!window.mlBundleInit) {
     btn.textContent = 'Ajout en cours…';
     if (err) err.hidden = true;
 
+    var items = btn.getAttribute('data-variants').split(',').map(function(id) {
+      return { id: Number(id), quantity: 1 };
+    });
+
     fetch({{ routes.cart_add_url | append: '.js' | json }}, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ items: [
-        { id: Number(btn.getAttribute('data-variant-a')), quantity: 1 },
-        { id: Number(btn.getAttribute('data-variant-b')), quantity: 1 }
-      ] })
+      body: JSON.stringify({ items: items })
     }).then(function(res) {
       if (!res.ok) throw new Error('cart');
       var code = btn.getAttribute('data-code');
@@ -96,7 +128,7 @@ if (!window.mlBundleInit) {
   });
 }
 </script>
-{%- else -%}
+{%- elsif is_trio == false and piece_b.url -%}
 <a href="{{ piece_b.url }}" class="pdp-pair">
   {% if piece_b.featured_image %}
     <img src="{{ piece_b.featured_image | image_url: width: 160 }}" alt="" width="64" height="64" loading="lazy">

@@ -51,7 +51,7 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 /* HEADER */
 .header-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px clamp(18px, 4vw, 36px); gap: 16px; }
 .header-left { display: flex; align-items: center; gap: 52px; min-width: 0; }
-.nav-links { display: flex; gap: 36px; }
+.nav-links { display: flex; gap: clamp(14px, 2vw, 32px); }
 .site-logo-link { display: flex; align-items: center; flex-shrink: 0; }
 .site-logo-img { display: block; width: 160px; max-width: 160px; height: auto; mix-blend-mode: multiply; transition: opacity .25s ease; }
 .site-logo-img:hover { opacity: .72; }
@@ -107,12 +107,14 @@ input.nl-input::placeholder { color: rgba(251,248,242,.45); }
 .bundle-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .bundle-eyebrow { font-family: 'Montserrat', sans-serif; font-size: 9.5px; font-weight: 400; letter-spacing: .22em; text-transform: uppercase; color: #7A5C2E; }
 .bundle-badge { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: .08em; color: #FBF8F2; background: #7A1F2B; padding: 5px 9px; white-space: nowrap; }
-.bundle-pieces { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: 10px; }
-.bundle-piece { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.bundle-pieces { display: flex; align-items: flex-start; gap: 8px; }
+.bundle-piece { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.bundle-card--trio { border-color: #B08D57; background: #FFFDF8; box-shadow: 0 10px 30px rgba(23,20,15,.06); }
+.bundle-card--compact { gap: 12px; padding: 16px 18px; }
 .bundle-piece img { width: 72px; height: 72px; object-fit: cover; border: 1px solid rgba(27,24,18,.1); background: #fff; }
 .bundle-piece-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 15px; line-height: 1.25; color: #17140F; }
 .bundle-piece-price { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 300; color: #6b6558; }
-.bundle-plus { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; color: #B08D57; padding-top: 20px; }
+.bundle-plus { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; color: #B08D57; padding-top: 20px; flex-shrink: 0; }
 .bundle-total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-top: 1px solid rgba(27,24,18,.1); padding-top: 14px; flex-wrap: wrap; }
 .bundle-total-label { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: #17140F; }
 .bundle-prices { display: flex; align-items: baseline; gap: 10px; }
@@ -346,3 +348,53 @@ html { scroll-behavior: smooth; }
 @media (max-width: 860px) {
   .boutique-img-wrap { aspect-ratio: 4 / 5; }
 }
+
+/* CARTE PRODUIT */
+.pcard { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.pcard-media { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(27,24,18,.06); }
+.pcard-img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.25,.46,.45,.94), opacity .45s ease; }
+.pcard-img--alt { position: absolute; inset: 0; opacity: 0; }
+.pcard-media:hover .pcard-img { transform: scale(1.04); }
+.pcard-media--hover:hover .pcard-img--alt { opacity: 1; }
+.pcard-badges { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.pcard-badge { font-family: 'Montserrat', sans-serif; font-size: 8.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; padding: 6px 9px; background: #FBF8F2; color: #17140F; }
+.pcard-badge--new { background: #7A1F2B; color: #FBF8F2; }
+.pcard-badge--offer { background: #17140F; color: #E8D5AE; }
+.pcard-body { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.pcard-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(17px, 2vw, 20px); font-weight: 400; line-height: 1.25; color: #17140F; }
+.pcard-prices { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pcard-price { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 20px; color: #17140F; }
+.pcard-compare { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; color: #6b6558; }
+.pcard-note { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .02em; color: #7A1F2B; }
+.pcard-form { width: 100%; margin: 0; }
+.pcard-btn { width: 100%; margin-top: 8px; padding: 13px 12px; text-align: center; white-space: normal; }
+@media (max-width: 560px) {
+  .pcard-btn { font-size: 9px; letter-spacing: .14em; padding: 12px 8px; }
+  .pcard-note { font-size: 9.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pcard-media:hover .pcard-img { transform: none; }
+}
+
+/* BANDEAU DE CONFIANCE */
+.tbar { background: #FFFDF8; border-bottom: 1px solid rgba(27,24,18,.08); padding: 18px clamp(18px, 5vw, 36px); }
+.tbar-list { max-width: 1200px; margin: 0 auto; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.tbar-item { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.tbar-item svg { width: 22px; height: 22px; flex-shrink: 0; }
+.tbar-title { display: block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .06em; color: #17140F; }
+.tbar-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 300; color: #6b6558; margin-top: 2px; }
+.pay-icons { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.pay-icon { width: 38px; height: 24px; }
+@media (max-width: 860px) {
+  .tbar-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; }
+  .tbar-item { gap: 9px; }
+  .tbar-title { font-size: 10.5px; letter-spacing: .03em; }
+  .tbar-sub { font-size: 10px; }
+}
+
+/* LIVRAISON ESTIMÉE + STOCK */
+.pdp-eta { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: #F3EEE3; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300; color: #17140F; line-height: 1.5; }
+.pdp-eta svg { width: 18px; height: 18px; flex-shrink: 0; }
+.pdp-eta strong { font-weight: 500; }
+.pdp-stock { display: flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 400; color: #7A1F2B; margin: 0; }
+.pdp-stock::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #B0452F; flex-shrink: 0; }

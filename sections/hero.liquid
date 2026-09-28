@@ -1,13 +1,10 @@
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
 {%- liquid
-  # Pièce signature (collier) : on écarte les boucles d'oreilles du choix par défaut
+  # Pièce signature : le collier, sauf choix contraire dans l'éditeur
   assign featured_product = section.settings.product
   if featured_product == blank
-    for p in collections.all.products
-      unless p.title contains 'oreilles'
-        assign featured_product = p
-        break
-      endunless
-    endfor
+    assign piece_handles = piece_handles | split: '|'
+    assign featured_product = all_products[piece_handles[0]]
   endif
 -%}
 
@@ -31,8 +28,12 @@
     <h1 class="serif hero-title ha3" style="margin: 0; line-height: 1.06; color: #FBF8F2;">{{ section.settings.headline | default: "La Goutte d'Émeraude" }}</h1>
     <p class="serif ha4" style="margin: 0; font-size: clamp(15px, 2vw, 19px); font-style: italic; line-height: 1.65; color: rgba(251,248,242,.82); max-width: 400px; font-weight: 300;">{{ section.settings.subheadline | default: "Le collier signature de la Maison, en cristal vert et finition dorée." }}</p>
     <div class="ha5" style="display: flex; gap: 20px; margin-top: 14px; flex-wrap: wrap; justify-content: center; align-items: center;">
-      <a href="{{ featured_product.url | default: '#piece' }}" class="btn btn-light" style="min-width: 190px;">Découvrir la pièce</a>
-      <a href="#nouveaute" class="btn btn-light" style="min-width: 190px; background: rgba(122,31,43,.55); border-color: rgba(201,169,110,.6);">Nouveauté · Boucles</a>
+      <a href="#collection" class="btn btn-light" style="min-width: 210px; background: #FBF8F2; color: #17140F; border-color: #FBF8F2;">Voir la collection</a>
+      {% if settings.trio_active %}
+        <a href="#parure" class="btn btn-light" style="min-width: 210px; background: rgba(122,31,43,.55); border-color: rgba(201,169,110,.6);">La parure · −{{ settings.trio_percent }} %</a>
+      {% else %}
+        <a href="{{ featured_product.url | default: '#piece' }}" class="btn btn-light" style="min-width: 210px;">Découvrir le collier</a>
+      {% endif %}
     </div>
     {% if settings.offer_active %}<a href="#offre" class="sans ha6" style="font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: rgba(251,248,242,.68); border-bottom: 1px solid rgba(251,248,242,.22); padding-bottom: 2px; margin-top: 2px; transition: color .25s ease, border-color .25s ease;">Offre de lancement : 1 acheté · 1 offert</a>{% endif %}
   </div>

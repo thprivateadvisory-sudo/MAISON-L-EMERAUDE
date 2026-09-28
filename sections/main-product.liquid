@@ -1,28 +1,50 @@
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- assign main_image = current_variant.featured_image | default: product.featured_image -%}
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
 {%- liquid
-  # Boucles d'oreilles : fiche matières et mise en avant dédiées
+  assign piece_handles = piece_handles | split: '|'
+  assign piece_necklace = all_products[piece_handles[0]]
+  assign piece_earrings = all_products[piece_handles[1]]
+  assign piece_bracelet = all_products[piece_handles[2]]
+
   assign is_earrings = false
-  if product.title contains 'oreilles' or product.type contains 'oreilles'
+  assign is_bracelet = false
+  assign is_necklace = false
+  if product.id == piece_earrings.id
     assign is_earrings = true
+  elsif product.id == piece_bracelet.id
+    assign is_bracelet = true
+  elsif product.id == piece_necklace.id
+    assign is_necklace = true
   endif
 
-  # Pièce complémentaire pour composer une parure (collier <-> boucles)
-  assign pair_product = nil
-  for p in collections.all.products
-    if p.id == product.id
-      continue
+  # Parure complète : la pièce affichée en premier, puis les deux autres
+  assign show_trio = false
+  if piece_necklace.id and piece_earrings.id and piece_bracelet.id
+    if is_earrings or is_bracelet or is_necklace
+      assign show_trio = true
     endif
-    if is_earrings
-      unless p.title contains 'oreilles'
-        assign pair_product = p
-        break
-      endunless
-    elsif p.title contains 'oreilles'
-      assign pair_product = p
-      break
+  endif
+  if is_earrings
+    assign trio_b = piece_necklace
+    assign trio_c = piece_bracelet
+    assign pair_product = piece_necklace
+  elsif is_bracelet
+    assign trio_b = piece_necklace
+    assign trio_c = piece_earrings
+    assign pair_product = nil
+  else
+    assign trio_b = piece_earrings
+    assign trio_c = piece_bracelet
+    if is_necklace and piece_earrings.id
+      assign pair_product = piece_earrings
     endif
-  endfor
+  endif
+
+  assign low_stock = false
+  if current_variant.available and current_variant.inventory_management == 'shopify' and current_variant.inventory_policy == 'deny' and current_variant.inventory_quantity > 0 and current_variant.inventory_quantity <= 5
+    assign low_stock = true
+  endif
 -%}
 <div class="sect" style="width: 100%;" id="product-main">
   <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
@@ -64,7 +86,7 @@
     {% # Informations produit %}
     <div style="display: flex; flex-direction: column; gap: 20px;">
 
-      <span class="eyebrow ml-reveal" style="color: {% if is_earrings %}#7A1F2B{% else %}#7A5C2E{% endif %}; font-size: 10px;">{% if is_earrings %}{{ section.settings.earrings_eyebrow | default: 'Nouveauté de la Maison' }}{% else %}La pièce signature{% endif %}</span>
+      <span class="eyebrow ml-reveal" style="color: {% if is_bracelet %}#7A1F2B{% else %}#7A5C2E{% endif %}; font-size: 10px;">{% if is_bracelet %}{{ section.settings.bracelet_eyebrow | default: 'Nouveauté de la Maison' }}{% elsif is_earrings %}{{ section.settings.earrings_eyebrow | default: "Boucles d'oreilles" }}{% elsif is_necklace %}La pièce signature{% else %}Maison L'Émeraude{% endif %}</span>
       <h1 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
 
       {% # Prix %}
@@ -85,6 +107,10 @@
 
       {% # Description %}
       <div class="sans" style="font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .01em;">{{ product.description }}</div>
+
+      {% if low_stock %}
+        <p class="pdp-stock">Plus que {{ current_variant.inventory_quantity }} pièce{% if current_variant.inventory_quantity > 1 %}s{% endif %} en stock</p>
+      {% endif %}
 
       {% # Formulaire %}
       {% form 'product', product, id: 'ProductForm' %}
@@ -113,13 +139,25 @@
             {% unless current_variant.available %}disabled{% endunless %}
           >
             {% if current_variant.available %}
-              {{ 'products.product.add_to_cart' | t }}
+              {{ 'products.product.add_to_cart' | t }} · {{ current_variant.price | money }}
             {% else %}
               {{ 'products.product.sold_out' | t }}
             {% endif %}
           </button>
         </div>
       {% endform %}
+
+      {% if current_variant.available %}
+      <div class="pdp-eta" id="PdpEta" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#7A5C2E" stroke-width="1.5" aria-hidden="true"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
+        <span>Commandez aujourd'hui, livraison estimée entre le <strong data-eta-min></strong> et le <strong data-eta-max></strong></span>
+      </div>
+      {% endif %}
+
+      {% if show_trio %}
+      {% # Parure complète, juste sous le bouton %}
+      {% render 'bundle-offer', mode: 'trio', piece_a: product, piece_b: trio_b, piece_c: trio_c %}
+      {% endif %}
 
       {% # Réassurance sous bouton %}
       <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px;">
@@ -139,6 +177,12 @@
           <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
           Écrin inclus, prêt à offrir
         </div>
+        {% if shop.enabled_payment_types.size > 0 %}
+        <div class="pay-icons" style="margin-top: 6px;">
+          <span class="visually-hidden">Moyens de paiement acceptés :</span>
+          {% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'pay-icon' }}{% endfor %}
+        </div>
+        {% endif %}
       </div>
 
       {% # Fiche matières %}
@@ -153,7 +197,17 @@
             <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
           </div>
         {% endfor %}
-        {% else %}
+        {% elsif is_bracelet %}
+        {%- capture bracelet_rows -%}{% if section.settings.bracelet_stone != blank %}Pierre|{{ section.settings.bracelet_stone }}~{% endif %}{% if section.settings.bracelet_metal != blank %}Métal|{{ section.settings.bracelet_metal }}~{% endif %}{% if section.settings.bracelet_length != blank %}Longueur|{{ section.settings.bracelet_length }}~{% endif %}{% if section.settings.bracelet_clasp != blank %}Fermoir|{{ section.settings.bracelet_clasp }}~{% endif %}{%- endcapture -%}
+        {% assign rows = bracelet_rows | split: '~' %}
+        {% for row in rows %}
+          {% assign cells = row | split: '|' %}
+          <div style="display: flex; justify-content: space-between; padding: 13px 0;{% unless forloop.last %} border-bottom: 1px solid rgba(27,24,18,.07);{% endunless %}">
+            <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">{{ cells[0] }}</span>
+            <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
+          </div>
+        {% endfor %}
+        {% elsif is_necklace %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
           <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
           <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert, taille goutte" }}</span>
@@ -187,8 +241,8 @@
       {% endif %}
 
       {% if pair_product %}
-      {% # Parure : pièce complémentaire / offre duo %}
-      {% render 'bundle-offer', piece_a: product, piece_b: pair_product %}
+      {% # Parure collier + boucles %}
+      {% render 'bundle-offer', mode: 'duo', piece_a: product, piece_b: pair_product, compact: show_trio %}
       {% endif %}
 
     </div>
@@ -286,11 +340,29 @@ document.addEventListener('DOMContentLoaded', function() {
       b.style.opacity = available ? '' : '.45';
       b.style.cursor = available ? '' : 'not-allowed';
     });
-    if (addBtn) addBtn.textContent = !variant ? {{ 'products.product.unavailable' | t | json }} : (available ? {{ 'products.product.add_to_cart' | t | json }} : {{ 'products.product.sold_out' | t | json }});
+    if (addBtn) addBtn.textContent = !variant ? {{ 'products.product.unavailable' | t | json }} : (available ? {{ 'products.product.add_to_cart' | t | json }} + ' · ' + formatMoney(variant.price) : {{ 'products.product.sold_out' | t | json }});
     if (stickyBtnEl) stickyBtnEl.textContent = available ? 'Ajouter' : (variant ? 'Épuisé' : 'Indisponible');
   }
 
   selects.forEach(function(s) { s.addEventListener('change', onOptionChange); });
+
+  // --- Livraison estimée (jours ouvrés) ---
+  var eta = document.getElementById('PdpEta');
+  if (eta) {
+    var addBusinessDays = function(date, n) {
+      var d = new Date(date);
+      while (n > 0) {
+        d.setDate(d.getDate() + 1);
+        if (d.getDay() !== 0 && d.getDay() !== 6) n--;
+      }
+      return d;
+    };
+    var fmt = function(d) { return d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }); };
+    var today = new Date();
+    eta.querySelector('[data-eta-min]').textContent = fmt(addBusinessDays(today, {{ settings.delivery_min_days | default: 4 }}));
+    eta.querySelector('[data-eta-max]').textContent = fmt(addBusinessDays(today, {{ settings.delivery_max_days | default: 9 }}));
+    eta.hidden = false;
+  }
 
   // --- Sticky Add to Cart (mobile) ---
   var mainBtn = addBtn;
@@ -331,11 +403,17 @@ document.addEventListener('DOMContentLoaded', function() {
     { "type": "text", "id": "water_resistance", "label": "Résistance à l'eau" },
     { "type": "textarea", "id": "offer_text", "label": "Explication de l'offre 1+1" },
     { "type": "header", "content": "Boucles d'oreilles" },
-    { "type": "text", "id": "earrings_eyebrow", "label": "Surtitre", "default": "Nouveauté de la Maison" },
+    { "type": "text", "id": "earrings_eyebrow", "label": "Surtitre", "default": "Boucles d'oreilles" },
     { "type": "text", "id": "earrings_stone", "label": "Pierre centrale" },
     { "type": "text", "id": "earrings_halo", "label": "Halo" },
     { "type": "text", "id": "earrings_setting", "label": "Monture" },
-    { "type": "text", "id": "earrings_size", "label": "Dimensions" }
+    { "type": "text", "id": "earrings_size", "label": "Dimensions" },
+    { "type": "header", "content": "Bracelet" },
+    { "type": "text", "id": "bracelet_eyebrow", "label": "Surtitre", "default": "Nouveauté de la Maison" },
+    { "type": "text", "id": "bracelet_stone", "label": "Pierre(s)" },
+    { "type": "text", "id": "bracelet_metal", "label": "Métal" },
+    { "type": "text", "id": "bracelet_length", "label": "Longueur" },
+    { "type": "text", "id": "bracelet_clasp", "label": "Fermoir" }
   ]
 }
 {% endschema %}

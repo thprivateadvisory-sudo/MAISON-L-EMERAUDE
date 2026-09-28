@@ -6,7 +6,7 @@
     {% if cart.item_count == 0 %}
       <div style="display: flex; flex-direction: column; gap: 20px; align-items: flex-start; padding: clamp(40px, 6vw, 60px) 0;">
         <p class="sans" style="color: #4A463D; font-size: 14px; font-weight: 300; line-height: 1.7; margin: 0;">Votre panier est vide pour l'instant.</p>
-        <a href="{{ routes.root_url }}" class="btn">Découvrir la pièce</a>
+        <a href="{{ routes.root_url }}#collection" class="btn">Découvrir la collection</a>
       </div>
 
     {% else %}
@@ -14,17 +14,24 @@
       {%- liquid
         # Code parure appliqué ? Il n'est pas cumulable avec l'offre de lancement
         assign bundle_applied = false
+        assign trio_applied = false
         assign bundle_code = settings.bundle_discount_code | strip | upcase
-        if bundle_code != blank
-          for app in cart.discount_applications
-            assign app_title = app.title | upcase
-            if app_title == bundle_code
-              assign bundle_applied = true
-            endif
-          endfor
-        endif
+        assign trio_code = settings.trio_discount_code | strip | upcase
+        for app in cart.discount_applications
+          assign app_title = app.title | upcase
+          if bundle_code != blank and app_title == bundle_code
+            assign bundle_applied = true
+          elsif trio_code != blank and app_title == trio_code
+            assign trio_applied = true
+          endif
+        endfor
       -%}
-      {% if bundle_applied %}
+      {% if trio_applied %}
+      <div class="offer-box" style="margin-bottom: 32px;">
+        <span class="offer-box-title">Parure complète appliquée</span>
+        <p class="offer-box-content" style="margin: 0;">Le collier, les boucles d'oreilles et le bracelet bénéficient de la remise parure ({{ settings.trio_percent }} %). Elle est déjà déduite du total ci-dessous.</p>
+      </div>
+      {% elsif bundle_applied %}
       {% # Rappel offre parure %}
       <div class="offer-box" style="margin-bottom: 32px;">
         <span class="offer-box-title">Offre parure appliquée</span>
@@ -108,8 +115,14 @@
         </div>
 
         <button type="submit" name="checkout" class="btn btn-dark" style="width: 100%; margin-top: 16px; padding: 16px 24px; font-size: 10.5px;">
-          Passer à la commande
+          Paiement sécurisé · Commander
         </button>
+        {% if shop.enabled_payment_types.size > 0 %}
+        <div class="pay-icons" style="justify-content: center; margin-top: 14px;">
+          <span class="visually-hidden">Moyens de paiement acceptés :</span>
+          {% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'pay-icon' }}{% endfor %}
+        </div>
+        {% endif %}
 
       {% endform %}
 
