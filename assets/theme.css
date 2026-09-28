@@ -384,7 +384,7 @@ html { scroll-behavior: smooth; }
 .tbar-title { display: block; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .06em; color: #17140F; }
 .tbar-sub { display: block; font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 300; color: #6b6558; margin-top: 2px; }
 .pay-icons { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.pay-icon { width: 38px; height: 24px; }
+.pay-icon { width: 38px; height: 24px; display: block; }
 @media (max-width: 860px) {
   .tbar-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; }
   .tbar-item { gap: 9px; }
@@ -398,3 +398,12 @@ html { scroll-behavior: smooth; }
 .pdp-eta strong { font-weight: 500; }
 .pdp-stock { display: flex; align-items: center; gap: 8px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 400; color: #7A1F2B; margin: 0; }
 .pdp-stock::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #B0452F; flex-shrink: 0; }
+
+/* QUESTIONS FICHE PRODUIT */
+.pdp-faq { border-top: 1px solid rgba(27,24,18,.1); }
+.pdp-faq details { border-bottom: 1px solid rgba(27,24,18,.1); }
+.pdp-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 15px 0; font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; color: #17140F; }
+.pdp-faq summary::-webkit-details-marker { display: none; }
+.pdp-faq summary::after { content: '+'; font-size: 16px; color: #B08D57; transition: transform .25s ease; }
+.pdp-faq details[open] summary::after { transform: rotate(45deg); }
+.pdp-faq p { margin: 0 0 16px; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.8; color: #4A463D; }
