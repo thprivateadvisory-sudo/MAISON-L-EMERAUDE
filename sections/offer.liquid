@@ -1,14 +1,11 @@
 {%- if settings.offer_active -%}
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
 {%- liquid
-  # Pièce signature (collier) : on écarte les boucles d'oreilles du choix par défaut
+  # Pièce signature : le collier, sauf choix contraire dans l'éditeur
   assign featured_product = section.settings.product
   if featured_product == blank
-    for p in collections.all.products
-      unless p.title contains 'oreilles'
-        assign featured_product = p
-        break
-      endunless
-    endfor
+    assign piece_handles = piece_handles | split: '|'
+    assign featured_product = all_products[piece_handles[0]]
   endif
 -%}
 

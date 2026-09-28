@@ -1,23 +1,78 @@
-{%- comment -%} Carte produit (recherche, collections). Paramètre : item (produit ou résultat de recherche). {%- endcomment -%}
+{%- comment -%}
+  Carte produit (accueil, collections, recherche).
+  Paramètres : item (produit ou résultat de recherche), new_id (facultatif : id de la pièce marquée « Nouveauté »).
+{%- endcomment -%}
 {%- if item.object_type == 'product' or item.variants -%}
-  <a href="{{ item.url }}" style="display: flex; flex-direction: column; gap: 12px;">
-    <div style="aspect-ratio: 4 / 5; overflow: hidden; background: #F3EEE3;">
+  {%- liquid
+    assign card_variant = item.selected_or_first_available_variant
+    assign is_new = false
+    if new_id and item.id == new_id
+      assign is_new = true
+    endif
+    for tag in item.tags
+      assign tag_down = tag | downcase
+      if tag_down == 'nouveau' or tag_down == 'nouveauté' or tag_down == 'nouveaute'
+        assign is_new = true
+      endif
+    endfor
+  -%}
+  <div class="pcard">
+    <a href="{{ item.url }}" class="pcard-media{% if item.images.size > 1 %} pcard-media--hover{% endif %}">
       {% if item.featured_image %}
         <img
-          src="{{ item.featured_image | image_url: width: 500 }}"
-          srcset="{{ item.featured_image | image_url: width: 300 }} 300w, {{ item.featured_image | image_url: width: 500 }} 500w"
+          src="{{ item.featured_image | image_url: width: 600 }}"
+          srcset="{{ item.featured_image | image_url: width: 360 }} 360w, {{ item.featured_image | image_url: width: 600 }} 600w"
           sizes="(max-width: 860px) 50vw, 25vw"
-          width="500"
-          height="625"
+          width="600"
+          height="600"
           alt="{{ item.featured_image.alt | default: item.title | escape }}"
           loading="lazy"
-          style="width: 100%; height: 100%; object-fit: cover;"
+          class="pcard-img"
         >
+        {% if item.images.size > 1 %}
+          <img
+            src="{{ item.images[1] | image_url: width: 600 }}"
+            alt=""
+            width="600"
+            height="600"
+            loading="lazy"
+            class="pcard-img pcard-img--alt"
+          >
+        {% endif %}
+      {% endif %}
+      <span class="pcard-badges">
+        {% if is_new %}<span class="pcard-badge pcard-badge--new">Nouveauté</span>{% endif %}
+        {% if item.available == false %}
+          <span class="pcard-badge">Épuisé</span>
+        {% elsif settings.offer_active %}
+          <span class="pcard-badge pcard-badge--offer">1 acheté · 1 offert</span>
+        {% endif %}
+      </span>
+    </a>
+
+    <div class="pcard-body">
+      <a href="{{ item.url }}" class="pcard-title">{{ item.title }}</a>
+      <span class="pcard-prices">
+        {% if item.compare_at_price > item.price %}<s class="pcard-compare"><span class="visually-hidden">Prix de référence :</span>{{ item.compare_at_price | money }}</s>{% endif %}
+        <span class="pcard-price">{% if item.price_varies %}Dès {% endif %}{{ item.price | money }}</span>
+      </span>
+      {% if settings.offer_active and item.available %}
+        <span class="pcard-note">+ une seconde pièce identique offerte</span>
+      {% endif %}
+
+      {% if item.available %}
+        {% if item.has_only_default_variant %}
+          <form method="post" action="{{ routes.cart_add_url }}" class="pcard-form">
+            <input type="hidden" name="id" value="{{ card_variant.id }}">
+            <input type="hidden" name="quantity" value="1">
+            <button type="submit" class="btn btn-dark pcard-btn">Ajouter au panier</button>
+          </form>
+        {% else %}
+          <a href="{{ item.url }}" class="btn btn-dark pcard-btn">Choisir</a>
+        {% endif %}
       {% endif %}
     </div>
-    <span class="serif" style="font-size: 18px; font-weight: 400; color: #17140F;">{{ item.title }}</span>
-    <span class="sans" style="font-size: 13px; font-weight: 300; color: #4A463D;">{{ item.price | money }}</span>
-  </a>
+  </div>
 {%- else -%}
   <a href="{{ item.url }}" class="serif" style="font-size: 18px;">{{ item.title }}</a>
 {%- endif -%}

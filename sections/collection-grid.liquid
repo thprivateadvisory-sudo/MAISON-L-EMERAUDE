@@ -1,0 +1,65 @@
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
+{%- liquid
+  assign piece_handles = piece_handles | split: '|'
+  assign new_piece = section.settings.new_product
+  if new_piece == blank
+    assign new_piece = all_products[piece_handles[2]]
+  endif
+
+  assign source = section.settings.collection
+  if source == blank
+    assign source = collections.all
+  endif
+-%}
+
+<div id="collection" class="cgrid-section">
+  <div class="cgrid-inner">
+    <div class="cgrid-head">
+      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">{{ section.settings.eyebrow }}</span>
+      <h2 class="serif ml-reveal ml-d1 cgrid-title">{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p class="sans ml-reveal ml-d2 cgrid-sub">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div class="cgrid">
+      {% for item in source.products limit: section.settings.limit %}
+        <div class="ml-reveal ml-d{{ forloop.index | at_most: 4 }}">
+          {% render 'product-card', item: item, new_id: new_piece.id %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if settings.trio_active %}
+      <p class="sans cgrid-foot">Les trois pièces ensemble : <a href="#parure" class="u-link">−{{ settings.trio_percent }} % sur la parure complète</a></p>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+.cgrid-section { width: 100%; background: #FBF8F2; padding: clamp(56px, 9vw, 110px) clamp(18px, 5vw, 36px); }
+.cgrid-inner { max-width: 1200px; margin: 0 auto; }
+.cgrid-head { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(32px, 5vw, 56px); }
+.cgrid-title { margin: 0; font-size: clamp(28px, 4.2vw, 44px); font-weight: 300; line-height: 1.12; }
+.cgrid-sub { margin: 0; max-width: 520px; font-size: 13.5px; font-weight: 300; line-height: 1.85; color: #4A463D; }
+.cgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(20px, 3vw, 36px); max-width: 1100px; margin: 0 auto; }
+.cgrid-foot { margin: clamp(32px, 5vw, 48px) 0 0; text-align: center; font-size: 13px; font-weight: 300; color: #4A463D; }
+@media (max-width: 560px) {
+  .cgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 14px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection affichée", "info": "Par défaut : toutes les pièces de la boutique." },
+    { "type": "range", "id": "limit", "label": "Nombre de pièces", "min": 2, "max": 12, "step": 1, "default": 6 },
+    { "type": "product", "id": "new_product", "label": "Pièce marquée « Nouveauté »", "info": "Par défaut : le bracelet. Le tag produit « nouveau » fonctionne aussi." },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "La Collection" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Les bijoux de la Maison" },
+    { "type": "textarea", "id": "subtitle", "label": "Sous-titre" }
+  ],
+  "presets": [{ "name": "Collection" }]
+}
+{% endschema %}

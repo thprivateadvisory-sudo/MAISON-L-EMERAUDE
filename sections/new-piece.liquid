@@ -1,25 +1,33 @@
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
 {%- liquid
-  # Nouveauté : produit choisi dans l'éditeur, sinon premières boucles d'oreilles de la boutique
+  assign piece_handles = piece_handles | split: '|'
+  assign piece_necklace = all_products[piece_handles[0]]
+  assign piece_earrings = all_products[piece_handles[1]]
+  assign piece_bracelet = all_products[piece_handles[2]]
+
+  # Nouveauté : produit choisi dans l'éditeur, sinon le bracelet, sinon les boucles d'oreilles
   assign new_product = section.settings.product
   if new_product == blank
-    for p in collections.all.products
-      if p.title contains 'oreilles'
-        assign new_product = p
-        break
-      endif
-    endfor
+    if piece_bracelet.id
+      assign new_product = piece_bracelet
+    elsif piece_earrings.id
+      assign new_product = piece_earrings
+    endif
   endif
 
-  # Pièce à associer (collier) pour la mention « parure »
-  assign pair_product = section.settings.pair_product
-  if pair_product == blank
-    for p in collections.all.products
-      unless p.title contains 'oreilles'
-        assign pair_product = p
-        break
-      endunless
-    endfor
+  assign np_kind = new_product.title | append: ' ' | append: new_product.type | downcase
+  if np_kind contains 'bracelet'
+    assign default_tagline = 'La nouvelle pièce de la Maison, à porter seule ou en parure.'
+    assign default_chips = 'Se porte seul ou en parure,Écrin inclus,Prêt à offrir'
+    assign default_cta = 'Découvrir le bracelet'
+  else
+    assign default_tagline = 'Deux gouttes rouge grenat, entourées de pierres blanches.'
+    assign default_chips = 'Taille poire,Halo scintillant,Créoles dorées serties,Écrin inclus'
+    assign default_cta = 'Découvrir les boucles'
   endif
+  assign default_description = new_product.description | strip_html | truncatewords: 45
+
+  assign chips = section.settings.chips | default: default_chips | split: ','
 -%}
 
 {%- if new_product -%}
@@ -65,14 +73,11 @@
       <span class="eyebrow ml-reveal" style="color: #7A1F2B; font-size: 10px; letter-spacing: .28em;">{{ section.settings.eyebrow | default: 'Nouvelle pièce de la Maison' }}</span>
       <span class="ornament ml-reveal" style="margin: 0; background: #7A1F2B;"></span>
       <h2 class="serif ml-reveal ml-d1 np-title">{{ new_product.title }}</h2>
-      <p class="serif ml-reveal ml-d1 np-tagline">{{ section.settings.tagline | default: 'Deux gouttes rouge grenat, entourées de pierres blanches.' }}</p>
-      <p class="sans ml-reveal ml-d2 np-desc">{{ section.settings.description | default: "Une pierre taillée en poire, couleur grenat, entourée d'un halo de pierres blanches et suspendue à une fine créole dorée sertie. Légères, elles se portent aussi bien le soir qu'au quotidien." }}</p>
+      <p class="serif ml-reveal ml-d1 np-tagline">{{ section.settings.tagline | default: default_tagline }}</p>
+      <p class="sans ml-reveal ml-d2 np-desc">{{ section.settings.description | default: default_description }}</p>
 
       <ul class="np-chips ml-reveal ml-d2">
-        <li>Taille poire</li>
-        <li>Halo scintillant</li>
-        <li>Créoles dorées serties</li>
-        <li>Écrin inclus</li>
+        {% for chip in chips %}<li>{{ chip | strip }}</li>{% endfor %}
       </ul>
 
       <div class="ml-reveal ml-d3" style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
@@ -84,7 +89,7 @@
       </div>
 
       <div class="ml-reveal ml-d3" style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start;">
-        <a href="{{ new_product.url }}" class="btn btn-dark np-cta">{{ section.settings.cta | default: 'Découvrir les boucles' }}</a>
+        <a href="{{ new_product.url }}" class="btn btn-dark np-cta">{{ section.settings.cta | default: default_cta }}</a>
         <div style="display: flex; flex-direction: column; gap: 7px;">
           <span class="trust-row">
             <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
@@ -97,9 +102,17 @@
         </div>
       </div>
 
-      {% if pair_product and pair_product.id != new_product.id %}
+      {% if piece_necklace.id and piece_earrings.id and piece_bracelet.id and settings.trio_active %}
+        <a href="#parure" class="pdp-pair ml-reveal ml-d4" style="max-width: 480px;">
+          <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
+            <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Parure complète</span>
+            <span class="serif" style="font-size: 17px; color: #17140F;">Collier + boucles + bracelet : −{{ settings.trio_percent }} %</span>
+          </span>
+          <span aria-hidden="true" style="margin-left: auto; color: #B08D57; font-size: 18px;">→</span>
+        </a>
+      {% elsif new_product.id == piece_earrings.id and piece_necklace.id %}
         <div class="ml-reveal ml-d4" style="max-width: 480px;">
-          {% render 'bundle-offer', piece_a: new_product, piece_b: pair_product %}
+          {% render 'bundle-offer', mode: 'duo', piece_a: piece_earrings, piece_b: piece_necklace %}
         </div>
       {% endif %}
     </div>
@@ -164,13 +177,13 @@
 {
   "name": "Nouveauté",
   "settings": [
-    { "type": "product", "id": "product", "label": "Pièce mise en avant", "info": "Par défaut : les boucles d'oreilles de la boutique." },
-    { "type": "product", "id": "pair_product", "label": "Pièce à associer (parure)" },
+    { "type": "product", "id": "product", "label": "Pièce mise en avant", "info": "Par défaut : le bracelet de la boutique." },
     { "type": "text", "id": "badge", "label": "Badge", "default": "Nouveauté" },
     { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Nouvelle pièce de la Maison" },
     { "type": "textarea", "id": "tagline", "label": "Accroche" },
-    { "type": "textarea", "id": "description", "label": "Description" },
-    { "type": "text", "id": "cta", "label": "Texte du bouton", "default": "Découvrir les boucles" }
+    { "type": "textarea", "id": "description", "label": "Description", "info": "Par défaut : le début de la description du produit." },
+    { "type": "text", "id": "chips", "label": "Points forts (séparés par des virgules)" },
+    { "type": "text", "id": "cta", "label": "Texte du bouton" }
   ],
   "presets": [{ "name": "Nouveauté" }]
 }

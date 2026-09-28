@@ -1,0 +1,31 @@
+{%- comment -%}
+  Renvoie « collier|boucles|bracelet » (handles, « - » si absent), à lire avec all_products.
+  Réglages du thème → Pièces de la Maison en priorité, sinon repérage par le titre ou le type.
+{%- endcomment -%}
+{%- liquid
+  assign h_necklace = settings.piece_necklace.handle
+  assign h_earrings = settings.piece_earrings.handle
+  assign h_bracelet = settings.piece_bracelet.handle
+  for p in collections.all.products
+    if p.handle == h_necklace or p.handle == h_earrings or p.handle == h_bracelet
+      continue
+    endif
+    assign p_kind = p.title | append: ' ' | append: p.type | downcase
+    if p_kind contains 'bracelet'
+      if h_bracelet == blank
+        assign h_bracelet = p.handle
+      endif
+    elsif p_kind contains 'oreille'
+      if h_earrings == blank
+        assign h_earrings = p.handle
+      endif
+    elsif h_necklace == blank
+      assign h_necklace = p.handle
+    endif
+  endfor
+  echo h_necklace | default: '-'
+  echo '|'
+  echo h_earrings | default: '-'
+  echo '|'
+  echo h_bracelet | default: '-'
+-%}
