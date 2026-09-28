@@ -113,7 +113,8 @@
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <span class="eyebrow" style="font-size: 8.5px; color: rgba(251,248,242,.6); margin-bottom: 4px; letter-spacing: .22em;">Navigation</span>
         <a href="{{ routes.root_url }}#maison" class="footer-link">La Maison</a>
-        <a href="{{ routes.root_url }}#piece" class="footer-link">Le bijou</a>
+        <a href="{{ routes.root_url }}#collection" class="footer-link">La collection</a>
+        {% if settings.trio_active %}<a href="{{ routes.root_url }}#parure" class="footer-link">La parure</a>{% endif %}
         {% if settings.offer_active %}<a href="{{ routes.root_url }}#offre" class="footer-link">L'offre de lancement</a>{% endif %}
         <a href="{{ routes.root_url }}#faq" class="footer-link">FAQ</a>
         <a href="{{ routes.root_url }}#contact" class="footer-link">Contact</a>
@@ -137,7 +138,12 @@
 
     <div style="border-top: 1px solid rgba(251,248,242,.07); padding-top: 24px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center;">
       <span class="sans" style="font-size: 10.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.6);">© {{ 'now' | date: '%Y' }} Maison L'Émeraude. Tous droits réservés.</span>
-      <span class="sans" style="font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.6); letter-spacing: .04em;">Paiement sécurisé · Livraison suivie</span>
+      <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+        <span class="sans" style="font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.6); letter-spacing: .04em;">Paiement sécurisé · Livraison suivie</span>
+        {% if shop.enabled_payment_types.size > 0 %}
+          <span class="pay-icons"><span class="visually-hidden">Moyens de paiement acceptés :</span>{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'pay-icon' }}{% endfor %}</span>
+        {% endif %}
+      </div>
     </div>
 
   </div>

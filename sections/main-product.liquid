@@ -239,6 +239,29 @@
       {% # Note de transparence %}
       <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La pierre est un cristal synthétique couleur grenat, et non un grenat naturel.</p>
       {% endif %}
+      {% if is_bracelet and section.settings.bracelet_note != blank %}
+      <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">{{ section.settings.bracelet_note }}</p>
+      {% endif %}
+
+      {% # Questions avant achat %}
+      <div class="pdp-faq">
+        <details>
+          <summary>Livraison</summary>
+          <p>Commande préparée sous {{ settings.prep_time }}, puis expédiée avec un numéro de suivi envoyé par email. Livraison sous {{ settings.shipping_delay }} après expédition.{% if settings.free_shipping %} Livraison offerte.{% else %} Les frais de livraison sont indiqués avant le paiement.{% endif %}</p>
+        </details>
+        <details>
+          <summary>Retours et remboursement</summary>
+          <p>Vous avez {{ settings.return_days }} jours à compter de la réception pour nous retourner la pièce dans son état d'origine, dans son écrin.{% if settings.free_returns %} Les retours sont gratuits.{% endif %} Le remboursement est effectué sous 5 à 10 jours ouvrés après réception du retour.</p>
+        </details>
+        <details>
+          <summary>Paiement sécurisé</summary>
+          <p>Le paiement est traité par Shopify, sur une page chiffrée. Vos données bancaires ne sont jamais transmises à la Maison.</p>
+        </details>
+        <details>
+          <summary>Une question ?</summary>
+          <p>Écrivez-nous à <a href="mailto:{{ settings.contact_email | default: 'maisonlemeraude@outlook.fr' }}" class="u-link">{{ settings.contact_email | default: 'maisonlemeraude@outlook.fr' }}</a>. Nous répondons sous 24 à 48 heures ouvrées.</p>
+        </details>
+      </div>
 
       {% if pair_product %}
       {% # Parure collier + boucles %}
@@ -413,7 +436,8 @@ document.addEventListener('DOMContentLoaded', function() {
     { "type": "text", "id": "bracelet_stone", "label": "Pierre(s)" },
     { "type": "text", "id": "bracelet_metal", "label": "Métal" },
     { "type": "text", "id": "bracelet_length", "label": "Longueur" },
-    { "type": "text", "id": "bracelet_clasp", "label": "Fermoir" }
+    { "type": "text", "id": "bracelet_clasp", "label": "Fermoir" },
+    { "type": "textarea", "id": "bracelet_note", "label": "Note de transparence", "info": "Ex : La pierre est un cristal synthétique couleur saphir, et non un saphir naturel." }
   ]
 }
 {% endschema %}

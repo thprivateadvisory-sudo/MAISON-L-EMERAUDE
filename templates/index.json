@@ -34,7 +34,7 @@
       "type": "storytelling",
       "settings": {
         "quote": "Un bijou que l'on porte tous les jours, et que l'on a plaisir à offrir.",
-        "body": "Maison L'Émeraude est une jeune maison de bijoux. Notre première création, La Goutte d'Émeraude, est un collier au vert profond et à l'éclat discret, proposé à un prix juste. Chaque commande est expédiée dans son écrin, prête à être portée ou offerte."
+        "body": "Maison L'Émeraude est une jeune maison de bijoux. Après La Goutte d'Émeraude, notre collier signature, la Maison propose des boucles d'oreilles et un bracelet, à des prix justes. Chaque commande est expédiée dans son écrin, prête à être portée ou offerte."
       }
     },
     "boutique-paris": {
@@ -92,15 +92,15 @@
         "q3": {
           "type": "question",
           "settings": {
-            "question": "Quelle est la matière du bijou ?",
-            "answer": "<p>La chaîne et la monture sont en acier inoxydable avec une finition dorée à l'or fin. L'acier inoxydable résiste bien à l'oxydation dans le temps.</p>"
+            "question": "En quelle matière sont les bijoux ?",
+            "answer": "<p>Le collier La Goutte d'Émeraude est en acier inoxydable avec une finition dorée à l'or fin, une matière qui résiste bien à l'oxydation dans le temps. La matière exacte de chaque pièce est indiquée sur sa fiche produit.</p>"
           }
         },
         "q4": {
           "type": "question",
           "settings": {
-            "question": "La pierre est-elle une vraie émeraude ?",
-            "answer": "<p>Non. La pierre centrale est un cristal synthétique de couleur verte, taillé en goutte et entouré d'oxydes de zirconium blancs. Elle a la couleur et l'éclat de l'émeraude, pour un prix bien plus accessible qu'une pierre naturelle.</p>"
+            "question": "Les pierres sont-elles naturelles ?",
+            "answer": "<p>Non. La pierre verte du collier est un cristal synthétique taillé en goutte, et la pierre des boucles d'oreilles un cristal synthétique couleur grenat. Elles ont la couleur et l'éclat des pierres précieuses, pour un prix bien plus accessible. La composition de chaque pièce est précisée sur sa fiche produit.</p>"
           }
         },
         "q5": {
@@ -113,8 +113,8 @@
         "q6": {
           "type": "question",
           "settings": {
-            "question": "Comment entretenir le collier ?",
-            "answer": "<p>Essuyez-le délicatement avec un chiffon doux après le port. Rangez-le dans son écrin, à l'abri de l'humidité et des produits cosmétiques. Évitez les parfums directement sur le bijou.</p>"
+            "question": "Comment entretenir mes bijoux ?",
+            "answer": "<p>Essuyez-les délicatement avec un chiffon doux après le port. Rangez-les dans leur écrin, à l'abri de l'humidité et des produits cosmétiques. Évitez de vaporiser du parfum directement sur le bijou.</p>"
           }
         },
         "q7": {
