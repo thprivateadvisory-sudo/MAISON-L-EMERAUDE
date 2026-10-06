@@ -9,7 +9,7 @@
       </button>
 
       {% # Logo desktop (caché sur mobile) %}
-      <a href="{{ routes.root_url }}" class="site-logo-link logo-desktop" style="--logo-w: {{ section.settings.logo_max_width }}px;" aria-label="Maison L'Émeraude — Accueil">
+      <a href="{{ routes.root_url }}" class="site-logo-link logo-desktop" style="--logo-w: {{ section.settings.logo_max_width }}px;" aria-label="Maison L’Émeraude — Accueil">
         {% if section.settings.logo_image != blank %}
           <img
             src="{{ section.settings.logo_image | image_url: width: 320 }}"
@@ -26,7 +26,7 @@
         {% else %}
           <img
             src="{{ 'logo.png' | asset_url }}"
-            alt="Maison L'Émeraude"
+            alt="Maison L’Émeraude"
             class="site-logo-img"
             width="{{ section.settings.logo_max_width }}"
             height="{{ section.settings.logo_max_width | times: 110 | divided_by: 360 }}"
@@ -37,17 +37,15 @@
 
       <nav class="nav-links" aria-label="Navigation principale">
         <a href="{{ routes.root_url }}#maison" class="nav-link">La Maison</a>
-        <a href="{{ routes.root_url }}#collection" class="nav-link">Collection</a>
-        <a href="{{ routes.root_url }}#nouveaute" class="nav-link">Nouveauté</a>
-        {% if settings.trio_active %}<a href="{{ routes.root_url }}#parure" class="nav-link">La Parure</a>{% endif %}
-        {% if settings.offer_active %}<a href="{{ routes.root_url }}#offre" class="nav-link">L'Offre</a>{% endif %}
-        <a href="{{ routes.root_url }}#faq" class="nav-link">FAQ</a>
+        <a href="{{ routes.root_url }}#collection" class="nav-link">Les bijoux</a>
+        {% if settings.trio_active %}<a href="{{ routes.root_url }}#parure" class="nav-link">La parure</a>{% endif %}
+        <a href="{{ routes.root_url }}#faq" class="nav-link">Questions</a>
         <a href="{{ routes.root_url }}#contact" class="nav-link">Contact</a>
       </nav>
     </div>
 
     {% # Logo mobile centré (enfant direct du header-inner, visible uniquement sur mobile) %}
-    <a href="{{ routes.root_url }}" class="site-logo-link logo-mobile" aria-label="Maison L'Émeraude — Accueil">
+    <a href="{{ routes.root_url }}" class="site-logo-link logo-mobile" aria-label="Maison L’Émeraude — Accueil">
       {% if section.settings.logo_image != blank %}
         <img
           src="{{ section.settings.logo_image | image_url: width: 260 }}"
@@ -64,7 +62,7 @@
       {% else %}
         <img
           src="{{ 'logo.png' | asset_url }}"
-          alt="Maison L'Émeraude"
+          alt="Maison L’Émeraude"
           class="site-logo-img"
           width="157"
           height="48"
@@ -92,13 +90,11 @@
   </button>
   <div class="mobile-menu-nav">
     <a href="{{ routes.root_url }}#maison" class="mobile-menu-link">La Maison</a>
-    <a href="{{ routes.root_url }}#collection" class="mobile-menu-link">La Collection</a>
-    <a href="{{ routes.root_url }}#nouveaute" class="mobile-menu-link">Nouveauté · Bracelet</a>
-    {% if settings.trio_active %}<a href="{{ routes.root_url }}#parure" class="mobile-menu-link">La Parure complète</a>{% endif %}
-    {% if settings.offer_active %}<a href="{{ routes.root_url }}#offre" class="mobile-menu-link">L'Offre de lancement</a>{% endif %}
-    <a href="{{ routes.root_url }}#faq" class="mobile-menu-link">FAQ</a>
+    <a href="{{ routes.root_url }}#collection" class="mobile-menu-link">Les bijoux</a>
+    {% if settings.trio_active %}<a href="{{ routes.root_url }}#parure" class="mobile-menu-link">La parure</a>{% endif %}
+    <a href="{{ routes.root_url }}#faq" class="mobile-menu-link">Questions fréquentes</a>
     <a href="{{ routes.root_url }}#contact" class="mobile-menu-link">Contact</a>
-    <a href="{{ routes.cart_url }}" class="mobile-menu-link" style="opacity:1; color: #7A5C2E;">Panier {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}</a>
+    <a href="{{ routes.cart_url }}" class="mobile-menu-link" style="opacity:1; color: #0F3027;">Panier {% if cart.item_count > 0 %}({{ cart.item_count }}){% endif %}</a>
   </div>
 </nav>
 

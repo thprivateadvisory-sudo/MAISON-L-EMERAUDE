@@ -1,0 +1,86 @@
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
+{%- liquid
+  assign gift_product = section.settings.product
+  if gift_product == blank
+    assign piece_handles = piece_handles | split: '|'
+    assign gift_product = all_products[piece_handles[0]]
+  endif
+-%}
+
+<section id="offrir" class="gf">
+  <div class="gf-media">
+    {% if section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 100vw, 50vw', widths: '600, 1000, 1600', class: 'gf-img', alt: section.settings.image.alt | default: '' }}
+    {% else %}
+      <img class="gf-img" src="{{ 'paris.jpg' | asset_url }}"
+        srcset="{{ 'paris-600.jpg' | asset_url }} 600w, {{ 'paris.jpg' | asset_url }} 1145w"
+        sizes="(max-width: 860px) 100vw, 50vw" width="1145" height="1374" loading="lazy"
+        alt="Femme portant le collier La Goutte d’Émeraude dans une rue de Paris, en fin de journée">
+    {% endif %}
+  </div>
+
+  <div class="gf-copy">
+    <span class="gf-eyebrow ml-reveal">{{ section.settings.eyebrow }}</span>
+    <h2 class="serif gf-title ml-reveal ml-d1">{{ section.settings.title }}</h2>
+    <p class="gf-text ml-reveal ml-d2">{{ section.settings.text }}</p>
+
+    <dl class="gf-list ml-reveal ml-d3">
+      {% for block in section.blocks %}
+        <div class="gf-item" {{ block.shopify_attributes }}>
+          <dt>{{ block.settings.title }}</dt>
+          <dd>{{ block.settings.text }}</dd>
+        </div>
+      {% endfor %}
+    </dl>
+
+    {% if gift_product.id %}
+      <a href="{{ gift_product.url }}" class="gf-btn ml-reveal ml-d4">{{ section.settings.cta }}</a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.gf { display: grid; grid-template-columns: 1fr 1fr; background: #FBF8F2; }
+.gf-media { position: relative; min-height: 640px; overflow: hidden; }
+.gf-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 55% 35%; }
+.gf-copy { display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: clamp(56px, 8vw, 112px) clamp(24px, 6vw, 96px); max-width: 640px; }
+.gf-eyebrow { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #8A6A3A; }
+.gf-title { margin: 0; font-size: clamp(34px, 4.6vw, 56px); font-weight: 300; line-height: 1.06; letter-spacing: -.01em; color: #0F3027; }
+.gf-text { margin: 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; line-height: 1.75; color: #3E3B35; }
+.gf-list { margin: 8px 0 0; display: flex; flex-direction: column; border-top: 1px solid rgba(15,48,39,.12); }
+.gf-item { display: grid; grid-template-columns: 170px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(15,48,39,.12); }
+.gf-item dt { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 20px; line-height: 1.25; color: #0F3027; }
+.gf-item dd { margin: 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; line-height: 1.65; color: #5A564D; }
+.gf-btn { align-self: flex-start; display: inline-flex; align-items: center; min-height: 54px; padding: 0 30px; background: #0F3027; color: #FBF8F2; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .06em; transition: background .3s ease; margin-top: 6px; }
+.gf-btn:hover { background: #155E48; }
+@media (max-width: 860px) {
+  .gf { grid-template-columns: 1fr; }
+  .gf-media { min-height: 0; aspect-ratio: 4 / 5; }
+  .gf-item { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Le cadeau",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo", "info": "Par défaut : la photo portée à Paris." },
+    { "type": "product", "id": "product", "label": "Pièce proposée (par défaut : le collier)" },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Offrir" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Il y a les cadeaux qu’on oublie. Et ceux qu’on porte tous les jours." },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Un anniversaire, une naissance, un merci qu’on n’arrive pas à dire. La Goutte d’Émeraude se glisse au creux du cou et rappelle, chaque matin, qui l’a offerte." },
+    { "type": "text", "id": "cta", "label": "Bouton", "default": "Offrir La Goutte d’Émeraude" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Argument",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre" },
+        { "type": "textarea", "id": "text", "label": "Texte" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Le cadeau" }]
+}
+{% endschema %}

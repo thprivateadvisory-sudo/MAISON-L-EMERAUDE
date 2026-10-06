@@ -7,120 +7,84 @@
     assign featured_product = all_products[piece_handles[0]]
   endif
   assign fp_variant = featured_product.selected_or_first_available_variant
+  assign proof = section.settings.proof | split: '|'
 -%}
 
-<section class="hx" aria-label="{{ section.settings.headline | default: "La Goutte d'Émeraude" | escape }}">
+<section class="hx" aria-label="{{ section.settings.headline | escape }}">
   <div class="hx-media" aria-hidden="true">
-    {% if section.settings.video != blank %}
-      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x', class: 'hx-video' }}
-    {% else %}
-      <video class="hx-video" autoplay muted loop playsinline preload="metadata"
-        poster="{{ 'film-maison-poster.jpg' | asset_url }}">
-        <source src="{{ 'film-maison-mobile.mp4' | asset_url }}" type="video/mp4" media="(max-width: 760px)">
-        <source src="{{ 'film-maison.mp4' | asset_url }}" type="video/mp4">
-      </video>
-    {% endif %}
     <img class="hx-poster"
       src="{{ 'paris.jpg' | asset_url }}"
       srcset="{{ 'paris-600.jpg' | asset_url }} 600w, {{ 'paris.jpg' | asset_url }} 1145w"
       sizes="100vw" width="1145" height="1374" alt="" loading="eager" fetchpriority="high">
+    {% if section.settings.video != blank %}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'metadata', image_size: '1600x', class: 'hx-video' }}
+    {% else %}
+      <video class="hx-video" autoplay muted loop playsinline preload="metadata" poster="{{ 'film-maison-poster.jpg' | asset_url }}">
+        <source src="{{ 'film-maison-mobile.mp4' | asset_url }}" type="video/mp4" media="(max-width: 760px)">
+        <source src="{{ 'film-maison.mp4' | asset_url }}" type="video/mp4">
+      </video>
+    {% endif %}
   </div>
   <div class="hx-shade"></div>
 
   <div class="hx-inner">
     <div class="hx-copy">
-      {% if settings.offer_active %}
-        <a href="#offre" class="hx-pill ha1"><span class="hx-dot"></span>Offre de lancement · 1 acheté = 1 offert{% if settings.offer_end_date != blank %} · jusqu'au {{ settings.offer_end_date }}{% endif %}</a>
-      {% else %}
-        <span class="eyebrow ha1 hx-eyebrow">{{ section.settings.brand_name | default: "Maison L'Émeraude" }}</span>
-      {% endif %}
-      <h1 class="serif hx-title ha3">{{ section.settings.headline | default: "La Goutte d'Émeraude" }}</h1>
-      <p class="serif hx-sub ha4">{{ section.settings.subheadline | default: "Le collier signature de la Maison, en cristal vert et finition dorée." }}</p>
+      <span class="hx-eyebrow ha1">{{ section.settings.eyebrow }}</span>
+      <h1 class="serif hx-title ha3">{{ section.settings.headline }}</h1>
+      <p class="serif hx-sub ha4">{{ section.settings.subheadline }}</p>
 
       <div class="hx-ctas ha5">
         {% if featured_product.available and featured_product.has_only_default_variant %}
           <form method="post" action="{{ routes.cart_add_url }}" class="hx-form">
             <input type="hidden" name="id" value="{{ fp_variant.id }}">
             <input type="hidden" name="quantity" value="1">
-            <button type="submit" class="hx-btn hx-btn--gold">Je le veux · {{ fp_variant.price | money }}</button>
+            <button type="submit" class="hx-btn">Ajouter au panier <span class="hx-btn-sep"></span> {{ fp_variant.price | money }}</button>
           </form>
         {% elsif featured_product.available %}
-          <a href="{{ featured_product.url }}" class="hx-btn hx-btn--gold">Je le veux · {{ fp_variant.price | money }}</a>
+          <a href="{{ featured_product.url }}" class="hx-btn">Choisir <span class="hx-btn-sep"></span> {{ fp_variant.price | money }}</a>
         {% endif %}
-        <a href="#collection" class="hx-btn hx-btn--ghost">Voir les bijoux</a>
+        <a href="#collection" class="hx-link">Découvrir les bijoux</a>
       </div>
 
-      <ul class="hx-proof ha6">
-        <li>Écrin inclus</li>
-        <li>Expédié sous {{ settings.prep_time | default: '48 h' }}</li>
-        <li>Retours {{ settings.return_days }} jours</li>
-      </ul>
+      {% if proof.size > 0 %}
+        <ul class="hx-proof ha6">
+          {% for p in proof %}<li>{{ p | strip }}</li>{% endfor %}
+        </ul>
+      {% endif %}
     </div>
-
-    {% if featured_product.featured_image %}
-      <a href="{{ featured_product.url }}" class="hx-card ha6">
-        <img src="{{ featured_product.featured_image | image_url: width: 200 }}" width="100" height="100" alt="" loading="eager">
-        <span class="hx-card-body">
-          <span class="hx-card-kicker">Pièce signature</span>
-          <span class="serif hx-card-title">{{ featured_product.title }}</span>
-          <span class="hx-card-price">{{ fp_variant.price | money }}{% if settings.offer_active %} <em>+ 1 offert</em>{% endif %}</span>
-        </span>
-      </a>
-    {% endif %}
   </div>
-
-  <a href="#collection" class="hx-scroll" aria-label="Faire défiler vers la collection"><span></span></a>
 </section>
 
 <style>
-.hx { position: relative; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; background: #0C2620; color: #FBF8F2; }
+.hx { position: relative; min-height: min(100svh, 920px); display: flex; align-items: flex-end; overflow: hidden; background: #0F3027; color: #FBF8F2; }
 .hx-media, .hx-shade { position: absolute; inset: 0; }
 .hx-video, .hx-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.hx-poster { object-position: 62% 30%; z-index: 0; }
-.hx-video { z-index: 1; }
-.hx-shade { z-index: 2; background: linear-gradient(180deg, rgba(8,26,21,.45) 0%, rgba(8,26,21,0) 30%, rgba(8,26,21,.15) 55%, rgba(8,26,21,.88) 100%), linear-gradient(90deg, rgba(8,26,21,.55) 0%, rgba(8,26,21,0) 60%); }
-.hx-inner { position: relative; z-index: 3; width: 100%; max-width: 1280px; margin: 0 auto; padding: 120px clamp(18px, 5vw, 48px) clamp(56px, 9vh, 96px); display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
-.hx-copy { max-width: 620px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
-.hx-eyebrow { color: #E8D5AE; letter-spacing: .32em; font-size: 10px; }
-.hx-pill { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid rgba(232,213,174,.45); background: rgba(12,38,32,.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: #F3E6C8; border-radius: 999px; }
-.hx-dot { width: 7px; height: 7px; border-radius: 50%; background: #3FBF8F; box-shadow: 0 0 0 0 rgba(63,191,143,.7); animation: hx-pulse 2s infinite; }
-@keyframes hx-pulse { 70% { box-shadow: 0 0 0 9px rgba(63,191,143,0); } 100% { box-shadow: 0 0 0 0 rgba(63,191,143,0); } }
-.hx-title { margin: 0; font-size: clamp(46px, 8.5vw, 104px); font-weight: 300; line-height: .98; letter-spacing: -.02em; color: #FBF8F2; }
-.hx-sub { margin: 0; font-size: clamp(17px, 2.1vw, 22px); font-style: italic; font-weight: 300; line-height: 1.5; color: rgba(251,248,242,.86); max-width: 470px; }
-.hx-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 8px; }
+.hx-poster { object-position: 62% 30%; }
+.hx-shade { background: linear-gradient(180deg, rgba(11,36,29,.35) 0%, rgba(11,36,29,0) 28%, rgba(11,36,29,0) 50%, rgba(11,36,29,.82) 100%), linear-gradient(90deg, rgba(11,36,29,.5) 0%, rgba(11,36,29,0) 55%); }
+.hx-inner { position: relative; width: 100%; max-width: 1280px; margin: 0 auto; padding: 140px clamp(20px, 5vw, 56px) clamp(48px, 8vh, 88px); }
+.hx-copy { max-width: 560px; display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.hx-eyebrow { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #E9DFC9; }
+.hx-title { margin: 0; font-size: clamp(48px, 7.6vw, 96px); font-weight: 300; line-height: .98; letter-spacing: -.02em; color: #FBF8F2; }
+.hx-sub { margin: 0; font-size: clamp(19px, 2.1vw, 23px); font-style: italic; font-weight: 400; line-height: 1.45; color: rgba(251,248,242,.9); max-width: 440px; }
+.hx-ctas { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 10px; }
 .hx-form { margin: 0; }
-.hx-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 32px; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; border: 1px solid transparent; transition: transform .25s ease, background .3s ease, color .3s ease, box-shadow .3s ease; white-space: nowrap; }
-.hx-btn--gold { background: linear-gradient(135deg, #E8D5AE 0%, #C9A96E 55%, #B08D57 100%); color: #0C2620; box-shadow: 0 10px 30px rgba(201,169,110,.28); }
-.hx-btn--gold:hover { transform: translateY(-2px); box-shadow: 0 16px 38px rgba(201,169,110,.4); }
-.hx-btn--ghost { color: #FBF8F2; border-color: rgba(251,248,242,.55); background: rgba(251,248,242,.04); }
-.hx-btn--ghost:hover { background: #FBF8F2; color: #0C2620; }
-.hx-proof { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .06em; color: rgba(251,248,242,.78); }
-.hx-proof li::before { content: '✓'; color: #C9A96E; margin-right: 7px; }
-.hx-card { display: flex; align-items: center; gap: 14px; padding: 12px 18px 12px 12px; background: rgba(251,248,242,.94); color: #17140F; max-width: 330px; box-shadow: 0 20px 50px rgba(0,0,0,.28); transition: transform .3s ease; flex-shrink: 0; }
-.hx-card:hover { transform: translateY(-3px); }
-.hx-card img { width: 76px; height: 76px; object-fit: cover; }
-.hx-card-body { display: flex; flex-direction: column; gap: 3px; }
-.hx-card-kicker { font-family: 'Montserrat', sans-serif; font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase; color: #7A5C2E; }
-.hx-card-title { font-size: 19px; line-height: 1.15; }
-.hx-card-price { font-family: 'Montserrat', sans-serif; font-size: 12px; color: #17140F; }
-.hx-card-price em { font-style: normal; color: #0F5A43; font-weight: 500; }
-.hx-scroll { position: absolute; z-index: 3; left: 50%; bottom: 18px; transform: translateX(-50%); width: 22px; height: 36px; border: 1px solid rgba(251,248,242,.5); border-radius: 12px; }
-.hx-scroll span { position: absolute; left: 50%; top: 7px; width: 2px; height: 7px; margin-left: -1px; background: #E8D5AE; border-radius: 2px; animation: hx-wheel 1.8s infinite; }
-@keyframes hx-wheel { 0% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(12px); } }
-@media (max-width: 900px) {
-  .hx-card { display: none; }
-  .hx-scroll { display: none; }
-}
+.hx-btn { display: inline-flex; align-items: center; gap: 14px; min-height: 56px; padding: 0 30px; background: #FBF8F2; color: #0F3027; border: 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .06em; cursor: pointer; transition: background .3s ease; white-space: nowrap; }
+.hx-btn:hover { background: #E9DFC9; }
+.hx-btn-sep { width: 1px; height: 16px; background: rgba(15,48,39,.3); }
+.hx-link { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: .04em; color: #FBF8F2; border-bottom: 1px solid rgba(251,248,242,.5); padding-bottom: 3px; transition: border-color .25s ease; }
+.hx-link:hover { border-color: #FBF8F2; }
+.hx-proof { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 400; color: rgba(251,248,242,.85); }
+.hx-proof li + li::before { content: ''; display: inline-block; width: 1px; height: 11px; background: rgba(251,248,242,.4); margin: 0 14px; vertical-align: -1px; }
 @media (max-width: 560px) {
-  .hx-inner { padding-bottom: 40px; }
-  .hx-ctas { width: 100%; flex-direction: column; }
-  .hx-form, .hx-btn { width: 100%; }
-  .hx-pill { font-size: 9px; letter-spacing: .1em; }
+  .hx-inner { padding-bottom: 36px; }
+  .hx-copy { gap: 14px; }
+  .hx-ctas { width: 100%; gap: 18px; }
+  .hx-form, .hx-btn { width: 100%; justify-content: center; }
+  .hx-link { margin: 0 auto; }
+  .hx-proof { font-size: 11.5px; justify-content: center; width: 100%; }
+  .hx-proof li + li::before { margin: 0 9px; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .hx-video { display: none; }
-  .hx-dot, .hx-scroll span { animation: none; }
-}
+@media (prefers-reduced-motion: reduce) { .hx-video { display: none; } }
 </style>
 
 {% schema %}
@@ -128,10 +92,11 @@
   "name": "Hero",
   "settings": [
     { "type": "product", "id": "product", "label": "Pièce mise en avant" },
-    { "type": "video", "id": "video", "label": "Vidéo de fond", "info": "Facultatif. Par défaut : le film de la Maison (vos photos animées). Format conseillé : MP4, 10 à 20 s, sans son." },
-    { "type": "text", "id": "brand_name", "label": "Nom de la Maison", "default": "Maison L'Émeraude" },
-    { "type": "text", "id": "headline", "label": "Titre principal", "default": "La Goutte d'Émeraude" },
-    { "type": "text", "id": "subheadline", "label": "Sous-titre", "default": "Le collier signature de la Maison, en cristal vert et finition dorée." }
+    { "type": "video", "id": "video", "label": "Vidéo de fond", "info": "Facultatif. Par défaut : le film de la Maison. Format conseillé : MP4, 10 à 20 s, sans son." },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Le collier signature" },
+    { "type": "text", "id": "headline", "label": "Titre principal", "default": "La Goutte d’Émeraude" },
+    { "type": "text", "id": "subheadline", "label": "Sous-titre", "default": "Un vert profond, cerclé de lumière. Celui qu’on ne quitte plus." },
+    { "type": "text", "id": "proof", "label": "Réassurance (séparée par |)", "default": "Livré en écrin|Expédié sous 48 h ouvrées|Retours 30 jours" }
   ]
 }
 {% endschema %}

@@ -10,7 +10,7 @@
 <div id="parure" class="parure-section">
   <div class="parure-inner">
     <div class="parure-head">
-      <span class="eyebrow ml-reveal" style="font-size: 10px; color: #C9A96E; letter-spacing: .28em;">{{ section.settings.eyebrow }}</span>
+      <span class="eyebrow ml-reveal" style="font-size: 11px; color: #C9A96E; letter-spacing: .16em;">{{ section.settings.eyebrow }}</span>
       <span class="ornament ml-reveal"></span>
       <h2 class="serif ml-reveal ml-d1 parure-title">{{ section.settings.title }}</h2>
       <p class="sans ml-reveal ml-d2 parure-body">{{ section.settings.body }}</p>
@@ -38,7 +38,7 @@
                 >
               {% endif %}
             </span>
-            <span class="parure-name">{{ p.title }}</span>
+            <span class="parure-name">{{ p.title | replace: "'", "’" }}</span>
             <span class="parure-price">{{ p.price | money }}</span>
           </a>
         {% endfor %}
@@ -58,11 +58,11 @@
 </div>
 
 <style>
-.parure-section { width: 100%; background: #17140F; color: #FBF8F2; padding: clamp(64px, 10vw, 120px) clamp(18px, 5vw, 36px); }
+.parure-section { width: 100%; background: #0F3027; color: #FBF8F2; padding: clamp(64px, 10vw, 120px) clamp(18px, 5vw, 36px); }
 .parure-inner { max-width: 1150px; margin: 0 auto; }
 .parure-head { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-bottom: clamp(36px, 6vw, 64px); }
 .parure-title { margin: 0; font-size: clamp(28px, 4.4vw, 46px); font-weight: 300; line-height: 1.12; color: #FBF8F2; }
-.parure-body { margin: 0; max-width: 520px; font-size: 13.5px; font-weight: 300; line-height: 1.85; color: rgba(251,248,242,.74); }
+.parure-body { margin: 0; max-width: 520px; font-size: 15px; font-weight: 300; line-height: 1.85; color: rgba(251,248,242,.74); }
 .parure-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
 .parure-pieces { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 2vw, 18px); }
 .parure-piece { display: flex; flex-direction: column; gap: 8px; text-align: center; }
@@ -70,12 +70,12 @@
 .parure-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.25,.46,.45,.94); }
 .parure-piece:hover .parure-img img { transform: scale(1.05); }
 .parure-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(14px, 1.6vw, 17px); line-height: 1.25; color: #FBF8F2; }
-.parure-price { font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 300; color: rgba(251,248,242,.62); }
+.parure-price { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 300; color: rgba(251,248,242,.62); }
 .parure-offer { display: flex; flex-direction: column; gap: 14px; color: #17140F; }
 .parure-offer .bundle-card { background: #FBF8F2; }
 .parure-offer .pdp-pair { display: none; }
 .parure-trust { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; }
-.parure-trust li { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.7); }
+.parure-trust li { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 11.5px; font-weight: 300; letter-spacing: .04em; color: rgba(251,248,242,.7); }
 .parure-trust li::before { content: '✓'; color: #C9A96E; margin-right: 6px; }
 @media (max-width: 860px) {
   .parure-grid { grid-template-columns: 1fr; }
@@ -91,8 +91,8 @@
   "name": "Parure complète",
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "La parure" },
-    { "type": "text", "id": "title", "label": "Titre", "default": "Émeraude, grenat, saphir : la parure complète." },
-    { "type": "textarea", "id": "body", "label": "Texte", "default": "Trois pierres, trois couleurs. Elles se portent ensemble ou séparément. Prises ensemble, elles bénéficient d'une remise, appliquée automatiquement au panier." }
+    { "type": "text", "id": "title", "label": "Titre", "default": "Émeraude, grenat, saphir : la parure complète." },
+    { "type": "textarea", "id": "body", "label": "Texte", "default": "Trois pierres, trois couleurs. Elles se portent ensemble ou séparément. Prises ensemble, elles bénéficient d’une remise, appliquée automatiquement au panier." }
   ],
   "presets": [{ "name": "Parure complète" }]
 }

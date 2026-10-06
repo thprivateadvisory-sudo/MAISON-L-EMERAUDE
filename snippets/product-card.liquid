@@ -1,6 +1,6 @@
 {%- comment -%}
   Carte produit (accueil, collections, recherche).
-  Paramètres : item (produit ou résultat de recherche), new_id (facultatif : id de la pièce marquée « Nouveauté »).
+  Paramètres : item (produit ou résultat de recherche), new_id (facultatif : id de la pièce marquée « Nouveauté »).
 {%- endcomment -%}
 {%- if item.object_type == 'product' or item.variants -%}
   {%- liquid
@@ -44,21 +44,16 @@
         {% if is_new %}<span class="pcard-badge pcard-badge--new">Nouveauté</span>{% endif %}
         {% if item.available == false %}
           <span class="pcard-badge">Épuisé</span>
-        {% elsif settings.offer_active %}
-          <span class="pcard-badge pcard-badge--offer">1 acheté · 1 offert</span>
         {% endif %}
       </span>
     </a>
 
     <div class="pcard-body">
-      <a href="{{ item.url }}" class="pcard-title">{{ item.title }}</a>
+      <a href="{{ item.url }}" class="pcard-title">{{ item.title | replace: "'", "’" }}</a>
       <span class="pcard-prices">
-        {% if item.compare_at_price > item.price %}<s class="pcard-compare"><span class="visually-hidden">Prix de référence :</span>{{ item.compare_at_price | money }}</s>{% endif %}
+        {% if item.compare_at_price > item.price %}<s class="pcard-compare"><span class="visually-hidden">Prix de référence :</span>{{ item.compare_at_price | money }}</s>{% endif %}
         <span class="pcard-price">{% if item.price_varies %}Dès {% endif %}{{ item.price | money }}</span>
       </span>
-      {% if settings.offer_active and item.available %}
-        <span class="pcard-note">+ une seconde pièce identique offerte</span>
-      {% endif %}
 
       {% if item.available %}
         {% if item.has_only_default_variant %}
@@ -74,5 +69,5 @@
     </div>
   </div>
 {%- else -%}
-  <a href="{{ item.url }}" class="serif" style="font-size: 18px;">{{ item.title }}</a>
+  <a href="{{ item.url }}" class="serif" style="font-size: 18px;">{{ item.title | replace: "'", "’" }}</a>
 {%- endif -%}

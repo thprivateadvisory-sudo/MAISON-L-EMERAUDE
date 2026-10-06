@@ -2,16 +2,12 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {
-        "brand_name": "Maison L'Émeraude",
-        "headline": "La Goutte d'Émeraude",
-        "subheadline": "Colliers, boucles d'oreilles et bracelets en cristal, finition dorée, livrés dans leur écrin."
-      }
+      "settings": {}
     },
     "piece-intro": {
       "type": "piece-intro",
       "settings": {
-        "description": "Une goutte de cristal vert émeraude entourée d'un halo de pierres blanches, suspendue à une chaîne fine en acier doré. La première pièce de la Maison."
+        "description": "Une goutte de cristal vert émeraude entourée d’un halo de pierres blanches, suspendue à une chaîne fine en acier doré. La première pièce de la Maison."
       },
       "disabled": true
     },
@@ -20,8 +16,8 @@
       "settings": {
         "stone": "Cristal synthétique vert, taille goutte",
         "secondary_stone": "Oxydes de zirconium blancs (halo)",
-        "metal": "Acier inoxydable, finition dorée à l'or fin",
-        "chain_length": "40 cm, rallonge jusqu'à 45 cm"
+        "metal": "Acier inoxydable, finition dorée à l’or fin",
+        "chain_length": "40 cm, rallonge jusqu’à 45 cm"
       },
       "disabled": true
     },
@@ -30,13 +26,14 @@
       "settings": {
         "badge": "Nouveauté",
         "eyebrow": "Nouvelle pièce de la Maison"
-      }
+      },
+      "disabled": true
     },
     "storytelling": {
       "type": "storytelling",
       "settings": {
-        "quote": "Un bijou que l'on porte tous les jours, et que l'on a plaisir à offrir.",
-        "body": "Maison L'Émeraude est une jeune maison de bijoux. Après La Goutte d'Émeraude, notre collier signature, la Maison propose des boucles d'oreilles et un bracelet, à des prix justes. Chaque commande est expédiée dans son écrin, prête à être portée ou offerte."
+        "quote": "Des bijoux qu’on met le matin sans y penser, et qu’on nous remarque toute la journée.",
+        "body": "Maison L’Émeraude est née d’une couleur : ce vert profond qui éclaire un visage. Nos pièces associent un cristal taillé, des pierres blanches et une finition dorée. Chacune part dans son écrin, prête à être portée ou offerte. Une question avant de commander ? Nous répondons à chaque message sous 48 heures ouvrées."
       }
     },
     "boutique-paris": {
@@ -45,7 +42,8 @@
         "headline": "Bientôt à Paris.",
         "address": "Paris",
         "opening": "Prochainement"
-      }
+      },
+      "disabled": true
     },
     "lifestyle-banner": {
       "type": "lifestyle-banner",
@@ -57,11 +55,7 @@
     },
     "offer": {
       "type": "offer",
-      "settings": {
-        "headline": "Une pour vous.<br>Une à offrir.",
-        "body": "Pour l'ouverture de la boutique, une seconde pièce identique est offerte pour toute commande passée pendant la période de lancement. Vous recevez deux bijoux, chacun dans son écrin, pour le prix d'un.",
-        "disclaimer": "Offre valable pendant la période de lancement uniquement, dans la limite des stocks disponibles. Un seul bijou supplémentaire par commande."
-      }
+      "settings": {}
     },
     "packaging": {
       "type": "packaging"
@@ -74,7 +68,8 @@
       "disabled": true
     },
     "reviews": {
-      "type": "reviews"
+      "type": "reviews",
+      "disabled": true
     },
     "faq": {
       "type": "faq",
@@ -82,85 +77,85 @@
         "q1": {
           "type": "question",
           "settings": {
-            "question": "Quel est le délai de livraison ?",
-            "answer": "<p>Votre commande est préparée sous 24 à 48 heures ouvrées, puis expédiée avec un numéro de suivi. La livraison intervient généralement sous 3 à 7 jours ouvrés à compter de l'expédition. Vous êtes notifié·e par email à chaque étape.</p>"
+            "question": "Quel est le délai de livraison ?",
+            "answer": "<p>Votre commande est préparée sous 24 à 48 heures ouvrées, puis expédiée avec un numéro de suivi. Elle arrive en général 3 à 7 jours ouvrés après l’expédition. Un email vous prévient à chaque étape.</p>"
           }
         },
         "q2": {
           "type": "question",
           "settings": {
-            "question": "Comment fonctionne l'offre 1 acheté · 1 offert ?",
-            "answer": "<p>Pour le lancement de la Maison, chaque commande est accompagnée d'une seconde pièce identique, offerte (une pièce offerte par commande). Vous n'avez rien de spécial à faire : deux bijoux et deux écrins vous seront envoyés dans le même colis. L'offre est valable jusqu'à la date indiquée sur le site, dans la limite des stocks disponibles.</p>"
+            "question": "Comment fonctionne le bijou offert ?",
+            "answer": "<p>Pendant l’ouverture de la Maison, chaque commande est accompagnée d’un second bijou identique, offert (un par commande). Vous n’avez rien à faire : les deux bijoux arrivent dans le même colis, chacun dans son écrin. L’offre est valable jusqu’à la date indiquée sur le site, dans la limite des stocks disponibles.</p>"
           }
         },
         "q3": {
           "type": "question",
           "settings": {
-            "question": "En quelle matière sont les bijoux ?",
-            "answer": "<p>Le collier La Goutte d'Émeraude est en acier inoxydable avec une finition dorée à l'or fin, une matière qui résiste bien à l'oxydation dans le temps. La matière exacte de chaque pièce est indiquée sur sa fiche produit.</p>"
+            "question": "En quelle matière sont les bijoux ?",
+            "answer": "<p>Le collier La Goutte d’Émeraude est en acier inoxydable à finition dorée, une matière qui résiste bien à l’oxydation dans le temps. La composition exacte de chaque pièce est indiquée sur sa fiche produit.</p>"
           }
         },
         "q4": {
           "type": "question",
           "settings": {
-            "question": "Les pierres sont-elles naturelles ?",
-            "answer": "<p>Non. La pierre verte du collier est un cristal synthétique taillé en goutte, et la pierre des boucles d'oreilles un cristal synthétique couleur grenat. Elles ont la couleur et l'éclat des pierres précieuses, pour un prix bien plus accessible. La composition de chaque pièce est précisée sur sa fiche produit.</p>"
+            "question": "Les pierres sont-elles naturelles ?",
+            "answer": "<p>Non. La pierre verte du collier est un cristal synthétique taillé en goutte, et celle des boucles d’oreilles un cristal synthétique couleur grenat. Elles offrent la couleur et l’éclat des pierres précieuses, à un prix accessible. La composition de chaque pièce est précisée sur sa fiche produit.</p>"
           }
         },
         "q5": {
           "type": "question",
           "settings": {
-            "question": "Le bijou résiste-t-il à l'eau ?",
-            "answer": "<p>Nous recommandons d'éviter un contact prolongé avec l'eau (piscine, mer, bain) pour préserver la finition dorée dans le temps. Le contact occasionnel avec l'eau ne devrait pas l'endommager, mais par précaution, retirez le bijou avant de vous baigner.</p>"
+            "question": "Le bijou résiste-t-il à l’eau ?",
+            "answer": "<p>Nous recommandons d’éviter un contact prolongé avec l’eau (piscine, mer, bain) pour préserver la finition dorée dans le temps. Le contact occasionnel avec l’eau ne devrait pas l’endommager, mais par précaution, retirez le bijou avant de vous baigner.</p>"
           }
         },
         "q6": {
           "type": "question",
           "settings": {
-            "question": "Comment entretenir mes bijoux ?",
-            "answer": "<p>Essuyez-les délicatement avec un chiffon doux après le port. Rangez-les dans leur écrin, à l'abri de l'humidité et des produits cosmétiques. Évitez de vaporiser du parfum directement sur le bijou.</p>"
+            "question": "Comment entretenir mes bijoux ?",
+            "answer": "<p>Essuyez-les délicatement avec un chiffon doux après le port. Rangez-les dans leur écrin, à l’abri de l’humidité et des produits cosmétiques. Évitez de vaporiser du parfum directement sur le bijou.</p>"
           }
         },
         "q7": {
           "type": "question",
           "settings": {
-            "question": "Que contient l'écrin ?",
-            "answer": "<p>Chaque bijou est livré dans l'écrin Maison L'Émeraude, inclus dans votre commande. Il suffit à lui seul pour un cadeau : pas besoin d'emballage supplémentaire.</p>"
+            "question": "Que contient l’écrin ?",
+            "answer": "<p>Chaque bijou est livré dans l’écrin Maison L’Émeraude, compris dans votre commande. Il se suffit à lui-même pour un cadeau : nul besoin d’emballage supplémentaire.</p>"
           }
         },
         "q8": {
           "type": "question",
           "settings": {
-            "question": "Puis-je offrir le bijou directement ?",
-            "answer": "<p>Oui. Le bijou arrive dans son écrin et aucun document indiquant le prix n'est glissé dans le colis. Vous pouvez l'offrir tel quel.</p>"
+            "question": "Puis-je offrir le bijou directement ?",
+            "answer": "<p>Oui. Le bijou arrive dans son écrin et aucun document indiquant le prix n’est glissé dans le colis. Vous pouvez l’offrir tel quel.</p>"
           }
         },
         "q9": {
           "type": "question",
           "settings": {
-            "question": "Comment suivre ma commande ?",
-            "answer": "<p>Dès l'expédition de votre colis, vous recevez un email avec votre numéro de suivi et le lien pour suivre la livraison.</p>"
+            "question": "Comment suivre ma commande ?",
+            "answer": "<p>Dès l’expédition de votre colis, vous recevez un email avec votre numéro de suivi et le lien pour suivre la livraison.</p>"
           }
         },
         "q10": {
           "type": "question",
           "settings": {
-            "question": "Comment effectuer un retour ?",
-            "answer": "<p>Vous disposez de 30 jours à compter de la réception pour retourner votre commande. Contactez-nous via le formulaire de contact en bas de cette page. La pièce doit être retournée dans son état d'origine, dans son écrin. Le remboursement est effectué sous 5 à 10 jours ouvrés après réception.</p>"
+            "question": "Comment effectuer un retour ?",
+            "answer": "<p>Vous disposez de 30 jours à compter de la réception pour retourner votre commande. Écrivez-nous via le formulaire de contact en bas de page. La pièce doit être renvoyée dans son état d’origine, avec son écrin. Le remboursement intervient sous 5 à 10 jours ouvrés après réception du retour.</p>"
           }
         },
         "q11": {
           "type": "question",
           "settings": {
-            "question": "Comment contacter la Maison ?",
+            "question": "Comment contacter la Maison ?",
             "answer": "<p>Vous pouvez nous écrire via le formulaire de contact en bas de cette page, ou directement à maisonlemeraude@outlook.fr. Nous répondons dans un délai de 24 à 48 heures ouvrées.</p>"
           }
         },
         "q12": {
           "type": "question",
           "settings": {
-            "question": "Comment fonctionne l'offre parure ?",
-            "answer": "<p>Le collier, les boucles d'oreilles et le bracelet pris ensemble bénéficient d'une remise sur la parure complète. Un bouton ajoute les trois pièces au panier et applique la remise automatiquement. La parure collier + boucles d'oreilles reste aussi proposée à prix réduit. Les remises parure ne se cumulent pas avec l'offre de lancement : la plus avantageuse s'applique.</p>"
+            "question": "Comment fonctionne l’offre parure ?",
+            "answer": "<p>Le collier, les boucles d’oreilles et le bracelet réunis bénéficient d’une remise sur la parure complète. Un bouton ajoute les trois pièces au panier et la remise s’applique automatiquement. La parure collier et boucles d’oreilles est aussi proposée à prix réduit. Les remises parure ne se cumulent pas avec le bijou offert : la formule la plus avantageuse s’applique.</p>"
           }
         }
       },
@@ -186,21 +181,22 @@
       "type": "collection-grid",
       "settings": {
         "limit": 6,
-        "eyebrow": "La Collection",
-        "title": "Choisissez votre bijou",
-        "subtitle": "Chaque pièce est expédiée dans son écrin, avec suivi, et reste échangeable ou remboursable pendant 30 jours."
+        "eyebrow": "La collection",
+        "title": "Trois pièces, une même lumière",
+        "subtitle": "Cristal taillé, halo de pierres blanches, finition dorée. Chaque bijou arrive dans son écrin, et vous avez 30 jours pour changer d’avis."
       }
     },
     "parure": {
       "type": "parure",
       "settings": {
         "eyebrow": "La parure",
-        "title": "Émeraude, grenat, saphir : la parure complète.",
-        "body": "Trois pierres, trois couleurs. Elles se portent ensemble ou séparément. Prises ensemble, elles bénéficient d'une remise, appliquée automatiquement au panier."
+        "title": "Émeraude, grenat, saphir.",
+        "body": "Trois pierres, trois couleurs, à porter seules ou ensemble. Réunies en parure, elles bénéficient d’une remise appliquée automatiquement au panier."
       }
     },
     "marquee": {
-      "type": "marquee"
+      "type": "marquee",
+      "disabled": true
     },
     "shop-the-look": {
       "type": "shop-the-look"
@@ -212,21 +208,21 @@
           "type": "step",
           "settings": {
             "title": "Une pierre taillée en goutte",
-            "text": "Un cristal vert émeraude, facetté pour capter la lumière à chaque mouvement."
+            "text": "Un cristal vert émeraude, facetté pour accrocher la lumière à chaque mouvement."
           }
         },
         "s2": {
           "type": "step",
           "settings": {
             "title": "Un halo de pierres blanches",
-            "text": "Des oxydes de zirconium sertis tout autour de la goutte, pour un éclat qui se remarque sans en faire trop."
+            "text": "Des oxydes de zirconium sertis tout autour de la goutte : un éclat qui se remarque, sans en faire trop."
           }
         },
         "s3": {
           "type": "step",
           "settings": {
             "title": "Une finition dorée",
-            "text": "Acier inoxydable à finition dorée, qui résiste bien au quotidien. Chaque pièce part dans son écrin, prête à offrir."
+            "text": "Une chaîne fine en acier inoxydable doré, pensée pour être portée chaque jour."
           }
         }
       },
@@ -234,28 +230,63 @@
         "s1",
         "s2",
         "s3"
-      ]
+      ],
+      "settings": {
+        "title": "Ce qui se voit de près."
+      }
     },
     "sticky-buy": {
       "type": "sticky-buy"
+    },
+    "gift": {
+      "type": "gift",
+      "blocks": {
+        "g1": {
+          "type": "item",
+          "settings": {
+            "title": "Aucun prix dans le colis",
+            "text": "Aucun document indiquant le prix n’est glissé dans le paquet : le bijou s’offre tel quel."
+          }
+        },
+        "g2": {
+          "type": "item",
+          "settings": {
+            "title": "Un écrin prêt à offrir",
+            "text": "Il arrive dans son écrin vert, sans emballage supplémentaire à prévoir."
+          }
+        },
+        "g3": {
+          "type": "item",
+          "settings": {
+            "title": "30 jours pour changer d’avis",
+            "text": "Si la pièce ne convient pas, elle peut être retournée dans les 30 jours suivant la réception."
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3"
+      ]
     }
   },
   "order": [
     "hero",
-    "marquee",
     "collection-grid",
-    "shop-the-look",
-    "offer",
-    "savoir-faire",
-    "parure",
-    "new-piece",
     "trust-bar",
+    "shop-the-look",
+    "savoir-faire",
+    "gift",
+    "parure",
+    "offer",
     "packaging",
-    "reviews",
     "faq",
     "storytelling",
-    "boutique-paris",
     "sticky-buy",
+    "marquee",
+    "new-piece",
+    "reviews",
+    "boutique-paris",
     "piece-intro",
     "detail-macro",
     "lifestyle-banner",

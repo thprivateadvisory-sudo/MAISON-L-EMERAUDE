@@ -80,8 +80,8 @@
 
       {% # ÉTAT AVEC VRAIS AVIS %}
       <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: clamp(48px, 7vw, 72px);">
-        <span class="eyebrow ml-reveal" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Avis clients</span>
-        <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); font-weight: 300;">Ce qu'elles en disent</h2>
+        <span class="eyebrow ml-reveal" style="font-size: 11px; color: #7A5C2E; letter-spacing: .16em;">Avis clients</span>
+        <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(22px, 3.5vw, 30px); font-weight: 300;">Ce qu’elles en disent</h2>
         {% # Note globale %}
         <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
           <div style="display: flex; gap: 3px;" role="img" aria-label="Note moyenne : {{ avg_rating | round: 1 }} sur 5">
@@ -89,7 +89,7 @@
               <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" {% if i <= avg_rounded %}fill="#B08D57" stroke="none"{% else %}fill="none" stroke="#C8B89A" stroke-width="1.5"{% endif %}/></svg>
             {% endfor %}
           </div>
-          <span class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558;">{{ avg_rating | round: 1 | replace: '.', ',' }}/5 · {{ review_count }} avis</span>
+          <span class="sans" style="font-size: 13px; font-weight: 300; color: #6b6558;">{{ avg_rating | round: 1 | replace: '.', ',' }}/5 · {{ review_count }} avis</span>
         </div>
       </div>
 
@@ -118,13 +118,13 @@
               {% # Auteur %}
               <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; flex-wrap: wrap; margin-top: 4px;">
                 <div>
-                  <span class="sans" style="font-size: 12.5px; font-weight: 400; color: #17140F; display: block;">{{ block.settings.author | default: "Cliente" }}</span>
+                  <span class="sans" style="font-size: 13.5px; font-weight: 400; color: #17140F; display: block;">{{ block.settings.author | default: "Cliente" }}</span>
                   {% if block.settings.date != blank %}
-                    <span class="sans" style="font-size: 11px; font-weight: 300; color: #6b6558; display: block; margin-top: 2px;">{{ block.settings.date }}</span>
+                    <span class="sans" style="font-size: 12px; font-weight: 300; color: #6b6558; display: block; margin-top: 2px;">{{ block.settings.date }}</span>
                   {% endif %}
                 </div>
                 {% if block.settings.verified %}
-                  <span class="sans" style="display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #7A5C2E; letter-spacing: .06em; text-transform: uppercase;">
+                  <span class="sans" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: #7A5C2E; letter-spacing: .06em; text-transform: uppercase;">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
                     Achat vérifié
                   </span>
@@ -144,21 +144,21 @@
 
         {% # Gauche : texte %}
         <div style="display: flex; flex-direction: column; gap: 28px;">
-          <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Avis clients</span>
+          <span class="eyebrow" style="font-size: 11px; color: #7A5C2E; letter-spacing: .16em;">Avis clients</span>
           <h2 class="serif" style="margin: 0; font-size: clamp(24px, 4vw, 36px); font-weight: 300; line-height: 1.2;">Soyez parmi les premières à donner votre avis.</h2>
-          <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La boutique vient d'ouvrir et les premières commandes sont en cours de livraison. Les avis de nos clientes seront publiés ici dès réception.</p>
+          <p class="sans" style="margin: 0; font-size: 15px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .015em;">La boutique vient d’ouvrir et les premières commandes sont en cours de livraison. Les avis de nos clientes seront publiés ici dès réception.</p>
 
           {% # Mention sur les avis %}
           <div style="border-left: 2px solid rgba(176,141,87,.4); padding-left: 20px; display: flex; flex-direction: column; gap: 10px;">
-            <p class="sans" style="margin: 0; font-size: 12.5px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">Nous publions uniquement les avis de clientes ayant passé commande, sans les modifier.</p>
+            <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">Nous publions uniquement les avis de clientes ayant passé commande, sans les modifier.</p>
           </div>
 
           {% # Ce que nos clientes pourront partager %}
           <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
-            <span class="eyebrow" style="font-size: 9px; color: #6b6558; letter-spacing: .18em;">Vous pourrez nous donner votre avis sur</span>
+            <span class="eyebrow" style="font-size: 10.5px; color: #6b6558; letter-spacing: .18em;">Vous pourrez nous donner votre avis sur</span>
             <div style="display: flex; flex-direction: column; gap: 7px;">
               <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>La qualité du bijou</span>
-              <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>L'écrin et la présentation</span>
+              <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>L’écrin et la présentation</span>
               <span class="trust-row"><svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>La livraison</span>
             </div>
           </div>
@@ -184,7 +184,7 @@
               {% # Auteur placeholder %}
               <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
                 <div style="height: 8px; background: rgba(27,24,18,.06); border-radius: 1px; width: 30%;"></div>
-                <span class="sans" style="font-size: 9.5px; letter-spacing: .08em; color: #6b6558; text-transform: uppercase;">Bientôt</span>
+                <span class="sans" style="font-size: 11px; letter-spacing: .08em; color: #6b6558; text-transform: uppercase;">Bientôt</span>
               </div>
             </div>
           {% endfor %}

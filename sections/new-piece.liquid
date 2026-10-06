@@ -70,9 +70,9 @@
 
     {% # Texte %}
     <div class="np-text">
-      <span class="eyebrow ml-reveal" style="color: #7A1F2B; font-size: 10px; letter-spacing: .28em;">{{ section.settings.eyebrow | default: 'Nouvelle pièce de la Maison' }}</span>
-      <span class="ornament ml-reveal" style="margin: 0; background: #7A1F2B;"></span>
-      <h2 class="serif ml-reveal ml-d1 np-title">{{ new_product.title }}</h2>
+      <span class="eyebrow ml-reveal" style="color: #155E48; font-size: 11px; letter-spacing: .16em;">{{ section.settings.eyebrow | default: 'Nouvelle pièce de la Maison' }}</span>
+      <span class="ornament ml-reveal" style="margin: 0; background: #155E48;"></span>
+      <h2 class="serif ml-reveal ml-d1 np-title">{{ new_product.title | replace: "'", "’" }}</h2>
       <p class="serif ml-reveal ml-d1 np-tagline">{{ section.settings.tagline | default: default_tagline }}</p>
       <p class="sans ml-reveal ml-d2 np-desc">{{ section.settings.description | default: default_description }}</p>
 
@@ -82,10 +82,9 @@
 
       <div class="ml-reveal ml-d3" style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
         {% if new_product.compare_at_price > new_product.price %}
-          <span class="compare-price"><span class="visually-hidden">Prix de référence :</span>{{ new_product.compare_at_price | money }}</span>
+          <span class="compare-price"><span class="visually-hidden">Prix de référence :</span>{{ new_product.compare_at_price | money }}</span>
         {% endif %}
         <span class="price">{{ new_product.price | money }}</span>
-        {% if settings.offer_active %}<span class="np-offer">1 achetée · 1 offerte</span>{% endif %}
       </div>
 
       <div class="ml-reveal ml-d3" style="display: flex; flex-direction: column; gap: 18px; align-items: flex-start;">
@@ -105,8 +104,8 @@
       {% if piece_necklace.id and piece_earrings.id and piece_bracelet.id and settings.trio_active %}
         <a href="#parure" class="pdp-pair ml-reveal ml-d4" style="max-width: 480px;">
           <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
-            <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Parure complète</span>
-            <span class="serif" style="font-size: 17px; color: #17140F;">Collier + boucles + bracelet : −{{ settings.trio_percent }} %</span>
+            <span class="eyebrow" style="font-size: 10.5px; color: #7A5C2E;">Parure complète</span>
+            <span class="serif" style="font-size: 17px; color: #17140F;">Collier + boucles + bracelet : −{{ settings.trio_percent }} %</span>
           </span>
           <span aria-hidden="true" style="margin-left: auto; color: #B08D57; font-size: 18px;">→</span>
         </a>
@@ -150,7 +149,7 @@
 .np-main { position: relative; overflow: hidden; background: #FFFFFF; aspect-ratio: 1 / 1; }
 .np-main img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .8s cubic-bezier(.25,.46,.45,.94), opacity .25s ease; }
 .np-main:hover img { transform: scale(1.04); }
-.np-badge { position: absolute; top: clamp(14px, 2vw, 20px); left: clamp(14px, 2vw, 20px); z-index: 1; padding: 8px 14px; background: #7A1F2B; color: #FBF8F2; font-family: 'Montserrat', sans-serif; font-size: 9px; font-weight: 400; letter-spacing: .24em; text-transform: uppercase; }
+.np-badge { position: absolute; top: clamp(14px, 2vw, 20px); left: clamp(14px, 2vw, 20px); z-index: 1; padding: 8px 14px; background: #155E48; color: #FBF8F2; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; }
 .np-thumbs { display: flex; gap: 8px; margin-top: 8px; }
 .np-thumb { flex: 1; max-width: 96px; aspect-ratio: 1; padding: 0; border: 1px solid rgba(27,24,18,.12); background: #FFFFFF; cursor: pointer; opacity: .6; transition: opacity .2s ease, border-color .2s ease; }
 .np-thumb img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
@@ -158,10 +157,10 @@
 .np-text { display: flex; flex-direction: column; gap: 22px; }
 .np-title { margin: 0; font-size: clamp(30px, 4.4vw, 50px); line-height: 1.08; font-weight: 300; letter-spacing: -.01em; color: #17140F; }
 .np-tagline { margin: -6px 0 0; font-size: clamp(17px, 2vw, 21px); font-style: italic; font-weight: 300; line-height: 1.5; color: #4A463D; max-width: 440px; }
-.np-desc { margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.95; letter-spacing: .02em; color: #4A463D; max-width: 440px; }
+.np-desc { margin: 0; font-size: 15px; font-weight: 300; line-height: 1.95; letter-spacing: .02em; color: #4A463D; max-width: 440px; }
 .np-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.np-chips li { font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase; color: #17140F; border: 1px solid rgba(176,141,87,.35); padding: 8px 12px; }
-.np-offer { font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: #7A1F2B; border-left: 1px solid rgba(176,141,87,.4); padding-left: 10px; margin-left: 4px; }
+.np-chips li { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #17140F; border: 1px solid rgba(176,141,87,.35); padding: 8px 12px; }
+.np-offer { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #155E48; border-left: 1px solid rgba(176,141,87,.4); padding-left: 10px; margin-left: 4px; }
 .np-cta { min-width: 230px; text-align: center; }
 @media (max-width: 860px) {
   .np-grid { grid-template-columns: 1fr; }

@@ -1,8 +1,8 @@
 {%- comment -%}
-  Offre parure : ajoute les pièces au panier en un clic, puis applique le code de réduction.
-  Paramètres : mode ('duo' ou 'trio'), piece_a, piece_b, piece_c (trio), compact (facultatif).
-  Duo : prix fixe (Paramètres du thème → Offre parure). Trio : remise en % (→ Parure complète).
-  Sans offre active ou si une pièce est épuisée : duo → simple lien vers piece_b, trio → rien.
+  Offre parure : ajoute les pièces au panier en un clic, puis applique le code de réduction.
+  Paramètres : mode ('duo' ou 'trio'), piece_a, piece_b, piece_c (trio), compact (facultatif).
+  Duo : prix fixe (Paramètres du thème → Offre parure). Trio : remise en % (→ Parure complète).
+  Sans offre active ou si une pièce est épuisée : duo → simple lien vers piece_b, trio → rien.
 {%- endcomment -%}
 {%- liquid
   assign is_trio = false
@@ -62,7 +62,7 @@
         {% if p.featured_image %}
           <img src="{{ p.featured_image | image_url: width: 200 }}" alt="" width="72" height="72" loading="lazy">
         {% endif %}
-        <span class="bundle-piece-name">{{ p.title }}</span>
+        <span class="bundle-piece-name">{{ p.title | replace: "'", "’" }}</span>
         <span class="bundle-piece-price">{{ v.price | money }}</span>
       </a>
     {% endfor %}
@@ -72,7 +72,7 @@
   <div class="bundle-total">
     <span class="bundle-total-label">{% if is_trio %}Les trois bijoux{% else %}Les deux bijoux{% endif %}</span>
     <span class="bundle-prices">
-      <s class="bundle-old"><span class="visually-hidden">Prix séparés :</span>{{ regular_total | money }}</s>
+      <s class="bundle-old"><span class="visually-hidden">Prix séparés :</span>{{ regular_total | money }}</s>
       <span class="bundle-new">{{ bundle_total | money }}</span>
     </span>
   </div>
@@ -88,7 +88,7 @@
   {% unless compact %}
   <p class="bundle-note">Un clic ajoute les {{ piece_count }} bijoux à votre panier, chacun dans son écrin. La remise de {{ bundle_saving | money }} est appliquée automatiquement.</p>
   {% endunless %}
-  <p class="bundle-error" role="alert" hidden>Un souci est survenu lors de l'ajout. Merci de réessayer.</p>
+  <p class="bundle-error" role="alert" hidden>Un souci est survenu lors de l’ajout. Merci de réessayer.</p>
 </div>
 
 <script>
@@ -134,9 +134,9 @@ if (!window.mlBundleInit) {
     <img src="{{ piece_b.featured_image | image_url: width: 160 }}" alt="" width="64" height="64" loading="lazy">
   {% endif %}
   <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0;">
-    <span class="eyebrow" style="font-size: 9px; color: #7A5C2E;">Composez votre parure</span>
-    <span class="serif" style="font-size: 17px; color: #17140F;">{{ piece_b.title }}</span>
-    <span class="sans" style="font-size: 12px; font-weight: 300; color: #4A463D;">{{ piece_b.price | money }}</span>
+    <span class="eyebrow" style="font-size: 10.5px; color: #7A5C2E;">Composez votre parure</span>
+    <span class="serif" style="font-size: 17px; color: #17140F;">{{ piece_b.title | replace: "'", "’" }}</span>
+    <span class="sans" style="font-size: 13px; font-weight: 300; color: #4A463D;">{{ piece_b.price | money }}</span>
   </span>
   <span aria-hidden="true" style="margin-left: auto; color: #B08D57; font-size: 18px;">→</span>
 </a>

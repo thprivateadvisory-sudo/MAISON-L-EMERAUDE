@@ -1,22 +1,22 @@
-<div style="width: 100%; background: #17140F; padding: clamp(56px, 9vw, 96px) clamp(18px, 5vw, 36px);" class="dark-grain">
+<div style="width: 100%; background: #FBF8F2; padding: clamp(56px, 9vw, 96px) clamp(18px, 5vw, 36px); border-top: 1px solid rgba(15,48,39,.1);">
   <div style="max-width: 480px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px;">
-    <span class="eyebrow ml-reveal" style="font-size: 9.5px; color: #C9A96E; letter-spacing: .28em;">La Maison</span>
-    <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(21px, 3.4vw, 27px); color: #FBF8F2; font-weight: 300; font-style: italic; line-height: 1.35;">Recevez nos nouveautés.</h2>
-    <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 13.5px; line-height: 1.75; color: rgba(251,248,242,.55); font-weight: 300; max-width: 360px;">Nouvelles pièces et offres, en avant-première. Un email de temps en temps, pas plus.</p>
+    <span class="eyebrow ml-reveal">Les nouvelles de la Maison</span>
+    <h2 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 3.6vw, 38px); color: #0F3027; font-weight: 300; line-height: 1.15;">Soyez la première informée.</h2>
+    <p class="sans ml-reveal ml-d2" style="margin: 0; font-size: 15px; line-height: 1.75; color: #5A564D; font-weight: 400; max-width: 380px;">Les nouvelles pièces avant tout le monde. Un email de temps en temps, jamais plus.</p>
     {% form 'customer', id: 'newsletter-form' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
       {% if form.posted_successfully? %}
         <div style="display: flex; align-items: center; gap: 10px;">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
-          <p class="sans" style="color: #B08D57; font-size: 13px; font-weight: 300; margin: 0;">Merci, votre inscription est bien enregistrée.</p>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0F3027" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <p class="sans" style="color: #0F3027; font-size: 14.5px; font-weight: 500; margin: 0;">Merci, votre inscription est bien enregistrée.</p>
         </div>
       {% else %}
         {% if form.errors %}
-          <p class="sans" role="alert" style="color: #E8B4A8; font-size: 12.5px; font-weight: 300; margin: 0 0 4px;">
+          <p class="sans" role="alert" style="color: #9B2C2C; font-size: 13.5px; font-weight: 300; margin: 0 0 4px;">
             {% if form.errors contains 'email' %}Merci de saisir une adresse email valide.{% else %}{{ form.errors | default_errors }}{% endif %}
           </p>
         {% endif %}
-        <div style="display: flex; width: 100%; border-bottom: 1px solid rgba(251,248,242,.3); padding-bottom: 12px; margin-top: 8px;">
+        <div style="display: flex; width: 100%; border-bottom: 1px solid rgba(15,48,39,.35); padding-bottom: 12px; margin-top: 8px;">
           <input
             class="sans nl-input"
             type="email"
@@ -25,13 +25,13 @@
             autocomplete="email"
             required
             aria-label="Adresse email pour la newsletter"
-            style="flex-grow: 1; min-width: 0; background: transparent; border: none; color: #FBF8F2; font-size: 14px; outline: none; font-weight: 300;"
+            style="flex-grow: 1; min-width: 0; background: transparent; border: none; color: #161513; font-size: 15.5px; outline: none; font-weight: 400;"
           >
-          <button type="submit" class="sans" style="background: none; border: none; color: #B08D57; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; white-space: nowrap; padding-left: 16px; transition: color .2s ease;" onmouseover="this.style.color='#C9A96E'" onmouseout="this.style.color='#B08D57'">S'inscrire</button>
+          <button type="submit" class="sans" style="background: none; border: none; color: #0F3027; font-size: 13px; font-weight: 600; letter-spacing: .04em; cursor: pointer; white-space: nowrap; padding-left: 16px;">S’inscrire</button>
         </div>
       {% endif %}
     {% endform %}
-    <p class="sans" style="margin: 0; font-size: 10.5px; font-weight: 300; color: rgba(251,248,242,.6); line-height: 1.5;">En vous inscrivant, vous acceptez de recevoir nos communications par email. Désinscription possible à tout moment via le lien présent dans chaque email.{% if shop.privacy_policy %} <a href="{{ shop.privacy_policy.url }}" style="text-decoration: underline; text-underline-offset: 2px;">Politique de confidentialité</a>.{% endif %}</p>
+    <p class="sans" style="margin: 0; font-size: 12px; font-weight: 400; color: #6B665C; line-height: 1.5;">En vous inscrivant, vous acceptez de recevoir nos communications par email. Désinscription possible à tout moment via le lien présent dans chaque email.{% if shop.privacy_policy %} <a href="{{ shop.privacy_policy.url }}" style="text-decoration: underline; text-underline-offset: 2px;">Politique de confidentialité</a>.{% endif %}</p>
   </div>
 </div>
 

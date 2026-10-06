@@ -1,20 +1,37 @@
-{%- if settings.offer_active -%}
-{% assign bar_text = section.settings.text | default: "Offre de lancement · Une pièce achetée · Une pièce offerte" %}
-{% if settings.offer_end_date != blank %}{% assign bar_text = bar_text | append: " · Jusqu'au " | append: settings.offer_end_date %}{% endif %}
-<div style="width: 100%; background: #17140F; border-bottom: 1px solid rgba(176,141,87,.14); padding: 10px 0; overflow: hidden; position: relative;" class="marquee-wrap" id="AnnouncementBar">
-  <p class="visually-hidden">{{ bar_text }}</p>
-  <div class="marquee-track" aria-hidden="true">
-    {% for i in (1..8) %}<span class="eyebrow" style="font-size: 9.5px; color: rgba(201,169,110,.85); letter-spacing: .22em; flex-shrink: 0;">{{ bar_text }}</span><span class="marquee-dot">◆</span>{% endfor %}
-  </div>
-  <button type="button" class="marquee-toggle" aria-pressed="false" aria-label="Mettre en pause le défilement" onclick="var w=document.getElementById('AnnouncementBar');var p=w.classList.toggle('paused');this.setAttribute('aria-pressed',p);this.setAttribute('aria-label',p?'Relancer le défilement':'Mettre en pause le défilement');this.innerHTML=p?'&#9654;':'&#10074;&#10074;';">&#10074;&#10074;</button>
+{%- liquid
+  if settings.offer_active
+    assign bar_text = section.settings.text | default: 'Pour l’ouverture de la Maison, un second bijou identique vous est offert'
+    if settings.offer_end_date != blank
+      assign bar_text = bar_text | append: ', jusqu’au ' | append: settings.offer_end_date
+    endif
+    assign bar_link = '#offre'
+  else
+    assign bar_text = section.settings.text_default | default: 'Livraison suivie · Retours sous 30 jours'
+    assign bar_link = blank
+  endif
+-%}
+<div class="abar" id="AnnouncementBar">
+  {% if bar_link != blank %}
+    <a href="{{ routes.root_url }}{{ bar_link }}" class="abar-text">{{ bar_text }}<span class="abar-more">Découvrir</span></a>
+  {% else %}
+    <p class="abar-text">{{ bar_text }}</p>
+  {% endif %}
 </div>
-{%- endif -%}
+
+<style>
+.abar { background: #0F3027; color: #F4EEE3; text-align: center; padding: 10px 16px; }
+.abar-text { margin: 0; display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 4px 12px; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 400; letter-spacing: .02em; line-height: 1.5; color: #F4EEE3; }
+.abar-more { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; border-bottom: 1px solid rgba(244,238,227,.5); padding-bottom: 1px; }
+a.abar-text:hover .abar-more { border-color: #F4EEE3; }
+@media (max-width: 560px) { .abar-text { font-size: 11.5px; } .abar-more { display: none; } }
+</style>
 
 {% schema %}
 {
-  "name": "Bandeau d'annonce",
+  "name": "Bandeau d’annonce",
   "settings": [
-    { "type": "text", "id": "text", "label": "Texte", "default": "Offre de lancement · Une pièce achetée · Une pièce offerte", "info": "La date de fin (Paramètres du thème → Offre de lancement) est ajoutée automatiquement." }
+    { "type": "text", "id": "text", "label": "Texte pendant l’offre", "default": "Pour l’ouverture de la Maison, un second bijou identique vous est offert", "info": "La date de fin (Paramètres du thème → Offre de lancement) est ajoutée automatiquement." },
+    { "type": "text", "id": "text_default", "label": "Texte hors offre", "default": "Livraison suivie · Retours sous 30 jours" }
   ]
 }
 {% endschema %}
