@@ -47,7 +47,7 @@
   endif
 -%}
 <div class="sect" style="width: 100%;" id="product-main">
-  <div style="max-width: 1200px; margin: 0 auto;" class="grid-2 grid-pdp">
+  <div style="max-width: 1200px; margin: 0 auto; align-items: start;" class="grid-2 grid-pdp">
 
     {% # Galerie produit %}
     <div class="pdp-gallery">
@@ -86,27 +86,18 @@
     {% # Informations produit %}
     <div style="display: flex; flex-direction: column; gap: 20px;">
 
-      <span class="eyebrow ml-reveal" style="color: {% if is_bracelet %}#7A1F2B{% else %}#7A5C2E{% endif %}; font-size: 10px;">{% if is_bracelet %}{{ section.settings.bracelet_eyebrow | default: 'Nouveauté de la Maison' }}{% elsif is_earrings %}{{ section.settings.earrings_eyebrow | default: "Boucles d'oreilles" }}{% elsif is_necklace %}La pièce signature{% else %}Maison L'Émeraude{% endif %}</span>
-      <h1 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title }}</h1>
+      <span class="eyebrow ml-reveal" style="color: {% if is_bracelet %}#155E48{% else %}#7A5C2E{% endif %}; font-size: 11px;">{% if is_bracelet %}{{ section.settings.bracelet_eyebrow | default: 'Nouveauté de la Maison' }}{% elsif is_earrings %}{{ section.settings.earrings_eyebrow | default: "Boucles d’oreilles" }}{% elsif is_necklace %}La pièce signature{% else %}Maison L’Émeraude{% endif %}</span>
+      <h1 class="serif ml-reveal ml-d1" style="margin: 0; font-size: clamp(28px, 4.5vw, 42px); line-height: 1.12; font-weight: 300; letter-spacing: -.005em;">{{ product.title | replace: "'", "’" }}</h1>
 
       {% # Prix %}
       <div style="display: flex; align-items: baseline; gap: 8px; margin-top: -4px; flex-wrap: wrap;" id="ProductPrice">
-        <span class="compare-price" data-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}><span class="visually-hidden">Prix de référence :</span>{{ current_variant.compare_at_price | money }}</span>
+        <span class="compare-price" data-compare{% unless current_variant.compare_at_price > current_variant.price %} hidden{% endunless %}><span class="visually-hidden">Prix de référence :</span>{{ current_variant.compare_at_price | money }}</span>
         <span class="price" data-price>{{ current_variant.price | money }}</span>
-        <span class="sans" style="font-size: 11px; font-weight: 300; color: #6b6558;">TTC</span>
+        <span class="sans" style="font-size: 13px; font-weight: 400; color: #6B665C;">TTC</span>
       </div>
-
-      {% if settings.offer_active %}
-      {% # Offre 1+1 encadrée %}
-      <div class="offer-box">
-        <span class="offer-box-title">Offre de lancement : 1 pièce achetée · 1 pièce offerte</span>
-        <p class="offer-box-content" style="margin: 0;">{{ section.settings.offer_text | default: "Pendant le lancement, une seconde pièce identique est offerte avec chaque commande. Vous recevez deux bijoux, chacun dans son écrin : un pour vous, un à offrir." }}</p>
-        {% if settings.offer_end_date != blank %}<p class="offer-box-content" style="margin: 0; font-weight: 400; color: #17140F;">Jusqu'au {{ settings.offer_end_date }} inclus · une pièce offerte par commande · dans la limite des stocks.</p>{% endif %}
-      </div>
-      {% endif %}
 
       {% # Description %}
-      <div class="sans" style="font-size: 14px; font-weight: 300; line-height: 1.9; color: #4A463D; letter-spacing: .01em;">{{ product.description }}</div>
+      <div class="pdp-desc">{{ product.description }}</div>
 
       {% if low_stock %}
         <p class="pdp-stock">Plus que {{ current_variant.inventory_quantity }} pièce{% if current_variant.inventory_quantity > 1 %}s{% endif %} en stock</p>
@@ -117,8 +108,8 @@
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
             <div>
-              <label class="eyebrow" for="Option-{{ forloop.index }}" style="font-size: 10px; color: #6b6558; display: block; margin-bottom: 8px;">{{ option.name }}</label>
-              <select id="Option-{{ forloop.index }}" data-option-index="{{ forloop.index0 }}" class="sans product-option" style="padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 13px; font-weight: 300; letter-spacing: .03em; color: #17140F; width: 100%; max-width: 240px;">
+              <label class="eyebrow" for="Option-{{ forloop.index }}" style="font-size: 11px; color: #6b6558; display: block; margin-bottom: 8px;">{{ option.name }}</label>
+              <select id="Option-{{ forloop.index }}" data-option-index="{{ forloop.index0 }}" class="sans product-option" style="padding: 11px 12px; border: 1px solid rgba(27,24,18,.2); background: transparent; min-width: 160px; font-size: 14.5px; font-weight: 300; letter-spacing: .03em; color: #17140F; width: 100%; max-width: 240px;">
                 {% for value in option.values %}
                   <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>
                 {% endfor %}
@@ -147,10 +138,14 @@
         </div>
       {% endform %}
 
+      {% if settings.offer_active %}
+        <p class="pdp-gift"><span class="pdp-gift-mark" aria-hidden="true"></span><span>{{ section.settings.offer_text }}{% if settings.offer_end_date != blank %} <em>Jusqu’au {{ settings.offer_end_date }}, dans la limite des stocks.</em>{% endif %}</span></p>
+      {% endif %}
+
       {% if current_variant.available %}
       <div class="pdp-eta" id="PdpEta" hidden>
-        <svg viewBox="0 0 24 24" fill="none" stroke="#7A5C2E" stroke-width="1.5" aria-hidden="true"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
-        <span>Commandez aujourd'hui, livraison estimée entre le <strong data-eta-min></strong> et le <strong data-eta-max></strong></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0F3027" stroke-width="1.5" aria-hidden="true"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7.5" cy="18.5" r="1.5"/><circle cx="17.5" cy="18.5" r="1.5"/></svg>
+        <span>Commandez aujourd’hui, livraison estimée entre le <strong data-eta-min></strong> et le <strong data-eta-max></strong></span>
       </div>
       {% endif %}
 
@@ -162,24 +157,24 @@
       {% # Réassurance sous bouton %}
       <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 4px;">
         <div class="trust-row">
-          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#0F3027" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
           Paiement sécurisé
         </div>
         <div class="trust-row">
-          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#0F3027" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
           {% if settings.free_shipping %}Livraison offerte{% else %}Livraison suivie{% endif %} · Expédition sous {{ settings.prep_time }}
         </div>
         <div class="trust-row">
-          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#0F3027" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
           Retours acceptés sous {{ settings.return_days }} jours{% if settings.free_returns %} · gratuits{% endif %}
         </div>
         <div class="trust-row">
-          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#B08D57" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg class="trust-check" viewBox="0 0 24 24" fill="none" stroke="#0F3027" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
           Écrin inclus, prêt à offrir
         </div>
         {% if shop.enabled_payment_types.size > 0 %}
         <div class="pay-icons" style="margin-top: 6px;">
-          <span class="visually-hidden">Moyens de paiement acceptés :</span>
+          <span class="visually-hidden">Moyens de paiement acceptés :</span>
           {% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag: class: 'pay-icon' }}{% endfor %}
         </div>
         {% endif %}
@@ -193,8 +188,8 @@
         {% for row in rows %}
           {% assign cells = row | split: '|' %}
           <div style="display: flex; justify-content: space-between; padding: 13px 0;{% unless forloop.last %} border-bottom: 1px solid rgba(27,24,18,.07);{% endunless %}">
-            <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">{{ cells[0] }}</span>
-            <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
+            <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">{{ cells[0] }}</span>
+            <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
           </div>
         {% endfor %}
         {% elsif is_bracelet %}
@@ -203,33 +198,33 @@
         {% for row in rows %}
           {% assign cells = row | split: '|' %}
           <div style="display: flex; justify-content: space-between; padding: 13px 0;{% unless forloop.last %} border-bottom: 1px solid rgba(27,24,18,.07);{% endunless %}">
-            <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">{{ cells[0] }}</span>
-            <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
+            <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">{{ cells[0] }}</span>
+            <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ cells[1] }}</span>
           </div>
         {% endfor %}
         {% elsif is_necklace %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert, taille goutte" }}</span>
+          <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pierre centrale</span>
+          <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.stone | default: "Cristal synthétique vert, taille goutte" }}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Métal</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.metal | default: "Acier inoxydable, finition dorée à l'or fin" }}</span>
+          <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Métal</span>
+          <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.metal | default: "Acier inoxydable, finition dorée à l’or fin" }}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Longueur</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.chain_length | default: "40 cm, rallonge jusqu'à 45 cm" }}</span>
+          <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Longueur</span>
+          <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.chain_length | default: "40 cm, rallonge jusqu’à 45 cm" }}</span>
         </div>
         {% if section.settings.pendant_size != blank %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid rgba(27,24,18,.07);">
-          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pendentif</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.pendant_size }}</span>
+          <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Pendentif</span>
+          <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.pendant_size }}</span>
         </div>
         {% endif %}
         {% if section.settings.water_resistance != blank %}
         <div style="display: flex; justify-content: space-between; padding: 13px 0;">
-          <span class="eyebrow" style="font-size: 10px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Résistance</span>
-          <span class="sans" style="font-size: 13px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.water_resistance }}</span>
+          <span class="eyebrow" style="font-size: 11px; color: #6b6558; white-space: nowrap; margin-right: 16px;">Résistance</span>
+          <span class="sans" style="font-size: 14.5px; font-weight: 300; color: #17140F; letter-spacing: .01em; text-align: right;">{{ section.settings.water_resistance }}</span>
         </div>
         {% endif %}
         {% endif %}
@@ -237,10 +232,10 @@
 
       {% if is_earrings %}
       {% # Note de transparence %}
-      <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La pierre est un cristal synthétique couleur grenat, et non un grenat naturel.</p>
+      <p class="sans" style="margin: 0; font-size: 13px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">La pierre est un cristal synthétique couleur grenat, et non un grenat naturel.</p>
       {% endif %}
       {% if is_bracelet and section.settings.bracelet_note != blank %}
-      <p class="sans" style="margin: 0; font-size: 12px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">{{ section.settings.bracelet_note }}</p>
+      <p class="sans" style="margin: 0; font-size: 13px; font-weight: 300; line-height: 1.75; color: #6b6558; font-style: italic;">{{ section.settings.bracelet_note }}</p>
       {% endif %}
 
       {% # Questions avant achat %}
@@ -251,14 +246,14 @@
         </details>
         <details>
           <summary>Retours et remboursement</summary>
-          <p>Vous avez {{ settings.return_days }} jours à compter de la réception pour nous retourner la pièce dans son état d'origine, dans son écrin.{% if settings.free_returns %} Les retours sont gratuits.{% endif %} Le remboursement est effectué sous 5 à 10 jours ouvrés après réception du retour.</p>
+          <p>Vous avez {{ settings.return_days }} jours à compter de la réception pour nous retourner la pièce dans son état d’origine, dans son écrin.{% if settings.free_returns %} Les retours sont gratuits.{% endif %} Le remboursement est effectué sous 5 à 10 jours ouvrés après réception du retour.</p>
         </details>
         <details>
           <summary>Paiement sécurisé</summary>
           <p>Le paiement est traité par Shopify, sur une page chiffrée. Vos données bancaires ne sont jamais transmises à la Maison.</p>
         </details>
         <details>
-          <summary>Une question ?</summary>
+          <summary>Une question ?</summary>
           <p>Écrivez-nous à <a href="mailto:{{ settings.contact_email | default: 'maisonlemeraude@outlook.fr' }}" class="u-link">{{ settings.contact_email | default: 'maisonlemeraude@outlook.fr' }}</a>. Nous répondons sous 24 à 48 heures ouvrées.</p>
         </details>
       </div>
@@ -275,8 +270,8 @@
 {% # Sticky Add to Cart (mobile) %}
 <div class="sticky-atc hidden" id="StickyATC">
   <div class="sticky-atc-info">
-    <span class="sticky-atc-name">{{ product.title }}</span>
-    <span class="sticky-atc-price"><span data-price>{{ current_variant.price | money }}</span>{% if settings.offer_active %} · 1 acheté · 1 offert{% endif %}</span>
+    <span class="sticky-atc-name">{{ product.title | replace: "'", "’" }}</span>
+    <span class="sticky-atc-price"><span data-price>{{ current_variant.price | money }}</span></span>
   </div>
   <button type="button" class="sticky-atc-btn" id="StickyATCBtn" {% unless current_variant.available %}disabled{% endunless %}>
     {% if current_variant.available %}Ajouter{% else %}Épuisé{% endif %}
@@ -424,9 +419,9 @@ document.addEventListener('DOMContentLoaded', function() {
     { "type": "text", "id": "chain_length", "label": "Longueur de chaîne" },
     { "type": "text", "id": "pendant_size", "label": "Dimensions du pendentif" },
     { "type": "text", "id": "water_resistance", "label": "Résistance à l'eau" },
-    { "type": "textarea", "id": "offer_text", "label": "Explication de l'offre 1+1" },
+    { "type": "textarea", "id": "offer_text", "label": "Phrase sur le bijou offert", "default": "Ouverture de la Maison : un second bijou identique vous est offert avec cette commande, chacun dans son écrin." },
     { "type": "header", "content": "Boucles d'oreilles" },
-    { "type": "text", "id": "earrings_eyebrow", "label": "Surtitre", "default": "Boucles d'oreilles" },
+    { "type": "text", "id": "earrings_eyebrow", "label": "Surtitre", "default": "Boucles d’oreilles" },
     { "type": "text", "id": "earrings_stone", "label": "Pierre centrale" },
     { "type": "text", "id": "earrings_halo", "label": "Halo" },
     { "type": "text", "id": "earrings_setting", "label": "Monture" },

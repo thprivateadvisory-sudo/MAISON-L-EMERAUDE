@@ -17,24 +17,24 @@
         <img class="stl-img" src="{{ 'closeup.jpg' | asset_url }}"
           srcset="{{ 'closeup-600.jpg' | asset_url }} 600w, {{ 'closeup.jpg' | asset_url }} 1000w"
           sizes="(max-width: 860px) 100vw, 55vw" width="1000" height="1200" loading="lazy"
-          alt="Collier La Goutte d'Émeraude et boucles d'oreilles assorties portés avec une chemise en soie">
+          alt="Collier La Goutte d’Émeraude et boucles d’oreilles assorties portés avec une chemise en soie">
       {% endif %}
       {% if look_a.id %}
         <a href="{{ look_a.url }}" class="stl-spot" style="left: {{ section.settings.a_x }}%; top: {{ section.settings.a_y }}%;">
-          <span class="stl-spot-dot"></span><span class="stl-spot-label">{{ look_a.title }} · {{ look_a.price | money }}</span>
+          <span class="stl-spot-dot"></span><span class="stl-spot-label">{{ look_a.title | replace: "'", "’" }} · {{ look_a.price | money }}</span>
         </a>
       {% endif %}
       {% if look_b.id %}
         <a href="{{ look_b.url }}" class="stl-spot" style="left: {{ section.settings.b_x }}%; top: {{ section.settings.b_y }}%;">
-          <span class="stl-spot-dot"></span><span class="stl-spot-label">{{ look_b.title }} · {{ look_b.price | money }}</span>
+          <span class="stl-spot-dot"></span><span class="stl-spot-label">{{ look_b.title | replace: "'", "’" }} · {{ look_b.price | money }}</span>
         </a>
       {% endif %}
     </div>
 
     <div class="stl-panel">
-      <span class="eyebrow ml-reveal stl-eyebrow">{{ section.settings.eyebrow }}</span>
+      <span class="ml-reveal stl-eyebrow">{{ section.settings.eyebrow }}</span>
       <h2 class="serif ml-reveal ml-d1 stl-title">{{ section.settings.title }}</h2>
-      <p class="sans ml-reveal ml-d2 stl-text">{{ section.settings.text }}</p>
+      <p class="ml-reveal ml-d2 stl-text">{{ section.settings.text }}</p>
 
       <div class="stl-items">
         {% for item in (1..3) %}
@@ -46,8 +46,8 @@
                 {% if p.featured_image %}<img src="{{ p.featured_image | image_url: width: 200 }}" width="88" height="88" alt="" loading="lazy">{% endif %}
               </a>
               <div class="stl-item-body">
-                <a href="{{ p.url }}" class="serif stl-item-title">{{ p.title }}</a>
-                <span class="sans stl-item-price">{{ v.price | money }}{% if settings.offer_active %} <em>+ 1 offert</em>{% endif %}</span>
+                <a href="{{ p.url }}" class="serif stl-item-title">{{ p.title | replace: "'", "’" }}</a>
+                <span class="stl-item-price">{{ v.price | money }}</span>
               </div>
               {% if p.available and p.has_only_default_variant %}
                 <form method="post" action="{{ routes.cart_add_url }}" class="stl-form">
@@ -64,7 +64,7 @@
       </div>
 
       {% if settings.bundle_active or settings.trio_active %}
-        <a href="#parure" class="sans stl-bundle ml-reveal ml-d4">Porter l'ensemble : voir la parure à prix réduit →</a>
+        <a href="#parure" class="stl-bundle ml-reveal ml-d4">Les trois ensemble : voir la parure</a>
       {% endif %}
     </div>
   </div>
@@ -78,29 +78,29 @@
 .stl-media:hover .stl-img { transform: scale(1.03); }
 .stl-spot { display: block; position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; z-index: 2; }
 .stl-spot-dot { display: block; position: relative; width: 22px; height: 22px; border-radius: 50%; background: rgba(251,248,242,.95); box-shadow: 0 2px 10px rgba(0,0,0,.25); flex-shrink: 0; }
-.stl-spot-dot::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: #0F5A43; }
+.stl-spot-dot::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: #155E48; }
 .stl-spot-dot::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(251,248,242,.8); animation: stl-ring 2.2s infinite; }
 @keyframes stl-ring { 0% { transform: scale(.7); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
-.stl-spot-label { position: absolute; left: 32px; top: 50%; margin-top: -15px; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .04em; background: rgba(251,248,242,.95); color: #17140F; padding: 7px 11px; white-space: nowrap; opacity: 0; transform: translateX(-6px); transition: opacity .3s ease, transform .3s ease; pointer-events: none; }
+.stl-spot-label { font-weight: 500; position: absolute; left: 32px; top: 50%; margin-top: -15px; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; letter-spacing: .04em; background: rgba(251,248,242,.95); color: #17140F; padding: 7px 11px; white-space: nowrap; opacity: 0; transform: translateX(-6px); transition: opacity .3s ease, transform .3s ease; pointer-events: none; }
 .stl-spot:hover .stl-spot-label, .stl-spot:focus-visible .stl-spot-label { opacity: 1; transform: none; }
 .stl-panel { display: flex; flex-direction: column; gap: 18px; }
-.stl-eyebrow { font-size: 10px; color: #7A5C2E; letter-spacing: .28em; }
-.stl-title { margin: 0; font-size: clamp(30px, 4.4vw, 50px); font-weight: 300; line-height: 1.08; color: #0C2620; }
-.stl-text { margin: 0; font-size: 14px; font-weight: 300; line-height: 1.85; color: #4A463D; max-width: 440px; }
+.stl-eyebrow { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 500; color: #8A6A3A; letter-spacing: .16em; text-transform: uppercase; }
+.stl-title { margin: 0; font-size: clamp(30px, 4.4vw, 50px); font-weight: 300; line-height: 1.08; color: #0F3027; }
+.stl-text { margin: 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.75; color: #3E3B35; max-width: 460px; }
 .stl-items { display: flex; flex-direction: column; margin-top: 10px; border-top: 1px solid rgba(27,24,18,.12); }
 .stl-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(27,24,18,.12); }
 .stl-thumb img { width: 72px; height: 72px; object-fit: cover; background: #fff; }
 .stl-item-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .stl-item-title { font-size: 19px; line-height: 1.2; color: #17140F; }
-.stl-item-price { font-size: 12.5px; color: #17140F; }
-.stl-item-price em { font-style: normal; color: #0F5A43; font-weight: 500; }
+.stl-item-price { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; font-weight: 500; color: #161513; }
+.stl-item-price em { font-style: normal; color: #155E48; font-weight: 500; }
 .stl-form { margin: 0; }
-.stl-add { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: #0C2620; color: #FBF8F2; border: 0; font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; transition: background .3s ease; }
-.stl-add:hover { background: #0F5A43; }
-.stl-bundle { font-size: 12px; letter-spacing: .04em; color: #7A1F2B; border-bottom: 1px solid rgba(122,31,43,.3); align-self: flex-start; padding-bottom: 2px; }
+.stl-add { display: inline-flex; align-items: center; min-height: 46px; padding: 0 20px; background: transparent; color: #0F3027; border: 1px solid #0F3027; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12.5px; font-weight: 600; letter-spacing: .04em; cursor: pointer; transition: background .3s ease, color .3s ease; }
+.stl-add:hover { background: #0F3027; color: #FBF8F2; }
+.stl-bundle { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 14px; font-weight: 500; color: #0F3027; border-bottom: 1px solid rgba(15,48,39,.35); align-self: flex-start; padding-bottom: 2px; }
 @media (max-width: 860px) {
   .stl-grid { grid-template-columns: 1fr; }
-  .stl-spot-label { opacity: 1; font-size: 10px; left: 50%; top: 34px; margin-top: 0; transform: translateX(-50%); }
+  .stl-spot-label { opacity: 1; font-size: 11px; left: 50%; top: 34px; margin-top: 0; transform: translateX(-50%); }
   .stl-spot:hover .stl-spot-label, .stl-spot:focus-visible .stl-spot-label { transform: translateX(-50%); }
 }
 @media (prefers-reduced-motion: reduce) { .stl-spot-dot::before { animation: none; } }
@@ -113,7 +113,7 @@
     { "type": "image_picker", "id": "image", "label": "Photo portée", "info": "Par défaut : la photo collier + boucles." },
     { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Le look" },
     { "type": "text", "id": "title", "label": "Titre", "default": "La goutte qui attire la lumière." },
-    { "type": "textarea", "id": "text", "label": "Texte", "default": "Le vert profond du cristal, le halo de pierres blanches, l'or de la chaîne. Elle se porte seule, ou avec les boucles grenat et le bracelet de la Maison." },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Le vert profond du cristal, le halo de pierres blanches, l’or de la chaîne. Elle se porte seule, ou avec les boucles grenat et le bracelet de la Maison." },
     { "type": "product", "id": "product_a", "label": "Pièce 1 (par défaut : le collier)" },
     { "type": "range", "id": "a_x", "label": "Pièce 1 : position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 55 },
     { "type": "range", "id": "a_y", "label": "Pièce 1 : position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 68 },

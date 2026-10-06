@@ -1,7 +1,6 @@
 {%- if settings.offer_active -%}
 {%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
 {%- liquid
-  # Pièce signature : le collier, sauf choix contraire dans l'éditeur
   assign featured_product = section.settings.product
   if featured_product == blank
     assign piece_handles = piece_handles | split: '|'
@@ -9,73 +8,38 @@
   endif
 -%}
 
-<div id="offre" style="width: 100%; background: #F3EEE3; padding: clamp(72px, 12vw, 140px) clamp(18px, 5vw, 36px);">
-  <div style="max-width: 1100px; margin: 0 auto;">
-
-    {% # Titre éditorial %}
-    <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; margin-bottom: clamp(48px, 7vw, 80px); max-width: 600px; margin-left: auto; margin-right: auto;">
-      <span class="eyebrow" style="font-size: 10px; color: #7A5C2E; letter-spacing: .28em;">Offre de lancement</span>
-      <span style="display: block; width: 24px; height: 1px; background: rgba(176,141,87,.6);"></span>
-      <h2 class="serif" style="margin: 0; font-size: clamp(26px, 4.5vw, 38px); line-height: 1.2; font-weight: 300;">{{ section.settings.headline | default: "Une pour vous.<br>Une à offrir." }}</h2>
-      <p class="sans" style="margin: 0; font-size: 14px; line-height: 1.85; color: #4A463D; font-weight: 300; max-width: 480px; letter-spacing: .015em;">{{ section.settings.body | default: "Pour l'ouverture de la boutique, une seconde pièce identique est offerte pour toute commande passée pendant la période de lancement. Vous recevez deux bijoux, chacun dans son écrin, pour le prix d'un." }}</p>
+<section id="offre" class="of">
+  <div class="of-inner">
+    <div class="of-head ml-reveal">
+      <span class="of-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="serif of-title">{{ section.settings.headline }}</h2>
     </div>
-
-    {% # Image + Explication %}
-    <div class="grid-2" style="align-items: start; gap: clamp(36px, 5vw, 80px);">
-
-      {% # Image %}
-      <div style="width: 100%; overflow: hidden; background: #EAE4D7;">
-        <img
-          src="{{ 'offer-lancement.jpg' | asset_url }}"
-          srcset="{{ 'offer-lancement-600.jpg' | asset_url }} 600w, {{ 'offer-lancement.jpg' | asset_url }} 1100w"
-          sizes="(max-width: 860px) 100vw, 50vw"
-          width="1100"
-          height="899"
-          alt="Deux colliers La Goutte d'Émeraude côte à côte : 1 acheté, 1 offert"
-          style="width: 100%; height: auto; display: block;"
-          loading="lazy"
-        >
+    <div class="of-body ml-reveal ml-d1">
+      <p class="of-text">{{ section.settings.body }}</p>
+      <div class="of-actions">
+        <a href="#collection" class="of-btn">Choisir mon bijou</a>
+        {% if settings.offer_end_date != blank %}<span class="of-date">Jusqu’au {{ settings.offer_end_date }} inclus</span>{% endif %}
       </div>
-
-      {% # Explication concrète %}
-      <div style="display: flex; flex-direction: column; gap: 32px;">
-
-        <div style="display: flex; flex-direction: column; gap: 24px;">
-          <div style="display: flex; gap: 20px; align-items: flex-start;">
-            <span class="serif" style="font-size: 13px; font-style: italic; color: #7A5C2E; flex-shrink: 0; width: 20px; padding-top: 2px;">1</span>
-            <div>
-              <div class="sans" style="font-size: 12.5px; font-weight: 400; letter-spacing: .06em; color: #17140F; margin-bottom: 6px; text-transform: uppercase; font-size: 10px; letter-spacing: .15em;">Vous commandez</div>
-              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Ajoutez une pièce à votre panier et finalisez votre commande normalement.</p>
-            </div>
-          </div>
-          <div style="display: flex; gap: 20px; align-items: flex-start;">
-            <span class="serif" style="font-size: 13px; font-style: italic; color: #7A5C2E; flex-shrink: 0; width: 20px; padding-top: 2px;">2</span>
-            <div>
-              <div class="sans" style="font-size: 10px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; color: #17140F; margin-bottom: 6px;">Nous préparons deux écrins</div>
-              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Nous emballons deux pièces identiques, chacune dans son écrin.</p>
-            </div>
-          </div>
-          <div style="display: flex; gap: 20px; align-items: flex-start;">
-            <span class="serif" style="font-size: 13px; font-style: italic; color: #7A5C2E; flex-shrink: 0; width: 20px; padding-top: 2px;">3</span>
-            <div>
-              <div class="sans" style="font-size: 10px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; color: #17140F; margin-bottom: 6px;">Vous recevez deux bijoux</div>
-              <p class="sans" style="margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.7; color: #4A463D;">Les deux bijoux arrivent ensemble dans un colis suivi, sous {{ settings.shipping_delay }} après expédition.</p>
-            </div>
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid rgba(27,24,18,.1); padding-top: 24px;">
-          {% if settings.offer_end_date != blank %}
-            <p class="sans" style="margin: 0 0 10px; font-size: 12px; font-weight: 400; letter-spacing: .04em; color: #17140F;">Offre valable jusqu'au {{ settings.offer_end_date }} inclus.</p>
-          {% endif %}
-          <p class="sans" style="margin: 0 0 20px; font-size: 12px; font-weight: 300; line-height: 1.7; color: #6b6558; font-style: italic;">{{ section.settings.disclaimer | default: "Offre valable pendant la période de lancement uniquement, dans la limite des stocks disponibles. Un seul bijou supplémentaire par commande." }}</p>
-          <a href="{{ featured_product.url | default: '#piece' }}" class="btn">Profiter de l'offre</a>
-        </div>
-
-      </div>
+      <p class="of-legal">{{ section.settings.disclaimer }}</p>
     </div>
   </div>
-</div>
+</section>
+
+<style>
+.of { background: #F2ECE2; padding: clamp(64px, 9vw, 120px) clamp(20px, 5vw, 48px); border-top: 1px solid rgba(15,48,39,.08); border-bottom: 1px solid rgba(15,48,39,.08); }
+.of-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: end; }
+.of-head { display: flex; flex-direction: column; gap: 16px; }
+.of-eyebrow { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #8A6A3A; }
+.of-title { margin: 0; font-size: clamp(38px, 5.6vw, 68px); font-weight: 300; line-height: 1.02; letter-spacing: -.015em; color: #0F3027; }
+.of-body { display: flex; flex-direction: column; gap: 22px; }
+.of-text { margin: 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.75; color: #3E3B35; }
+.of-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.of-btn { display: inline-flex; align-items: center; min-height: 54px; padding: 0 30px; background: #0F3027; color: #FBF8F2; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .06em; transition: background .3s ease; }
+.of-btn:hover { background: #155E48; }
+.of-date { font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 500; color: #0F3027; }
+.of-legal { margin: 0; font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif; font-size: 12px; line-height: 1.6; color: #6B665C; }
+@media (max-width: 860px) { .of-inner { grid-template-columns: 1fr; align-items: start; } }
+</style>
 {%- endif -%}
 
 {% schema %}
@@ -83,9 +47,10 @@
   "name": "Offre de lancement",
   "settings": [
     { "type": "product", "id": "product", "label": "Pièce mise en avant" },
-    { "type": "text", "id": "headline", "label": "Titre" },
-    { "type": "textarea", "id": "body", "label": "Introduction" },
-    { "type": "textarea", "id": "disclaimer", "label": "Mention légale / conditions" }
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "L’ouverture de la Maison" },
+    { "type": "text", "id": "headline", "label": "Titre", "default": "Un pour vous, un à offrir." },
+    { "type": "textarea", "id": "body", "label": "Texte", "default": "Pour célébrer l’ouverture, chaque commande est accompagnée d’un second bijou identique, offert. Les deux arrivent ensemble, chacun dans son écrin : l’un pour vous, l’autre pour quelqu’un qui compte." },
+    { "type": "textarea", "id": "disclaimer", "label": "Conditions", "default": "Un bijou offert par commande, identique à la pièce achetée, dans la limite des stocks disponibles. Non cumulable avec les remises parure : la plus avantageuse s’applique." }
   ]
 }
 {% endschema %}
