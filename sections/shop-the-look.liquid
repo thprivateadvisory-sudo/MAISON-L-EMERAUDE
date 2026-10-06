@@ -1,0 +1,126 @@
+{%- capture piece_handles -%}{% render 'piece-handles' %}{%- endcapture -%}
+{%- liquid
+  assign piece_handles = piece_handles | split: '|'
+  assign look_a = section.settings.product_a | default: all_products[piece_handles[0]]
+  assign look_b = section.settings.product_b
+  assign panel_a = look_a
+  assign panel_b = all_products[piece_handles[1]]
+  assign panel_c = all_products[piece_handles[2]]
+-%}
+
+<section id="look" class="stl">
+  <div class="stl-grid">
+    <div class="stl-media ml-reveal">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 100vw, 55vw', widths: '600, 1000, 1400', class: 'stl-img', alt: section.settings.image.alt | default: 'Les bijoux de la Maison portés' }}
+      {% else %}
+        <img class="stl-img" src="{{ 'closeup.jpg' | asset_url }}"
+          srcset="{{ 'closeup-600.jpg' | asset_url }} 600w, {{ 'closeup.jpg' | asset_url }} 1000w"
+          sizes="(max-width: 860px) 100vw, 55vw" width="1000" height="1200" loading="lazy"
+          alt="Collier La Goutte d'Émeraude et boucles d'oreilles assorties portés avec une chemise en soie">
+      {% endif %}
+      {% if look_a.id %}
+        <a href="{{ look_a.url }}" class="stl-spot" style="left: {{ section.settings.a_x }}%; top: {{ section.settings.a_y }}%;">
+          <span class="stl-spot-dot"></span><span class="stl-spot-label">{{ look_a.title }} · {{ look_a.price | money }}</span>
+        </a>
+      {% endif %}
+      {% if look_b.id %}
+        <a href="{{ look_b.url }}" class="stl-spot" style="left: {{ section.settings.b_x }}%; top: {{ section.settings.b_y }}%;">
+          <span class="stl-spot-dot"></span><span class="stl-spot-label">{{ look_b.title }} · {{ look_b.price | money }}</span>
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="stl-panel">
+      <span class="eyebrow ml-reveal stl-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="serif ml-reveal ml-d1 stl-title">{{ section.settings.title }}</h2>
+      <p class="sans ml-reveal ml-d2 stl-text">{{ section.settings.text }}</p>
+
+      <div class="stl-items">
+        {% for item in (1..3) %}
+          {% case forloop.index %}{% when 1 %}{% assign p = panel_a %}{% when 2 %}{% assign p = panel_b %}{% else %}{% assign p = panel_c %}{% endcase %}
+          {% if p.id %}
+            {% assign v = p.selected_or_first_available_variant %}
+            <div class="stl-item ml-reveal ml-d{{ forloop.index | plus: 1 | at_most: 4 }}">
+              <a href="{{ p.url }}" class="stl-thumb">
+                {% if p.featured_image %}<img src="{{ p.featured_image | image_url: width: 200 }}" width="88" height="88" alt="" loading="lazy">{% endif %}
+              </a>
+              <div class="stl-item-body">
+                <a href="{{ p.url }}" class="serif stl-item-title">{{ p.title }}</a>
+                <span class="sans stl-item-price">{{ v.price | money }}{% if settings.offer_active %} <em>+ 1 offert</em>{% endif %}</span>
+              </div>
+              {% if p.available and p.has_only_default_variant %}
+                <form method="post" action="{{ routes.cart_add_url }}" class="stl-form">
+                  <input type="hidden" name="id" value="{{ v.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="stl-add" aria-label="Ajouter {{ p.title | escape }} au panier">Ajouter</button>
+                </form>
+              {% elsif p.available %}
+                <a href="{{ p.url }}" class="stl-add">Choisir</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if settings.bundle_active or settings.trio_active %}
+        <a href="#parure" class="sans stl-bundle ml-reveal ml-d4">Porter l'ensemble : voir la parure à prix réduit →</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+.stl { background: #F3EEE3; padding: clamp(56px, 9vw, 120px) clamp(18px, 5vw, 36px); }
+.stl-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.stl-media { position: relative; overflow: hidden; }
+.stl-img { width: 100%; height: auto; display: block; transition: transform 1.6s cubic-bezier(.16,1,.3,1); }
+.stl-media:hover .stl-img { transform: scale(1.03); }
+.stl-spot { display: block; position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; z-index: 2; }
+.stl-spot-dot { display: block; position: relative; width: 22px; height: 22px; border-radius: 50%; background: rgba(251,248,242,.95); box-shadow: 0 2px 10px rgba(0,0,0,.25); flex-shrink: 0; }
+.stl-spot-dot::after { content: ''; position: absolute; inset: 7px; border-radius: 50%; background: #0F5A43; }
+.stl-spot-dot::before { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 1px solid rgba(251,248,242,.8); animation: stl-ring 2.2s infinite; }
+@keyframes stl-ring { 0% { transform: scale(.7); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
+.stl-spot-label { position: absolute; left: 32px; top: 50%; margin-top: -15px; font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .04em; background: rgba(251,248,242,.95); color: #17140F; padding: 7px 11px; white-space: nowrap; opacity: 0; transform: translateX(-6px); transition: opacity .3s ease, transform .3s ease; pointer-events: none; }
+.stl-spot:hover .stl-spot-label, .stl-spot:focus-visible .stl-spot-label { opacity: 1; transform: none; }
+.stl-panel { display: flex; flex-direction: column; gap: 18px; }
+.stl-eyebrow { font-size: 10px; color: #7A5C2E; letter-spacing: .28em; }
+.stl-title { margin: 0; font-size: clamp(30px, 4.4vw, 50px); font-weight: 300; line-height: 1.08; color: #0C2620; }
+.stl-text { margin: 0; font-size: 14px; font-weight: 300; line-height: 1.85; color: #4A463D; max-width: 440px; }
+.stl-items { display: flex; flex-direction: column; margin-top: 10px; border-top: 1px solid rgba(27,24,18,.12); }
+.stl-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(27,24,18,.12); }
+.stl-thumb img { width: 72px; height: 72px; object-fit: cover; background: #fff; }
+.stl-item-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.stl-item-title { font-size: 19px; line-height: 1.2; color: #17140F; }
+.stl-item-price { font-size: 12.5px; color: #17140F; }
+.stl-item-price em { font-style: normal; color: #0F5A43; font-weight: 500; }
+.stl-form { margin: 0; }
+.stl-add { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: #0C2620; color: #FBF8F2; border: 0; font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; cursor: pointer; transition: background .3s ease; }
+.stl-add:hover { background: #0F5A43; }
+.stl-bundle { font-size: 12px; letter-spacing: .04em; color: #7A1F2B; border-bottom: 1px solid rgba(122,31,43,.3); align-self: flex-start; padding-bottom: 2px; }
+@media (max-width: 860px) {
+  .stl-grid { grid-template-columns: 1fr; }
+  .stl-spot-label { opacity: 1; font-size: 10px; left: 50%; top: 34px; margin-top: 0; transform: translateX(-50%); }
+  .stl-spot:hover .stl-spot-label, .stl-spot:focus-visible .stl-spot-label { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) { .stl-spot-dot::before { animation: none; } }
+</style>
+
+{% schema %}
+{
+  "name": "Le look",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo portée", "info": "Par défaut : la photo collier + boucles." },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Le look" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "La goutte qui attire la lumière." },
+    { "type": "textarea", "id": "text", "label": "Texte", "default": "Le vert profond du cristal, le halo de pierres blanches, l'or de la chaîne. Elle se porte seule, ou avec les boucles grenat et le bracelet de la Maison." },
+    { "type": "product", "id": "product_a", "label": "Pièce 1 (par défaut : le collier)" },
+    { "type": "range", "id": "a_x", "label": "Pièce 1 : position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 55 },
+    { "type": "range", "id": "a_y", "label": "Pièce 1 : position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 68 },
+    { "type": "product", "id": "product_b", "label": "Pièce 2 (point facultatif)", "info": "À choisir uniquement si la pièce est visible sur la photo." },
+    { "type": "range", "id": "b_x", "label": "Pièce 2 : position horizontale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 37 },
+    { "type": "range", "id": "b_y", "label": "Pièce 2 : position verticale", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 13 }
+  ],
+  "presets": [{ "name": "Le look" }]
+}
+{% endschema %}

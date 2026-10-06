@@ -1,0 +1,75 @@
+<section id="detail" class="sf dark-grain">
+  <div class="sf-grid">
+    <div class="sf-media ml-reveal">
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, controls: false, preload: 'none', image_size: '1000x', class: 'sf-video' }}
+      {% else %}
+        <video class="sf-video" autoplay muted loop playsinline preload="none" poster="{{ 'film-detail-poster.jpg' | asset_url }}" aria-hidden="true">
+          <source src="{{ 'film-detail.mp4' | asset_url }}" type="video/mp4">
+        </video>
+      {% endif %}
+      <span class="sf-tag">{{ section.settings.media_caption }}</span>
+    </div>
+
+    <div class="sf-copy">
+      <span class="eyebrow ml-reveal sf-eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="serif ml-reveal ml-d1 sf-title">{{ section.settings.title }}</h2>
+      <ol class="sf-list">
+        {% for block in section.blocks %}
+          <li class="sf-step ml-reveal ml-d{{ forloop.index | plus: 1 | at_most: 4 }}" {{ block.shopify_attributes }}>
+            <span class="serif sf-num">{{ forloop.index | prepend: '0' }}</span>
+            <div>
+              <h3 class="sans sf-step-title">{{ block.settings.title }}</h3>
+              <p class="sans sf-step-text">{{ block.settings.text }}</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+      <a href="#collection" class="sf-cta ml-reveal ml-d4">{{ section.settings.cta }}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+.sf { background: #0C2620; color: #FBF8F2; padding: clamp(64px, 10vw, 130px) clamp(18px, 5vw, 36px); }
+.sf-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 96px); align-items: center; }
+.sf-media { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: #08201A; }
+.sf-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.sf-tag { position: absolute; left: 16px; bottom: 16px; font-family: 'Montserrat', sans-serif; font-size: 9.5px; letter-spacing: .2em; text-transform: uppercase; color: #0C2620; background: rgba(251,248,242,.92); padding: 7px 11px; }
+.sf-copy { display: flex; flex-direction: column; gap: 22px; }
+.sf-eyebrow { font-size: 10px; color: #C9A96E; letter-spacing: .3em; }
+.sf-title { margin: 0; font-size: clamp(30px, 4.4vw, 52px); font-weight: 300; line-height: 1.08; }
+.sf-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; }
+.sf-step { display: flex; gap: 22px; padding: 20px 0; border-top: 1px solid rgba(201,169,110,.22); }
+.sf-num { font-size: 28px; font-style: italic; color: #C9A96E; line-height: 1; min-width: 36px; }
+.sf-step-title { margin: 0 0 6px; font-size: 11px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: #F3E6C8; }
+.sf-step-text { margin: 0; font-size: 13.5px; font-weight: 300; line-height: 1.8; color: rgba(251,248,242,.7); }
+.sf-cta { align-self: flex-start; display: inline-flex; align-items: center; min-height: 52px; padding: 0 30px; background: linear-gradient(135deg, #E8D5AE 0%, #C9A96E 55%, #B08D57 100%); color: #0C2620; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; transition: transform .25s ease; }
+.sf-cta:hover { transform: translateY(-2px); }
+@media (max-width: 860px) { .sf-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .sf-video { display: none; } .sf-media { background: url('{{ 'film-detail-poster.jpg' | asset_url }}') center / cover; } }
+</style>
+
+{% schema %}
+{
+  "name": "Le détail",
+  "settings": [
+    { "type": "video", "id": "video", "label": "Vidéo", "info": "Facultatif. Par défaut : gros plan animé sur la goutte. Vous pouvez la remplacer par une vidéo de préparation de vos commandes (mains, mise en écrin)." },
+    { "type": "text", "id": "media_caption", "label": "Légende sur la vidéo", "default": "La Goutte d'Émeraude, de près" },
+    { "type": "text", "id": "eyebrow", "label": "Surtitre", "default": "Le détail" },
+    { "type": "text", "id": "title", "label": "Titre", "default": "Ce qui se voit de près." },
+    { "type": "text", "id": "cta", "label": "Bouton", "default": "Choisir mon bijou" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Étape",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titre" },
+        { "type": "textarea", "id": "text", "label": "Texte" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Le détail" }]
+}
+{% endschema %}

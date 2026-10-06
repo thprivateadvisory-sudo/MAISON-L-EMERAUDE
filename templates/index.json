@@ -12,7 +12,8 @@
       "type": "piece-intro",
       "settings": {
         "description": "Une goutte de cristal vert émeraude entourée d'un halo de pierres blanches, suspendue à une chaîne fine en acier doré. La première pièce de la Maison."
-      }
+      },
+      "disabled": true
     },
     "detail-macro": {
       "type": "detail-macro",
@@ -21,7 +22,8 @@
         "secondary_stone": "Oxydes de zirconium blancs (halo)",
         "metal": "Acier inoxydable, finition dorée à l'or fin",
         "chain_length": "40 cm, rallonge jusqu'à 45 cm"
-      }
+      },
+      "disabled": true
     },
     "new-piece": {
       "type": "new-piece",
@@ -50,7 +52,8 @@
       "settings": {
         "caption": "Livré dans son écrin, prêt à offrir.",
         "show_fallback": false
-      }
+      },
+      "disabled": true
     },
     "offer": {
       "type": "offer",
@@ -67,7 +70,8 @@
       "type": "trust",
       "settings": {
         "return_policy": "À compter de la réception du colis"
-      }
+      },
+      "disabled": true
     },
     "reviews": {
       "type": "reviews"
@@ -183,7 +187,7 @@
       "settings": {
         "limit": 6,
         "eyebrow": "La Collection",
-        "title": "Les bijoux de la Maison",
+        "title": "Choisissez votre bijou",
         "subtitle": "Chaque pièce est expédiée dans son écrin, avec suivi, et reste échangeable ou remboursable pendant 30 jours."
       }
     },
@@ -194,23 +198,67 @@
         "title": "Émeraude, grenat, saphir : la parure complète.",
         "body": "Trois pierres, trois couleurs. Elles se portent ensemble ou séparément. Prises ensemble, elles bénéficient d'une remise, appliquée automatiquement au panier."
       }
+    },
+    "marquee": {
+      "type": "marquee"
+    },
+    "shop-the-look": {
+      "type": "shop-the-look"
+    },
+    "savoir-faire": {
+      "type": "savoir-faire",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Une pierre taillée en goutte",
+            "text": "Un cristal vert émeraude, facetté pour capter la lumière à chaque mouvement."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Un halo de pierres blanches",
+            "text": "Des oxydes de zirconium sertis tout autour de la goutte, pour un éclat qui se remarque sans en faire trop."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Une finition dorée",
+            "text": "Acier inoxydable à finition dorée, qui résiste bien au quotidien. Chaque pièce part dans son écrin, prête à offrir."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ]
+    },
+    "sticky-buy": {
+      "type": "sticky-buy"
     }
   },
   "order": [
     "hero",
-    "trust-bar",
+    "marquee",
     "collection-grid",
-    "new-piece",
+    "shop-the-look",
+    "offer",
+    "savoir-faire",
     "parure",
-    "piece-intro",
-    "detail-macro",
+    "new-piece",
+    "trust-bar",
+    "packaging",
+    "reviews",
+    "faq",
     "storytelling",
     "boutique-paris",
+    "sticky-buy",
+    "piece-intro",
+    "detail-macro",
     "lifestyle-banner",
-    "offer",
-    "packaging",
-    "trust",
-    "reviews",
-    "faq"
+    "trust"
   ]
 }
