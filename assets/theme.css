@@ -21,8 +21,8 @@ img { max-width: 100%; display: block; }
 .btn:hover { background: #17140F; color: #FBF8F2; }
 .btn-light { border: 1px solid rgba(251,248,242,.7); color: #FBF8F2; }
 .btn-light:hover { background: #FBF8F2; color: #17140F; }
-.btn-dark { background: #17140F; color: #FBF8F2; border: 1px solid #17140F; }
-.btn-dark:hover { background: #2c2720; border-color: #2c2720; }
+.btn-dark { background: #0C2620; color: #FBF8F2; border: 1px solid #0C2620; }
+.btn-dark:hover { background: #0F5A43; border-color: #0F5A43; }
 
 .nav-link { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .15em; text-transform: uppercase; color: #17140F; opacity: .72; transition: opacity .25s ease; white-space: nowrap; }
 .nav-link:hover { opacity: 1; }
@@ -354,18 +354,21 @@ html { scroll-behavior: smooth; }
 .pcard-media { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(27,24,18,.06); }
 .pcard-img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.25,.46,.45,.94), opacity .45s ease; }
 .pcard-img--alt { position: absolute; inset: 0; opacity: 0; }
-.pcard-media:hover .pcard-img { transform: scale(1.04); }
+.pcard-media:hover .pcard-img { transform: scale(1.06); }
+.pcard { transition: transform .4s ease; }
+.pcard-media { box-shadow: 0 0 0 rgba(12,38,32,0); transition: box-shadow .4s ease; }
+.pcard:hover .pcard-media { box-shadow: 0 18px 40px rgba(12,38,32,.12); }
 .pcard-media--hover:hover .pcard-img--alt { opacity: 1; }
 .pcard-badges { position: absolute; top: 10px; left: 10px; right: 10px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
 .pcard-badge { font-family: 'Montserrat', sans-serif; font-size: 8.5px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; padding: 6px 9px; background: #FBF8F2; color: #17140F; }
 .pcard-badge--new { background: #7A1F2B; color: #FBF8F2; }
-.pcard-badge--offer { background: #17140F; color: #E8D5AE; }
+.pcard-badge--offer { background: #0C2620; color: #E8D5AE; }
 .pcard-body { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .pcard-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(17px, 2vw, 20px); font-weight: 400; line-height: 1.25; color: #17140F; }
 .pcard-prices { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
 .pcard-price { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 20px; color: #17140F; }
 .pcard-compare { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 16px; color: #6b6558; }
-.pcard-note { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 400; letter-spacing: .02em; color: #7A1F2B; }
+.pcard-note { font-family: 'Montserrat', sans-serif; font-size: 10.5px; font-weight: 500; letter-spacing: .02em; color: #0F5A43; }
 .pcard-form { width: 100%; margin: 0; }
 .pcard-btn { width: 100%; margin-top: 8px; padding: 13px 12px; text-align: center; white-space: normal; }
 @media (max-width: 560px) {

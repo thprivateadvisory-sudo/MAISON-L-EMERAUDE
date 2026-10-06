@@ -1,0 +1,42 @@
+{%- capture mq_items -%}
+  {%- if settings.offer_active -%}1 acheté · 1 offert|{%- endif -%}
+  Écrin inclus, prêt à offrir|Expédié sous {{ settings.prep_time }}|{% if settings.free_shipping %}Livraison offerte{% else %}Livraison suivie{% endif %}|Retours {{ settings.return_days }} jours|Paiement sécurisé
+  {%- if settings.trio_active -%}|Parure complète −{{ settings.trio_percent }} %{%- endif -%}
+{%- endcapture -%}
+{%- assign mq_items = section.settings.items | default: mq_items | split: '|' -%}
+
+<div class="mq" role="region" aria-label="Nos engagements">
+  <ul class="visually-hidden">
+    {% for it in mq_items %}<li>{{ it | strip }}</li>{% endfor %}
+  </ul>
+  <div class="mq-track" aria-hidden="true">
+    {% for n in (1..2) %}
+      <div class="mq-group">
+        {% for it in mq_items %}
+          <span class="mq-item">{{ it | strip }}</span><span class="mq-sep">✦</span>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.mq { background: #0C2620; color: #E8D5AE; overflow: hidden; border-top: 1px solid rgba(201,169,110,.25); border-bottom: 1px solid rgba(201,169,110,.25); }
+.mq-track { display: flex; width: max-content; animation: mq-slide 38s linear infinite; }
+.mq:hover .mq-track { animation-play-state: paused; }
+.mq-group { display: flex; align-items: center; flex-shrink: 0; }
+.mq-item { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(18px, 2.4vw, 26px); padding: 16px 26px; white-space: nowrap; }
+.mq-sep { color: #C9A96E; font-size: 11px; }
+@keyframes mq-slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .mq-track { animation: none; flex-wrap: wrap; width: auto; } .mq-group + .mq-group { display: none; } }
+</style>
+
+{% schema %}
+{
+  "name": "Bandeau défilant",
+  "settings": [
+    { "type": "text", "id": "items", "label": "Messages (séparés par |)", "info": "Laisser vide : messages calculés à partir des réglages (offre, livraison, retours)." }
+  ],
+  "presets": [{ "name": "Bandeau défilant" }]
+}
+{% endschema %}
